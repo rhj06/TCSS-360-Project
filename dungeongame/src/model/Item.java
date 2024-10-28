@@ -1,3 +1,4 @@
+package dungeongame.src.model;
 
 /**
  * Represents an item that can be used in the dungeon adventure game.
@@ -37,6 +38,14 @@ public interface Item {
      * @return the number of items available.
      */
     int getItemquantity();
+
+    String getMyItemName();
+
+    String getMyItemDescription();
+
+    int getMyItemValue();
+
+    int getMyItemQuantity();
 
     /**
      * Checks if the player has this item.

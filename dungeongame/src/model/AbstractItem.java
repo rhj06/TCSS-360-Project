@@ -1,3 +1,4 @@
+package dungeongame.src.model;
 
 /**
  * The AbstractItem class provides a common foundation for all items in the
@@ -10,16 +11,16 @@
 public abstract class AbstractItem implements Item {
 
     /** The name of the item. */
-    private String myItemName;
+    private final String myItemName;
 
     /** The description/type of the item. */
-    private String myItemDescription;
+    private final String myItemDescription;
 
     /** The value of the item to be used for amount of health restored or amount of attack speed increased. */
-    private int myItemValue;
+    private final int myItemValue;
 
     /** The number of this item available. */
-    private myItemQuantity;
+    private final int myItemQuantity;
 
     /**
      * Constructs an AbstractItem with the specified name, description, value,
@@ -30,12 +31,13 @@ public abstract class AbstractItem implements Item {
      * @param theItemValue The value of the item.
      * @param theItemQuantity The initial number of this item.
      */
-    public AbstractItem(String thItemName, String theItemDescription, int theItemValue, int theItemQuantity) {
-        myItemName = thItemName;
+    public AbstractItem(String theItemName, String theItemDescription, int theItemValue, int theItemQuantity) {
+        myItemName = theItemName;
         myItemDescription = theItemDescription;
         myItemValue = theItemValue;
         myItemQuantity = theItemQuantity;
     }
+
 
     /**
      * Retrieves the name of the item.
@@ -83,7 +85,7 @@ public abstract class AbstractItem implements Item {
      * @return True if the player has the item, false otherwise.
      */
     @Override
-    boolean hasItem() {
+    public boolean hasItem() {
         return myItemValue > 0;
     }
 
@@ -94,7 +96,9 @@ public abstract class AbstractItem implements Item {
      * @param thePlayer The player who uses the item.
      */
     @Override
-    void useItem(Player thePlayer) {
+    public void useItem(Player thePlayer) {
 
     }
+
+    public abstract void useItem();
 }
