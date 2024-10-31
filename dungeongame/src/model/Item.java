@@ -4,7 +4,6 @@ package dungeongame.src.model;
  * Represents an item that can be used in the dungeon adventure game.
  * Defines common behaviors for all items, such as getting the item's
  * name, description, value, and usage.
- *
  * Implementing classes must define how the item is used by the player.
  *
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
@@ -16,35 +15,27 @@ public interface Item {
      *
      * @return the name of the item.
      */
-    String getItemName();
+    String getMyItemName();
 
     /**
      * Provides a description of the item.
      *
      * @return a description of the item.
      */
-    String getItemDescription();
+    String getMyItemDescription();
 
     /**
      * Returns the value of the item, which may be used for amount of health to restore or amount speed increased.
      *
      * @return the value of the item.
      */
-    int getItemValue();
+    int getMyItemValue();
 
     /**
      * Retrieves the current quantity of this item.
      *
      * @return the number of items available.
      */
-    int getItemquantity();
-
-    String getMyItemName();
-
-    String getMyItemDescription();
-
-    int getMyItemValue();
-
     int getMyItemQuantity();
 
     /**
@@ -57,7 +48,7 @@ public interface Item {
     /**
      * Defines the behavior when the item is used by the player
      *
-     * @param thePlayer the player who is using the item.
+     * @param
      */
     void useItem(Player thePlayer);
 }

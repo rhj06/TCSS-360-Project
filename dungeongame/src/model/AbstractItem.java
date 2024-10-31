@@ -38,7 +38,6 @@ public abstract class AbstractItem implements Item {
         myItemQuantity = theItemQuantity;
     }
 
-
     /**
      * Retrieves the name of the item.
      *
@@ -75,9 +74,7 @@ public abstract class AbstractItem implements Item {
      * @return The number of this item available.
      */
     @Override
-    public int getMyItemQuantity() {
-        return getMyItemQuantity()
-    }
+    public int getMyItemQuantity() { return myItemQuantity; }
 
     /**
      * Checks whether the player has this item.
@@ -86,19 +83,17 @@ public abstract class AbstractItem implements Item {
      */
     @Override
     public boolean hasItem() {
-        return myItemValue > 0;
+        return myItemValue >= 0;
     }
 
     /**
      * Defines the behavior when this item is used by a player. Subclasses must provide a specific implementation
      * of how the item affects the player.
      *
-     * @param thePlayer The player who uses the item.
+     * @param thePlayer allows the player to use this item.
      */
     @Override
     public void useItem(Player thePlayer) {
 
     }
-
-    public abstract void useItem();
 }
