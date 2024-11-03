@@ -21,7 +21,6 @@ public abstract class AbstractItem implements Item {
 
     /** The number of this item available. */
     private final int myItemQuantity;
-
     /**
      * Constructs an AbstractItem with the specified name, description, value,
      * and item quantity.

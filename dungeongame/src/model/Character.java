@@ -56,27 +56,20 @@ public interface Character {
 
     /**
      * get special attack of character
-     * @return
      */
-    int getSpecialAttack();
+    void useSpecialAttack();
 
     /**
      * is character attacking?
      * @return
      */
-    boolean isAttacking();
+    boolean canAttack(final int theOtherSpeed);
 
     /**
      * is character dead?
      * @return
      */
     boolean isDead();
-
-    /**
-     * toString of character
-     * @return
-     */
-    String toString();
 
 
 }

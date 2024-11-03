@@ -11,8 +11,6 @@ public abstract class AbstractDungeonCharacter implements Character{
     /***/
     private int myAttack;
     /***/
-    private int mySpecialAttack;
-    /***/
     private int mySpeed;
     /***/
     private int myDefense;
@@ -22,21 +20,20 @@ public abstract class AbstractDungeonCharacter implements Character{
      * @param theMaxHealth
      * @param theCurrHealth
      * @param theAttack
-     * @param theSpecialAttack
      * @param theSpeed
      * @param theDefense
      */
-    private AbstractDungeonCharacter(final int theMaxHealth, final int theCurrHealth,
-                                     final int theAttack, final int theSpecialAttack, final int theSpeed,
-                                     final int theDefense) {
+    public AbstractDungeonCharacter(final int theMaxHealth, final int theCurrHealth,
+                                     final int theAttack, final int theSpeed, final int theDefense) {
 
         myMaxHealth = theMaxHealth;
         myCurrHealth = theCurrHealth;
         myAttack = theAttack;
-        mySpecialAttack = theSpecialAttack;
         mySpeed = theSpeed;
         myDefense = theDefense;
     }
+
+
 
     /**
      *
@@ -61,6 +58,24 @@ public abstract class AbstractDungeonCharacter implements Character{
      *
      * @return
      */
+    @Override
+    public int getAttack() {
+        return myAttack;
+    }
+
+    /**
+     *
+     * @param theAttackBonus
+     */
+    @Override
+    public void setAttack(int theAttackBonus) {
+        myAttack += theAttackBonus;
+    }
+
+    /**
+     *
+     * @return
+     */
     public int getDefense() {
         return myDefense;
     }
@@ -70,7 +85,7 @@ public abstract class AbstractDungeonCharacter implements Character{
      * @param theDefense
      */
     public void setDefense(final int theDefense) {
-        myDefense = theDefense;
+        myDefense += theDefense;
     }
 
     /**
@@ -86,14 +101,32 @@ public abstract class AbstractDungeonCharacter implements Character{
      * @param theSpeed
      */
     public void setSpeed(final int theSpeed) {
-        mySpeed = theSpeed;
+        mySpeed += theSpeed;
+    }
+
+    /**
+     *
+     * @param theOtherSpeed
+     * @return
+     */
+    public boolean canAttack(int theOtherSpeed) {
+        return mySpeed >= theOtherSpeed;
+    }
+
+    public void useSpecialAttack() {}
+
+
+    public boolean isDead() {
+        return myCurrHealth <= 0;
     }
 
     /**
      *
      * @return
      */
+    @Override
     public String toString() {
         return DEFAULT_NAME;
     }
+
 }
