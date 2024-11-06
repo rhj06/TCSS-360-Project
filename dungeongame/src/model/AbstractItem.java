@@ -89,10 +89,10 @@ public abstract class AbstractItem implements Item {
      * Defines the behavior when this item is used by a player. Subclasses must provide a specific implementation
      * of how the item affects the player.
      *
-     * @param thePlayer allows the player to use this item.
+     * @param theCharacter allows the player to use this item.
      */
     @Override
-    public void useItem(Player thePlayer) {
+    public void useItem(Character theCharacter) {
 
     }
 }

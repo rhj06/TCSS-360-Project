@@ -50,5 +50,5 @@ public interface Item {
      *
      * @param
      */
-    void useItem(Player thePlayer);
+    void useItem(Character theCharacter);
 }

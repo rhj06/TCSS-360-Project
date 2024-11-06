@@ -14,6 +14,7 @@ public class HealthPotion extends AbstractItem {
      * The Health Potion has a single use and the value represents the amount of health to be restored.
      */
     public HealthPotion() {
+
         super("Health Potion", "Restores health", 20, 1);
     }
 
@@ -21,13 +22,11 @@ public class HealthPotion extends AbstractItem {
      * Uses the Health Potion, restoring a portion of the player's health up to the max health.
      * This method is specific to the Health Potion's behavior in the game.
      *
-     * @param thePlayer who will receive the health boost.
+     * @param theCharacter who will receive the health boost.
      */
     @Override
-    public void useItem(Player thePlayer) {
-        if (thePlayer != null) {
-            int newHealth = thePlayer.getMyHealth() + getMyItemValue();
-            thePlayer.setMyHealth(newHealth);
-        }
+    public void useItem(Character theCharacter) {
+        int newHealth = theCharacter.getHealth() + getMyItemValue();
+        theCharacter.setHealth(newHealth);
     }
 }
