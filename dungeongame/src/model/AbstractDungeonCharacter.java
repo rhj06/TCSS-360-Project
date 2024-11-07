@@ -1,5 +1,7 @@
 package dungeongame.src.model;
 
+import java.util.Random;
+
 public abstract class AbstractDungeonCharacter implements Character{
 
     /***/
@@ -9,7 +11,9 @@ public abstract class AbstractDungeonCharacter implements Character{
     /***/
     private int myCurrHealth;
     /***/
-    private int myAttack;
+    private final int myMinAttack;
+    /***/
+    private final int myMaxAttack;
     /***/
     private int mySpeed;
     /***/
@@ -18,17 +22,18 @@ public abstract class AbstractDungeonCharacter implements Character{
     /**
      *
      * @param theMaxHealth
-     * @param theCurrHealth
-     * @param theAttack
+     * @param theMinAttack
      * @param theSpeed
      * @param theDefense
      */
-    public AbstractDungeonCharacter(final int theMaxHealth, final int theCurrHealth,
-                                     final int theAttack, final int theSpeed, final int theDefense) {
+    public AbstractDungeonCharacter(final int theMaxHealth,
+                                     final int theMinAttack, final int theMaxAttack,
+                                    final int theSpeed, final int theDefense) {
 
         myMaxHealth = theMaxHealth;
-        myCurrHealth = theCurrHealth;
-        myAttack = theAttack;
+        myCurrHealth = theMaxHealth;
+        myMinAttack = theMinAttack;
+        myMaxAttack = theMaxAttack;
         mySpeed = theSpeed;
         myDefense = theDefense;
     }
@@ -41,6 +46,10 @@ public abstract class AbstractDungeonCharacter implements Character{
      */
     public int getHealth() {
         return myCurrHealth;
+    }
+
+    public int getMaxHealth() {
+        return myMaxHealth;
     }
 
     /**
@@ -60,7 +69,8 @@ public abstract class AbstractDungeonCharacter implements Character{
      */
     @Override
     public int getAttack() {
-        return myAttack;
+        int attackRange = new Random().nextInt(myMaxAttack-myMinAttack);
+        return myMinAttack + attackRange;
     }
 
     /**
@@ -69,7 +79,8 @@ public abstract class AbstractDungeonCharacter implements Character{
      */
     @Override
     public void setAttack(int theAttackBonus) {
-        myAttack += theAttackBonus;
+//         myMinAttack += theAttackBonus;
+//         myMaxAttack += theAttackBonus;
     }
 
     /**

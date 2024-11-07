@@ -7,10 +7,10 @@ public abstract class AbstractMonster extends AbstractDungeonCharacter {
     /***/
     private static final String DEFAULT_NAME = "Dungeon Character";
 
-    public AbstractMonster(final int theMaxHealth, final int theCurrHealth,
-                           final int theAttack, final int theSpeed,
+    public AbstractMonster(final int theMaxHealth,
+                           final int theMinAttack, final int theMaxAttack, final int theSpeed,
                            final int theDefense, final String theName, final double theItemDropRate) {
-        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense);
+        super(theMaxHealth, theMinAttack, theMaxAttack, theSpeed, theDefense);
         myItemDropRate = theItemDropRate;
 
     }
