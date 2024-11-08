@@ -7,11 +7,11 @@ public final class Skeleton extends AbstractMonster{
     /***/
     private final String myName;
 
-    public Skeleton(final int theMaxHealth, final int theCurrHealth,
-                 final int theAttack, final int theSpeed,
-                 final int theDefense, final String theName, final double theItemDropRate) {
+    public Skeleton(final int theMaxHealth,
+                    final int theMinAttack, final int theMaxAttack, final int theSpeed,
+                    final int theDefense, final double theItemDropRate, final String theName) {
 
-        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense, theName, theItemDropRate);
+        super(theMaxHealth, theMinAttack, theMaxAttack, theSpeed, theDefense, theItemDropRate, theName);
         myName = theName;
     }
 

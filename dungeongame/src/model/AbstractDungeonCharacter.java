@@ -1,8 +1,9 @@
 package dungeongame.src.model;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public abstract class AbstractDungeonCharacter implements Character{
+public abstract class AbstractDungeonCharacter implements Character, Serializable {
 
     /***/
     private static final String DEFAULT_NAME = "Dungeon Character";
