@@ -4,41 +4,83 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class Maze {
+/**
+ * Represents the dungeon in the dungeon adventure game.
+ *
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ * @version 11/10/2024
+ */
+final public class Maze {
     private final Room[][] myRooms;
     private final Point myPlayerCords;
     private final int mySize;
 
-    Maze(int theMazeSize){
+    /**
+     * Constructor for the maze object.
+     *
+     * @param theMazeSize, the number of room columns and rows that make up the dungeon.
+     */
+    Maze(final int theMazeSize){
         mySize = theMazeSize;
         myRooms = new Room[theMazeSize][theMazeSize];
         myPlayerCords = new Point(0, 0);
     }
 
+    /**
+     * Returns the size of the dungeon, number of rows and columns.
+     */
     public int getSize() {
         return mySize;
     }
 
+    /**
+     * Returns 2D array that stores the rooms that make up the maze.
+     */
     public Room[][] getRooms() {
         return myRooms;
     }
 
-    public boolean isValidMove(int theX, int theY) {
+    /**
+     * Returns true if the move to the input coordinates is valid, that is if the coordinates are in the maze,
+     * if the player is in a neighboring room, and if there is a door from the current room to the target room.
+     *
+     * @param theX The column value the target room.
+     * @param theY The row value of the target room.
+     */
+    public boolean isValidMove(final int theX, final int theY) {
         return false;
     }
 
-    public boolean hasMonster(int theX, int theY) {
+    /**
+     * Returns true if the room at the target coordinates contains a monster.
+     *
+     * @param theX The column value the target room.
+     * @param theY The row value of the target room.
+     */
+    public boolean hasMonster(final int theX, final int theY) {
         return false;
     }
 
-    public boolean hasItem(int theX, int theY) {
+    /**
+     * Returns true if the room at the target coordinates contains an item.
+     *
+     * @param theX The column value the target room.
+     * @param theY The row value of the target room.
+     */
+    public boolean hasItem(final int theX, final int theY) {
         return false;
     }
 
+    /**
+     * Returns the current coordinates of the player as a point object.
+     */
     public Point getPlayerCords() {
         return myPlayerCords;
     }
 
+    /**
+     * Generates the maze, creating connections between the rooms and setting up doors and walls.
+     */
     public void generateMaze() {
         //initialize rooms
         for (int i = 0; i < mySize; i++) {
@@ -48,7 +90,7 @@ public class Maze {
             }
         }
 
-        //setup neighbor connectinos
+        //setup neighbor connections
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
                 if (i > 0) {
@@ -83,7 +125,7 @@ public class Maze {
 
     }
 
-    private void travers(Room curr, Set<Room> visited){
+    private void travers(final Room curr, final Set<Room> visited){
         visited.add(curr);
 
         List<Room> validNeighbors = new ArrayList<>();
@@ -182,6 +224,9 @@ public class Maze {
 
     }
 
+    /**
+     * Prints the maze to the console.
+     */
     public void printMaze() {
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
@@ -223,8 +268,4 @@ public class Maze {
         maze.generateMaze();
         maze.printMaze();
     }
-
-//    private void createTestMaze(Maze maze){
-//
-//    }
 }
