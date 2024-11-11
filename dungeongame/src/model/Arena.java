@@ -2,16 +2,30 @@ package dungeongame.src.model;
 
 import java.util.Random;
 
+/**
+ * Manages a fight between a player and a monster.
+ *
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ * @version 11/10/2024
+ */
 public class Arena {
     Player myPlayer;
     AbstractMonster myMonster;
 
-    public Arena(Player thePlayer, AbstractMonster theMonster) {
+    /**
+     * Constructor for the arena.
+     *
+     * @param thePlayer the player that will be fighting.
+     * @param theMonster the monster that will be fighting.
+     */
+    public Arena(final Player thePlayer, final AbstractMonster theMonster) {
         myPlayer = thePlayer;
         myMonster = theMonster;
-
     }
 
+    /**
+     * A combat loop that will continue until one of the entities is dead.
+     */
     public void combat(){
         Random rand = new Random();
         boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).canAttack(myMonster.getSpeed());
@@ -24,7 +38,11 @@ public class Arena {
                 } else if(playerMove == 1){
                     //Player inventory contains potions increase health
                 } else if(playerMove == 2){
-                    //special attack
+                    if(myPlayer instanceof TargetedSpecial) {
+                        ((TargetedSpecial)myPlayer).useTargetedSpecialAttack(myMonster);
+                    } else {
+                        ((AbstractDungeonCharacter)myPlayer).useSpecialAttack();
+                    }
                 } else if(playerMove == 3){
                     myMonster.setHealth(-myMonster.getHealth());
                 }
@@ -39,28 +57,7 @@ public class Arena {
             }
 
             playerTurn = true ? false : true;
+
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

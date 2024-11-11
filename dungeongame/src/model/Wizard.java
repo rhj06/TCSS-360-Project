@@ -1,6 +1,6 @@
 package dungeongame.src.model;
 
-public final class Wizard extends AbstractDungeonCharacter implements Player{
+public final class Wizard extends AbstractDungeonCharacter implements Player, TargetedSpecial {
 
     /***/
     private static final String DEFAULT_NAME = "Wizard";
@@ -28,7 +28,7 @@ public final class Wizard extends AbstractDungeonCharacter implements Player{
      * Increase health by 50 units, decrease attack power of monster
      */
     @Override
-    public void useSpecialAttack() {
+    public void useTargetedSpecialAttack(AbstractMonster theMonster) {
         super.setHealth(HEALTH_BONUS);
         // How to decrease Attack of monster?
     }
