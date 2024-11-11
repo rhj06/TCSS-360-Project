@@ -19,6 +19,8 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     private int mySpeed;
     /***/
     private int myDefense;
+    /***/
+    private final String myName;
 
     /**
      *
@@ -29,7 +31,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      */
     public AbstractDungeonCharacter(final int theMaxHealth,
                                      final int theMinAttack, final int theMaxAttack,
-                                    final int theSpeed, final int theDefense) {
+                                    final int theSpeed, final int theDefense, final String theName) {
 
         myMaxHealth = theMaxHealth;
         myCurrHealth = theMaxHealth;
@@ -37,6 +39,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         myMaxAttack = theMaxAttack;
         mySpeed = theSpeed;
         myDefense = theDefense;
+        myName = theName;
     }
 
 
@@ -138,7 +141,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      */
     @Override
     public String toString() {
-        return DEFAULT_NAME;
+        return myName + " the " + DEFAULT_NAME;
     }
 
 }

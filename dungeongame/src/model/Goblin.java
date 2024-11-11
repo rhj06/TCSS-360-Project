@@ -3,7 +3,7 @@ package dungeongame.src.model;
 public final class Goblin extends AbstractMonster{
 
     /***/
-    private static final String DEFAULT_NAME = "Ogre";
+    private static final String DEFAULT_NAME = "Goblin";
     /***/
     private final String myName;
 

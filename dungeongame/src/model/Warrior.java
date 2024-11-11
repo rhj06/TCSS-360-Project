@@ -22,7 +22,7 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
      */
     public Warrior(final int theMaxHealth, final int theCurrHealth, final int theAttack,
                    final int theSpeed, final int theDefense, final String theName) {
-        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense);
+        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense, theName);
         myAttack = theAttack;
         myDefense = theDefense;
         myName = theName;
