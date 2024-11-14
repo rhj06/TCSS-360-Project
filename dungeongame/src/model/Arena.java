@@ -56,7 +56,7 @@ public class Arena {
 
             }
 
-            playerTurn = true ? false : true;
+            playerTurn = false;
 
         }
     }

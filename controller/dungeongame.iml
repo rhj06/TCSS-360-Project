@@ -3,7 +3,10 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="java" level="project" />
-    <orderEntry type="library" name="appslandia.javafx" level="project" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="javafx.base" level="project" />
+    <orderEntry type="library" exported="" name="javafx.controls" level="project" />
+    <orderEntry type="library" exported="" name="javafx.fxml" level="project" />
+    <orderEntry type="library" exported="" name="javafx.graphics" level="project" />
   </component>
 </module>

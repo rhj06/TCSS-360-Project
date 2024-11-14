@@ -7,9 +7,9 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
     /***/
     private static final int ATTACK_AND_DEFENSE_BONUS = 50;
     /***/
-    private int myAttack;
+    private final int myAttack;
     /***/
-    private int myDefense;
+    private final int myDefense;
     /***/
     private final String myName;
 
