@@ -1,5 +1,6 @@
 package dungeongame.src.model;
 
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,14 +10,29 @@ import java.util.Map;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 11/10/2024
  */
-final public class PlayerInventory {
+final public class PlayerInventory implements java.io.Serializable {
+    @Serial
+    private static final long serialVersionUID = 87531815144L;
+    private static PlayerInventory uniqueInstance;
+
     Map<Item, Integer> myInventory;
 
     /**
      * Constructs an empty inventory that tracks the items the player has picked up and used.
      */
-    public PlayerInventory() {
+    private PlayerInventory() {
         myInventory = new HashMap<Item, Integer>();
+    }
+
+    public static PlayerInventory getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new PlayerInventory();
+        }
+        return uniqueInstance;
+    }
+
+    public void updateFrom(PlayerInventory theOtherInventory) {
+        myInventory = theOtherInventory.myInventory;
     }
 
     /**

@@ -1,9 +1,12 @@
 package dungeongame.src.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Random;
 
 public abstract class AbstractDungeonCharacter implements Character, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1351355L;
 
     /***/
     private static final String DEFAULT_NAME = "Dungeon Character";

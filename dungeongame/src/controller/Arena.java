@@ -1,4 +1,6 @@
-package dungeongame.src.model;
+package dungeongame.src.controller;
+
+import dungeongame.src.model.*;
 
 import java.util.Random;
 
@@ -11,6 +13,7 @@ import java.util.Random;
 public class Arena {
     Player myPlayer;
     AbstractMonster myMonster;
+    PlayerInventory myInventory;
 
     /**
      * Constructor for the arena.
@@ -18,9 +21,11 @@ public class Arena {
      * @param thePlayer the player that will be fighting.
      * @param theMonster the monster that will be fighting.
      */
-    public Arena(final Player thePlayer, final AbstractMonster theMonster) {
+    public Arena(final Player thePlayer, final AbstractMonster theMonster, final PlayerInventory theInventory) {
         myPlayer = thePlayer;
         myMonster = theMonster;
+        myInventory = theInventory;
+
     }
 
     /**
@@ -56,7 +61,7 @@ public class Arena {
 
             }
 
-            playerTurn = false;
+            playerTurn = true ? false : true;
 
         }
     }

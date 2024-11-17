@@ -1,6 +1,8 @@
 package dungeongame.src.model;
 
 import java.awt.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
@@ -10,20 +12,42 @@ import java.util.List;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 11/10/2024
  */
-final public class Maze {
-    private final Room[][] myRooms;
-    private final Point myPlayerCords;
-    private final int mySize;
+final public class Maze implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 3545354534L;
+    private static Maze uniqueInstance;
+
+    private Room[][] myRooms;
+    private Point myPlayerCords;
+    private int mySize;
 
     /**
      * Constructor for the maze object.
      *
-     * @param theMazeSize, the number of room columns and rows that make up the dungeon.
+     * //@param theMazeSize, the number of room columns and rows that make up the dungeon.
      */
-    Maze(final int theMazeSize){
+    private Maze(){
+        mySize = 0;
+        myRooms = new Room[0][0];
+        myPlayerCords = new Point(0, 0);
+    }
+
+    public static Maze getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new Maze();
+        }
+        return uniqueInstance;
+    }
+
+    public void updateFrom(Maze theOtherMaze) {
+        myRooms = theOtherMaze.myRooms;
+        myPlayerCords = theOtherMaze.myPlayerCords;
+        mySize = theOtherMaze.mySize;
+    }
+
+    public void setMazeSize(int theMazeSize){
         mySize = theMazeSize;
         myRooms = new Room[theMazeSize][theMazeSize];
-        myPlayerCords = new Point(0, 0);
     }
 
     /**
@@ -262,10 +286,10 @@ final public class Maze {
         }
     }
 
-    public static void main(String[] args) {
-        Maze maze = new Maze(5);
-
-        maze.generateMaze();
-        maze.printMaze();
-    }
+//    public static void main(String[] args) {
+//        Maze maze = new Maze(5);
+//
+//        maze.generateMaze();
+//        maze.printMaze();
+//    }
 }
