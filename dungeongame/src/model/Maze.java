@@ -17,6 +17,8 @@ final public class Maze implements Serializable {
     private static final long serialVersionUID = 3545354534L;
     private static Maze uniqueInstance;
 
+    private static final int ITEM_GEN_PERCENT = 30;
+
     private Room[][] myRooms;
     private Point myPlayerCords;
     private int mySize;
@@ -138,6 +140,8 @@ final public class Maze implements Serializable {
 
         makeTraversable();
         addRandomDoors();
+        generateItems();
+        generatePillars();
     }
 
     private void makeTraversable(){
@@ -244,8 +248,52 @@ final public class Maze implements Serializable {
         }
     }
 
-    public void displayMaze() {
+    private void generateItems(){
+        Random random = new Random();
+        List<Integer> items = new ArrayList<>();
+        items.add(1);
+        items.add(2);
+        items.add(3);
 
+        for (int i = 0; i < mySize; i++) {
+            for (int j = 0; j < mySize; j++) {
+                int gen = random.nextInt(100);
+                if(gen <= ITEM_GEN_PERCENT) {
+                    Collections.shuffle(items);
+                    int potion = items.getFirst();
+                    if(potion == 1){
+                        myRooms[i][j].setItem(new HealthPotion());
+                    } else if (potion == 2){
+                        myRooms[i][j].setItem(new SpeedPotion());
+                    } else if (potion == 3){
+                        myRooms[i][j].setItem(new VisionPotion());
+                    }
+                }
+            }
+        }
+    }
+
+    private void generatePillars(){
+        Pillar EncapsulationPillar = new Pillar("Encapsulation Pillar");
+        Pillar InheritancePillar = new Pillar("Inheritance Pillar");
+        Pillar PolymorphismPillar = new Pillar("Polymorphism Pillar");
+        Pillar AbstractionPillar = new Pillar("Abstraction Pillar");
+
+        List<Pillar> pillars = new ArrayList<>();
+        pillars.add(EncapsulationPillar);
+        pillars.add(InheritancePillar);
+        pillars.add(PolymorphismPillar);
+        pillars.add(AbstractionPillar);
+
+        Random random = new Random();
+
+        while (!pillars.isEmpty()) {
+            Room room = myRooms[random.nextInt(mySize)][random.nextInt(mySize)];
+            if (!(room.getItem() instanceof Pillar)){
+                room.setItem(pillars.getFirst());
+                pillars.remove(pillars.getFirst());
+            }
+        }
     }
 
     /**
@@ -255,7 +303,7 @@ final public class Maze implements Serializable {
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
                 if (myRooms[i][j].isNorthDoor()) {
-                    System.out.print(" _ _ ");
+                    System.out.print("     ");
                 } else {
                     System.out.print(" ___ ");
                 }
@@ -269,8 +317,24 @@ final public class Maze implements Serializable {
                     System.out.print("|");
                 }
 
-                if (myRooms[i][j].isSouthDoor()) {
-                    System.out.print("_ _");
+                if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getItem() == null) {
+                    System.out.print("   ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getItem() instanceof HealthPotion) {
+                    System.out.print(" H ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getItem() instanceof SpeedPotion) {
+                    System.out.print(" S ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getItem() instanceof VisionPotion) {
+                    System.out.print(" V ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getItem() instanceof Pillar) {
+                    System.out.print(" P ");
+                } else if (myRooms[i][j].getItem() instanceof HealthPotion) {
+                    System.out.print("_H_");
+                } else if (myRooms[i][j].getItem() instanceof SpeedPotion) {
+                    System.out.print("_S_");
+                } else if (myRooms[i][j].getItem() instanceof VisionPotion) {
+                    System.out.print("_V_");
+                } else if (myRooms[i][j].getItem() instanceof Pillar) {
+                        System.out.print("_P_");
                 } else {
                     System.out.print("___");
                 }
@@ -286,10 +350,11 @@ final public class Maze implements Serializable {
         }
     }
 
-//    public static void main(String[] args) {
-//        Maze maze = new Maze(5);
-//
-//        maze.generateMaze();
-//        maze.printMaze();
-//    }
+    public static void main(String[] args) {
+        Maze maze = Maze.getInstance();
+        maze.setMazeSize(5);
+
+        maze.generateMaze();
+        maze.printMaze();
+    }
 }
