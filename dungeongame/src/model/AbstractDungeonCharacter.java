@@ -19,7 +19,9 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     /***/
     private final int myMaxAttack;
     /***/
-    private int mySpeed;
+    private int myMinSpeed;
+    /***/
+    private int myMaxSpeed;
     /***/
     private int myDefense;
     /***/
@@ -29,18 +31,22 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      *
      * @param theMaxHealth
      * @param theMinAttack
-     * @param theSpeed
+     * @param theMaxAttack
+     * @param theMinSpeed
+     * @param theMaxSpeed
      * @param theDefense
+     * @param theName
      */
     public AbstractDungeonCharacter(final int theMaxHealth,
                                      final int theMinAttack, final int theMaxAttack,
-                                    final int theSpeed, final int theDefense, final String theName) {
+                                    final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
 
         myMaxHealth = theMaxHealth;
         myCurrHealth = theMaxHealth;
         myMinAttack = theMinAttack;
         myMaxAttack = theMaxAttack;
-        mySpeed = theSpeed;
+        myMinSpeed = theMinSpeed;
+        myMaxSpeed = theMaxSpeed;
         myDefense = theDefense;
         myName = theName;
     }
@@ -112,7 +118,8 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @return
      */
     public int getSpeed() {
-        return mySpeed;
+        int speedRange = new Random().nextInt(myMaxSpeed-myMinSpeed);
+        return myMinSpeed + speedRange;
     }
 
     /**
@@ -120,7 +127,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @param theSpeed
      */
     public void setSpeed(final int theSpeed) {
-        mySpeed = theSpeed;
+
     }
 
     /**
@@ -129,7 +136,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @return
      */
     public boolean canAttack(int theOtherSpeed) {
-        return mySpeed >= theOtherSpeed;
+        return getSpeed() >= theOtherSpeed;
     }
 
     public void useSpecialAttack() {}

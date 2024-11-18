@@ -16,17 +16,21 @@ public final class Thief extends AbstractDungeonCharacter implements Player {
     private boolean myChanceToAttackTwice = false;
 
     /**
+     *
      * @param theMaxHealth
-     * @param theCurrHealth
-     * @param theAttack
-     * @param theSpeed
+     * @param theMinAttack
+     * @param theMaxAttack
+     * @param theMinSpeed
+     * @param theMaxSpeed
      * @param theDefense
+     * @param theName
      */
-    public Thief(final int theMaxHealth, final int theCurrHealth, final int theAttack,
-                  final int theSpeed, final int theDefense, final String theName) {
-        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense, theName);
+    public Thief(final int theMaxHealth, final int theMinAttack, final int theMaxAttack,
+                  final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
+        super(theMaxHealth, theMinAttack, theMaxAttack, theMinSpeed, theMaxSpeed, theDefense, theName);
         myName = theName;
     }
+
 
     /**
      * Increase Speed by 50 units, adds an 80% chance to Attack Twice

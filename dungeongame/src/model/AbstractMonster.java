@@ -10,7 +10,7 @@ public abstract class AbstractMonster extends AbstractDungeonCharacter {
     public AbstractMonster(final int theMaxHealth,
                            final int theMinAttack, final int theMaxAttack, final int theSpeed,
                            final int theDefense, final double theItemDropRate, final String theName) {
-        super(theMaxHealth, theMinAttack, theMaxAttack, theSpeed, theDefense, theName);
+        super(theMaxHealth, theMinAttack, theMaxAttack, theSpeed, theSpeed, theDefense, theName);
         myItemDropRate = theItemDropRate;
 
     }

@@ -7,26 +7,24 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
     /***/
     private static final int ATTACK_AND_DEFENSE_BONUS = 50;
     /***/
-    private final int myAttack;
-    /***/
-    private final int myDefense;
-    /***/
     private final String myName;
 
     /**
+     *
      * @param theMaxHealth
-     * @param theCurrHealth
-     * @param theAttack
-     * @param theSpeed
+     * @param theMinAttack
+     * @param theMaxAttack
+     * @param theMinSpeed
+     * @param theMaxSpeed
      * @param theDefense
+     * @param theName
      */
-    public Warrior(final int theMaxHealth, final int theCurrHealth, final int theAttack,
-                   final int theSpeed, final int theDefense, final String theName) {
-        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense, theName);
-        myAttack = theAttack;
-        myDefense = theDefense;
+    public Warrior(final int theMaxHealth, final int theMinAttack, final int theMaxAttack,
+                  final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
+        super(theMaxHealth, theMinAttack, theMaxAttack, theMinSpeed, theMaxSpeed, theDefense, theName);
         myName = theName;
     }
+
 
     /**
      * Increase Attack and Speed by 50 units

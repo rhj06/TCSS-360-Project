@@ -7,20 +7,21 @@ public final class Wizard extends AbstractDungeonCharacter implements Player, Ta
     /***/
     private static final int HEALTH_BONUS = 50;
     /***/
-    private int myAttack;
-    /***/
     private final String myName;
 
     /**
+     *
      * @param theMaxHealth
-     * @param theCurrHealth
-     * @param theAttack
-     * @param theSpeed
+     * @param theMinAttack
+     * @param theMaxAttack
+     * @param theMinSpeed
+     * @param theMaxSpeed
      * @param theDefense
+     * @param theName
      */
-    public Wizard(final int theMaxHealth, final int theCurrHealth, final int theAttack,
-                  final int theSpeed, final int theDefense, final String theName) {
-        super(theMaxHealth, theCurrHealth, theAttack, theSpeed, theDefense, theName);
+    public Wizard(final int theMaxHealth, final int theMinAttack, final int theMaxAttack,
+                  final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
+        super(theMaxHealth, theMinAttack, theMaxAttack, theMinSpeed, theMaxSpeed, theDefense, theName);
         myName = theName;
     }
 
