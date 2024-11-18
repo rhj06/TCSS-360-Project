@@ -66,8 +66,9 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     public void setHealth(final int theHealth) {
         if (theHealth > myMaxHealth) {
             myCurrHealth = myMaxHealth;
+        } else {
+            myCurrHealth = theHealth;
         }
-        myCurrHealth = theHealth;
     }
 
     /**
@@ -119,7 +120,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @param theSpeed
      */
     public void setSpeed(final int theSpeed) {
-        mySpeed += theSpeed;
+        mySpeed = theSpeed;
     }
 
     /**
