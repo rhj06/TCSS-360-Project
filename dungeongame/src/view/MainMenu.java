@@ -18,13 +18,13 @@ import javafx.stage.Stage;
 public class MainMenu {
 
     /** Path to the background image for the main menu. */
-    private static final String BACKGROUND_IMAGE = "file:dungeongame/resources/dungeonadventure1.jpg";
+    private static final String BACKGROUND_IMAGE = "file:.idea/resources/dungeonadventure1.jpg";
 
     /** Path to the primary font used for the title label. */
-    private static final String FONT_PATH = "file:dungeongame/resources/fonts/OldeEnglish.ttf";
+    private static final String FONT_PATH = "file:.idea/resources/fonts/OldeEnglish.ttf";
 
     /** Path to the secondary font used for button labels. */
-    private static final String FONT_PATH2 = "file:dungeongame/resources/fonts/VIKING-N.TTF";
+    private static final String FONT_PATH2 = "file:.idea/resources/fonts/VIKING-N.TTF";
 
     /** Text displayed as the title of the main menu. */
     private static final String TITLE_TEXT = "Dungeon Adventure";
