@@ -1,5 +1,8 @@
 package dungeongame.src.model;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * The AbstractItem class provides a common foundation for all items in the
  * dungeon adventure game. It implements the Item interface and defines
@@ -8,7 +11,9 @@ package dungeongame.src.model;
  *
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  */
-public abstract class AbstractItem implements Item {
+public abstract class AbstractItem implements Item, Serializable {
+    @Serial
+    private static final long serialVersionUID = 351354354L;
 
     /** The name of the item. */
     private final String myItemName;

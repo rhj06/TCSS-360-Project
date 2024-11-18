@@ -1,6 +1,8 @@
 package dungeongame.src.model;
 
 import java.awt.*;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -9,7 +11,10 @@ import java.util.Objects;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 11/10/2024
  */
-public class Room {
+public class Room implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 65432135L;
+
     private int myContents;
     private Point myCords;
     private Room myNorthNeighbor;
