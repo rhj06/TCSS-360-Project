@@ -24,7 +24,7 @@ public class HealthPotionTest {
     @BeforeEach
     public void setUp() {
         healthPotion = new HealthPotion();
-        character = new Thief(70, 50, 10, 15, 10, "Test Thief");
+        character = new Thief(70, 50, 10, 15, 10, 10, "Test Thief");
     }
 
     /**

@@ -90,7 +90,7 @@ public class GameSaver implements Serializable {
         Maze maze = Maze.getInstance();
         maze.setMazeSize(5);
         PlayerInventory playerInventory = PlayerInventory.getInstance();
-        Wizard wizard = new Wizard(10,10,10,10,10,"10");
+        Wizard wizard = new Wizard(10,10,10,10,10, 10, "10");
         maze.generateMaze();
         maze.printMaze();
         System.out.println();

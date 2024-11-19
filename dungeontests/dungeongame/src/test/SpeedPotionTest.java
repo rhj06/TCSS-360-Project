@@ -24,7 +24,7 @@ public class SpeedPotionTest {
     @BeforeEach
     public void setUp() {
         speedPotion = new SpeedPotion();
-        character = new Thief(70, 50, 10, 15, 10, "Test Thief"); // Speed = 15
+        character = new Thief(70, 50, 10, 15, 10, 20, "Test Thief"); // Speed = 15
     }
 
     /**
