@@ -104,6 +104,48 @@ final public class Maze implements Serializable {
         return myPlayerCords;
     }
 
+    public boolean goNorth(){
+        boolean canGoNorth = false;
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (playerStartRoom.isNorthDoor()){
+            myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y-1);
+            canGoNorth = true;
+        }
+        return canGoNorth;
+    }
+
+    public boolean goEast(){
+        boolean canGoEast = false;
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (playerStartRoom.isEastDoor()){
+            myPlayerCords.setLocation(myPlayerCords.x+1, myPlayerCords.y);
+            canGoEast = true;
+        }
+        return canGoEast;
+    }
+
+    public boolean goSouth(){
+        boolean canGoSouth = false;
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (playerStartRoom.isSouthDoor()){
+            myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y+1);
+            canGoSouth = true;
+        }
+        return canGoSouth;
+    }
+
+    public boolean goWest(){
+        boolean canGoWest = false;
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (playerStartRoom.isWestDoor()){
+            myPlayerCords.setLocation(myPlayerCords.x-1, myPlayerCords.y);
+            canGoWest = true;
+        }
+        return canGoWest;
+    }
+
+
+
     /**
      * Generates the maze, creating connections between the rooms and setting up doors and walls.
      */
@@ -296,6 +338,7 @@ final public class Maze implements Serializable {
         }
     }
 
+
     /**
      * Prints the maze to the console.
      */
@@ -312,7 +355,7 @@ final public class Maze implements Serializable {
 
             for (int j = 0; j < mySize; j++) {
                 if (myRooms[i][j].isWestDoor()) {
-                    System.out.print("=");
+                    System.out.print(" ");
                 } else {
                     System.out.print("|");
                 }
@@ -334,13 +377,53 @@ final public class Maze implements Serializable {
                 } else if (myRooms[i][j].getItem() instanceof VisionPotion) {
                     System.out.print("_V_");
                 } else if (myRooms[i][j].getItem() instanceof Pillar) {
-                        System.out.print("_P_");
+                    System.out.print("_P_");
                 } else {
                     System.out.print("___");
                 }
 
                 if (myRooms[i][j].isEastDoor()) {
-                    System.out.print("=");
+                    System.out.print(" ");
+                } else {
+                    System.out.print("|");
+                }
+
+            }
+            System.out.println();
+        }
+    }
+
+//testing player movement functions
+    public void printPlayerCordMaze() {
+        for (int i = 0; i < mySize; i++) {
+            for (int j = 0; j < mySize; j++) {
+                if (myRooms[i][j].isNorthDoor()) {
+                    System.out.print("     ");
+                } else {
+                    System.out.print(" ___ ");
+                }
+            }
+            System.out.println();
+
+            for (int j = 0; j < mySize; j++) {
+                if (myRooms[i][j].isWestDoor()) {
+                    System.out.print(" ");
+                } else {
+                    System.out.print("|");
+                }
+
+                if (myRooms[i][j].isSouthDoor() && myRooms[myPlayerCords.y][myPlayerCords.x] != myRooms[i][j]) {
+                    System.out.print("   ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[myPlayerCords.y][myPlayerCords.x] == myRooms[i][j]) {
+                    System.out.print(" P ");
+                } else if (myRooms[myPlayerCords.y][myPlayerCords.x] == myRooms[i][j]) {
+                    System.out.print("_P_");
+                } else {
+                    System.out.print("___");
+                }
+
+                if (myRooms[i][j].isEastDoor()) {
+                    System.out.print(" ");
                 } else {
                     System.out.print("|");
                 }
@@ -356,5 +439,25 @@ final public class Maze implements Serializable {
 
         maze.generateMaze();
         maze.printMaze();
+        maze.printPlayerCordMaze();
+
+        maze.goEast();
+        maze.printPlayerCordMaze();
+        maze.goSouth();
+        maze.printPlayerCordMaze();
+        maze.goWest();
+        maze.printPlayerCordMaze();
+        maze.goNorth();
+        maze.printPlayerCordMaze();
+
+        maze.goSouth();
+        maze.printPlayerCordMaze();
+        maze.goEast();
+        maze.printPlayerCordMaze();
+        maze.goNorth();
+        maze.printPlayerCordMaze();
+        maze.goWest();
+        maze.printPlayerCordMaze();
+
     }
 }
