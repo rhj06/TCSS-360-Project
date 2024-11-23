@@ -32,7 +32,7 @@ public final class Goblin extends AbstractMonster{
 
     @Override
     public String toString() {
-        return myName + " the " + DEFAULT_NAME;
+        return myName + " the " + DEFAULT_NAME + " Health: " + this.getHealth() + ", Attack: " + this.getAttack();
     }
 
 }

@@ -18,6 +18,7 @@ final public class Maze implements Serializable {
     private static Maze uniqueInstance;
 
     private static final int ITEM_GEN_PERCENT = 30;
+    private static final int MONSTER_SPAWN_RATE = 30;
 
     private Room[][] myRooms;
     private Point myPlayerCords;
@@ -184,6 +185,7 @@ final public class Maze implements Serializable {
         addRandomDoors();
         generateItems();
         generatePillars();
+        generateMonsters();
     }
 
     private void makeTraversable(){
@@ -338,6 +340,27 @@ final public class Maze implements Serializable {
         }
     }
 
+    private void generateMonsters(){
+        ArrayList<String> monsterTypes = new ArrayList<>();
+        monsterTypes.add("Goblin");
+        monsterTypes.add("Ogre");
+        monsterTypes.add("Skeleton");
+        monsterTypes.add("Slime");
+
+        Random random = new Random();
+
+        int monstersToSpawn = ((mySize*mySize) * MONSTER_SPAWN_RATE) / 100;
+
+        while(monstersToSpawn != 0) {
+            Room room = myRooms[random.nextInt(mySize)][random.nextInt(mySize)];
+            if (room.getMonster() == null){
+                Collections.shuffle(monsterTypes);
+                AbstractMonster monster = MonsterFactory.createMonster(monsterTypes.getFirst());
+                room.setMonster(monster);
+                monstersToSpawn--;
+            }
+        }
+    }
 
     /**
      * Prints the maze to the console.
@@ -378,6 +401,60 @@ final public class Maze implements Serializable {
                     System.out.print("_V_");
                 } else if (myRooms[i][j].getItem() instanceof Pillar) {
                     System.out.print("_P_");
+                } else {
+                    System.out.print("___");
+                }
+
+                if (myRooms[i][j].isEastDoor()) {
+                    System.out.print(" ");
+                } else {
+                    System.out.print("|");
+                }
+
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * Prints the maze to the console.
+     */
+    public void printMonsterMaze() {
+        for (int i = 0; i < mySize; i++) {
+            for (int j = 0; j < mySize; j++) {
+                if (myRooms[i][j].isNorthDoor()) {
+                    System.out.print("     ");
+                } else {
+                    System.out.print(" ___ ");
+                }
+            }
+            System.out.println();
+
+            for (int j = 0; j < mySize; j++) {
+                if (myRooms[i][j].isWestDoor()) {
+                    System.out.print(" ");
+                } else {
+                    System.out.print("|");
+                }
+
+                if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() == null) {
+                    System.out.print("   ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() instanceof Goblin) {
+                    System.out.print(" G ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() instanceof Ogre) {
+                    System.out.print(" O ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() instanceof Skeleton) {
+                    System.out.print(" S ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() instanceof Slime) {
+                    System.out.print(" L ");
+                } else if (myRooms[i][j].getMonster() instanceof Goblin) {
+                    System.out.print("_G_");
+                } else if (myRooms[i][j].getMonster() instanceof Ogre) {
+                    System.out.print("_O_");
+                } else if (myRooms[i][j].getMonster() instanceof Skeleton) {
+                    System.out.print("_S_");
+                } else if (myRooms[i][j].getMonster() instanceof Slime) {
+                    System.out.print("_L_");
                 } else {
                     System.out.print("___");
                 }
@@ -437,27 +514,32 @@ final public class Maze implements Serializable {
         Maze maze = Maze.getInstance();
         maze.setMazeSize(5);
 
+
+
         maze.generateMaze();
         maze.printMaze();
         maze.printPlayerCordMaze();
+        maze.printMonsterMaze();
+//
+//        maze.goEast();
+//        maze.printPlayerCordMaze();
+//        maze.goSouth();
+//        maze.printPlayerCordMaze();
+//        maze.goWest();
+//        maze.printPlayerCordMaze();
+//        maze.goNorth();
+//        maze.printPlayerCordMaze();
+//
+//        maze.goSouth();
+//        maze.printPlayerCordMaze();
+//        maze.goEast();
+//        maze.printPlayerCordMaze();
+//        maze.goNorth();
+//        maze.printPlayerCordMaze();
+//        maze.goWest();
+//        maze.printPlayerCordMaze();
 
-        maze.goEast();
-        maze.printPlayerCordMaze();
-        maze.goSouth();
-        maze.printPlayerCordMaze();
-        maze.goWest();
-        maze.printPlayerCordMaze();
-        maze.goNorth();
-        maze.printPlayerCordMaze();
-
-        maze.goSouth();
-        maze.printPlayerCordMaze();
-        maze.goEast();
-        maze.printPlayerCordMaze();
-        maze.goNorth();
-        maze.printPlayerCordMaze();
-        maze.goWest();
-        maze.printPlayerCordMaze();
-
+//        AbstractMonster goblin = MonsterFactory.createMonster("Goblin");
+//        System.out.println(goblin.toString());
     }
 }
