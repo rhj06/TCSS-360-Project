@@ -62,5 +62,5 @@ public final class MonsterFactory {
     private static String getRandomName() {
         return NAMES[new Random().nextInt(NAMES.length)];
     }
-
+//
 }

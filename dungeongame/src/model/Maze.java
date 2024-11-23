@@ -514,7 +514,7 @@ final public class Maze implements Serializable {
         Maze maze = Maze.getInstance();
         maze.setMazeSize(5);
 
-
+//
 
         maze.generateMaze();
         maze.printMaze();

@@ -246,7 +246,7 @@ public class Room implements Serializable {
     public void setMonster(AbstractMonster theMonster) {
         myMonster = theMonster;
     }
-
+//
     /**
      * Sets the item in the room to be the inputted item.
      */
