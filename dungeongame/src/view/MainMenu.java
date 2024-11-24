@@ -46,7 +46,7 @@ public class MainMenu {
      */
     public Scene createMainMenuScene(Stage theStage) {
         VBox menu = new VBox(20, createTitleLabel(),
-                createButton("New Game", () -> theStage.setScene(createGameScene())),
+                createButton("New Game", () -> theStage.setScene(characterSelectScreen(theStage))),
                 createButton("Load Game", this::loadGame),
                 createButton("Exit", theStage::close));
 
@@ -115,8 +115,9 @@ public class MainMenu {
      *
      * @return A Scene object representing the initial game screen.
      */
-    private Scene createGameScene() {
-        return new Scene(new BorderPane(), 800, 600);
+    private Scene characterSelectScreen(Stage theStage) {
+        CharacterSelectScreen characterSelectScreen = new CharacterSelectScreen();
+        return characterSelectScreen.createCharacterSelectScene(theStage);
     }
 
     /**
