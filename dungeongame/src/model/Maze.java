@@ -145,7 +145,36 @@ final public class Maze implements Serializable {
         return canGoWest;
     }
 
+    public Room[] getNeighborsClockwise(int theI, int theJ){
+        Room room = myRooms[theI][theJ];
+        Room[] rooms = new Room[8];
+        if (room.getNorthNeighbor() != null){
+            rooms[0] = room.getNorthNeighbor();
+        }
+        if (room.getNorthNeighbor().getEastNeighbor() != null){
+            rooms[1] = room.getNorthNeighbor().getEastNeighbor();
+        }
+        if (room.getEastNeighbor() != null){
+            rooms[2] = room.getEastNeighbor();
+        }
+        if (room.getEastNeighbor().getSouthNeighbor() != null){
+            rooms[3] = room.getEastNeighbor().getSouthNeighbor();
+        }
+        if (room.getSouthNeighbor() != null){
+            rooms[4] = room.getSouthNeighbor();
+        }
+        if (room.getSouthNeighbor().getWestNeighbor() != null){
+            rooms[5] = room.getSouthNeighbor().getWestNeighbor();
+        }
+        if (room.getWestNeighbor() != null){
+            rooms[6] = room.getWestNeighbor();
+        }
+        if (room.getWestNeighbor().getNorthNeighbor() != null){
+            rooms[7] = room.getWestNeighbor().getNorthNeighbor();
+        }
 
+        return rooms;
+    }
 
     /**
      * Generates the maze, creating connections between the rooms and setting up doors and walls.
@@ -518,7 +547,9 @@ final public class Maze implements Serializable {
 
         maze.generateMaze();
         maze.printMaze();
+        System.out.println();
         maze.printPlayerCordMaze();
+        System.out.println();
         maze.printMonsterMaze();
 //
 //        maze.goEast();
