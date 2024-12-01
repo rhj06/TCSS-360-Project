@@ -66,17 +66,17 @@ public class DirectionalButtons {
      * @param theDirection The direction to move ("west", "east", "north", "south").
      */
     private void movePlayer(String theDirection) {
-        boolean moved = switch (theDirection) {
-            case "west" -> myMaze.goWest();
-            case "east" -> myMaze.goEast();
-            case "north" -> myMaze.goNorth();
-            case "south" -> myMaze.goSouth();
-            default -> false;
-        };
-        if (moved) {
-            roomDescription.updateDescription();
-        } else {
-            roomDescription.updateDescription("You can't move in that direction.");
-        }
+//        boolean moved = switch (theDirection) {
+//            case "west" -> myMaze.goWest();
+//            case "east" -> myMaze.goEast();
+//            case "north" -> myMaze.goNorth();
+//            case "south" -> myMaze.goSouth();
+//            default -> false;
+//        };
+//        if (moved) {
+//            roomDescription.updateDescription();
+//        } else {
+//            roomDescription.updateDescription("You can't move in that direction.");
+//        }
     }
 }
