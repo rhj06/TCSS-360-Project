@@ -3,6 +3,7 @@ package dungeongame.src.model;
 import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Random;
 
 public abstract class AbstractDungeonCharacter implements Character, Serializable {
@@ -148,6 +149,17 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         return getSpeed() >= theOtherSpeed;
     }
 
+    /**
+     *
+     * @return
+     */
+    public String getImageFileName() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName().toLowerCase(Locale.ENGLISH));
+        sb.append(".png");
+
+        return sb.toString();
+    }
     public void useSpecialAttack() {}
 
 

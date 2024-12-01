@@ -4,6 +4,7 @@ import dungeongame.src.model.Maze;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -55,7 +56,7 @@ public class MapScreen {
 
         mapLayout.getChildren().addAll(mapLabel, mapContentLabel);
 
-        Scene mapScene = new Scene(mapLayout, 400, 300);
+        Scene mapScene = new MapScene(new BorderPane());
         mapStage.setScene(mapScene);
         mapStage.show();
     }
