@@ -1,6 +1,8 @@
 package dungeongame.src.model;
 
 import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
@@ -20,6 +22,7 @@ final public class Maze implements Serializable {
     private static final int ITEM_GEN_PERCENT = 30;
     private static final int MONSTER_SPAWN_RATE = 30;
 
+    private PropertyChangeSupport myPCS;
     private Room[][] myRooms;
     private Point myPlayerCords;
     private int mySize;
@@ -30,6 +33,7 @@ final public class Maze implements Serializable {
      * //@param theMazeSize, the number of room columns and rows that make up the dungeon.
      */
     private Maze(){
+        myPCS = new PropertyChangeSupport(this);
         mySize = 0;
         myRooms = new Room[0][0];
         myPlayerCords = new Point(0, 0);
@@ -68,34 +72,33 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Returns true if the move to the input coordinates is valid, that is if the coordinates are in the maze,
-     * if the player is in a neighboring room, and if there is a door from the current room to the target room.
-     *
-     * @param theX The column value the target room.
-     * @param theY The row value of the target room.
+     * Returns true if the room at the target coordinates contains a monster.
      */
-    public boolean isValidMove(final int theX, final int theY) {
-        return false;
+    public boolean roomHasMonster(int theI, int theJ) {
+        return myRooms[theI][theJ].getMonster() != null;
     }
 
-    /**
-     * Returns true if the room at the target coordinates contains a monster.
-     *
-     * @param theX The column value the target room.
-     * @param theY The row value of the target room.
-     */
-    public boolean hasMonster(final int theX, final int theY) {
-        return false;
+    public AbstractMonster getRoomMonster(int theI, int theJ){
+        return myRooms[theI][theJ].getMonster();
+    }
+
+    public void setRoomMonster(int theI, int theJ, AbstractMonster theMonster){
+        myRooms[theI][theJ].setMonster(theMonster);
     }
 
     /**
      * Returns true if the room at the target coordinates contains an item.
-     *
-     * @param theX The column value the target room.
-     * @param theY The row value of the target room.
      */
-    public boolean hasItem(final int theX, final int theY) {
-        return false;
+    public boolean roomHasItem(int theI, int theJ){
+        return myRooms[theI][theJ].getItem() != null;
+    }
+
+    public Item getRoomItem(int theI, int theJ){
+        return myRooms[theI][theJ].getItem();
+    }
+
+    public void setRoomItem(int theI, int theJ, Item theItem){
+        myRooms[theI][theJ].setItem(theItem);
     }
 
     /**
@@ -105,44 +108,76 @@ final public class Maze implements Serializable {
         return myPlayerCords;
     }
 
-    public boolean goNorth(){
+    public boolean canGoNorth(){
         boolean canGoNorth = false;
         Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
         if (playerStartRoom.isNorthDoor()){
-            myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y-1);
             canGoNorth = true;
         }
         return canGoNorth;
     }
 
-    public boolean goEast(){
+    public boolean canGoEast(){
         boolean canGoEast = false;
         Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
         if (playerStartRoom.isEastDoor()){
-            myPlayerCords.setLocation(myPlayerCords.x+1, myPlayerCords.y);
             canGoEast = true;
         }
         return canGoEast;
     }
 
-    public boolean goSouth(){
+    public boolean canGoSouth(){
         boolean canGoSouth = false;
         Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
         if (playerStartRoom.isSouthDoor()){
-            myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y+1);
             canGoSouth = true;
         }
         return canGoSouth;
     }
 
-    public boolean goWest(){
+    public boolean canGoWest(){
         boolean canGoWest = false;
         Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
         if (playerStartRoom.isWestDoor()){
-            myPlayerCords.setLocation(myPlayerCords.x-1, myPlayerCords.y);
             canGoWest = true;
         }
         return canGoWest;
+    }
+
+    public void goNorth(){
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (canGoNorth()){
+            Point oldCords = myPlayerCords;
+            myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y-1);
+            myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+        }
+    }
+
+    public void goEast(){
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (canGoEast()){
+            Point oldCords = myPlayerCords;
+            myPlayerCords.setLocation(myPlayerCords.x+1, myPlayerCords.y);
+            myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+        }
+    }
+
+    public void goSouth(){
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (canGoSouth()){
+            Point oldCords = myPlayerCords;
+            myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y+1);
+            myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+        }
+    }
+
+    public void goWest(){
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        if (canGoWest()){
+            Point oldCords = myPlayerCords;
+            myPlayerCords.setLocation(myPlayerCords.x-1, myPlayerCords.y);
+            myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+        }
     }
 
     public Room[] getNeighborsClockwise(int theI, int theJ){
@@ -391,6 +426,34 @@ final public class Maze implements Serializable {
         }
     }
 
+    void spawnExit(){
+        Random random = new Random();
+        int i = 0;
+        int j = 0;
+        int side = random.nextInt(4);
+
+        if (side == 0) {
+            i = 0;
+            j = random.nextInt(mySize);
+            myRooms[i][j].setNorthDoor(true);
+        } else if (side == 1) {
+            i = random.nextInt(mySize);
+            j = mySize-1;
+            myRooms[i][j].setEastDoor(true);
+        } else if (side == 2) {
+            i = mySize - 1;
+            j = random.nextInt(mySize);
+            myRooms[i][j].setSouthDoor(true);
+        } else if (side == 3) {
+            i = random.nextInt(mySize);
+            j = 0;
+            myRooms[i][j].setWestDoor(true);
+        }
+
+        System.out.println("Exit has been spawned.");
+    }
+
+
     /**
      * Prints the maze to the console.
      */
@@ -551,6 +614,9 @@ final public class Maze implements Serializable {
         maze.printPlayerCordMaze();
         System.out.println();
         maze.printMonsterMaze();
+
+        maze.spawnExit();
+        maze.printMaze();
 //
 //        maze.goEast();
 //        maze.printPlayerCordMaze();

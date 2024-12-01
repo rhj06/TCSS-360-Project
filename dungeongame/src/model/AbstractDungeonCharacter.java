@@ -1,5 +1,6 @@
 package dungeongame.src.model;
 
+import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Random;
@@ -10,6 +11,9 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
 
     /***/
     private static final String DEFAULT_NAME = "Dungeon Character";
+
+
+    private final PropertyChangeSupport myPCS;
     /***/
     private final int myMaxHealth;
     /***/
@@ -41,6 +45,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
                                      final int theMinAttack, final int theMaxAttack,
                                     final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
 
+        myPCS = new PropertyChangeSupport(this);
         myMaxHealth = theMaxHealth;
         myCurrHealth = theMaxHealth;
         myMinAttack = theMinAttack;
@@ -51,7 +56,9 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         myName = theName;
     }
 
-
+    public PropertyChangeSupport getMyPCS() {
+        return myPCS;
+    }
 
     /**
      *
@@ -71,10 +78,12 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      */
     public void setHealth(final int theHealth) {
         if (theHealth > myMaxHealth) {
+
             myCurrHealth = myMaxHealth;
         } else {
             myCurrHealth = theHealth;
         }
+        myPCS.firePropertyChange("Health Changed", null, myCurrHealth);
     }
 
     /**

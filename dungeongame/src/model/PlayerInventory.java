@@ -1,7 +1,10 @@
 package dungeongame.src.model;
 
+import java.beans.PropertyChangeSupport;
 import java.io.Serial;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,12 +18,14 @@ final public class PlayerInventory implements java.io.Serializable {
     private static final long serialVersionUID = 87531815144L;
     private static PlayerInventory uniqueInstance;
 
-    Map<Item, Integer> myInventory;
+    private PropertyChangeSupport myPCS;
+    private Map<Item, Integer> myInventory;
 
     /**
      * Constructs an empty inventory that tracks the items the player has picked up and used.
      */
     private PlayerInventory() {
+        myPCS = new PropertyChangeSupport(this);
         myInventory = new HashMap<Item, Integer>();
     }
 
@@ -62,6 +67,8 @@ final public class PlayerInventory implements java.io.Serializable {
      */
     public void addItem(final Item theItem) {
         myInventory.put(theItem, myInventory.getOrDefault(theItem, 0) + 1);
+        myPCS.firePropertyChange("Item Added", null, myInventory);
+        checkforPillars();
     }
 
     /**
@@ -70,14 +77,30 @@ final public class PlayerInventory implements java.io.Serializable {
      * @param theItem the item to be deducted from the inventory.
      */
     public void useItem(final Item theItem) {
-        if (myInventory.containsKey(theItem)) {
+        if (myInventory.containsKey(theItem) && !(theItem instanceof Pillar)) {
             if (myInventory.get(theItem) > 1) {
                 myInventory.put(theItem, myInventory.get(theItem) - 1);
             } else if (myInventory.get(theItem) == 1) {
                 myInventory.remove(theItem);
             }
+            myPCS.firePropertyChange("Item Used", null, myInventory);
         } else {
-            throw new IllegalArgumentException("No item found");
+            throw new IllegalArgumentException("No item found / Can not use Item");
+        }
+    }
+
+    public void checkforPillars() {
+        List pillars = new ArrayList();
+        for (Map.Entry<Item, Integer> entry : myInventory.entrySet()) {
+            if (entry.getKey() instanceof Pillar) {
+                pillars.add(entry.getKey().getMyItemName());
+            }
+        }
+        if (pillars.contains("Encapsulation Pillar") &&
+                pillars.contains("Inheritance Pillar") &&
+                pillars.contains("Polymorphism Pillar") &&
+                pillars.contains("Abstraction Pillar")) {
+            Maze.getInstance().spawnExit();
         }
     }
 }

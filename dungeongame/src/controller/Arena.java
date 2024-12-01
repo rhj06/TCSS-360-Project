@@ -2,6 +2,8 @@ package dungeongame.src.controller;
 
 import dungeongame.src.model.*;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Random;
 
 /**
@@ -11,9 +13,11 @@ import java.util.Random;
  * @version 11/10/2024
  */
 public class Arena {
-    Player myPlayer;
-    AbstractMonster myMonster;
-    PlayerInventory myInventory;
+    private final PropertyChangeSupport myPCS = new PropertyChangeSupport(this);
+    private Player myPlayer;
+    private AbstractMonster myMonster;
+    private PlayerInventory myInventory;
+    private int myPlayerMove;
 
     /**
      * Constructor for the arena.
@@ -21,11 +25,20 @@ public class Arena {
      * @param thePlayer the player that will be fighting.
      * @param theMonster the monster that will be fighting.
      */
-    public Arena(final Player thePlayer, final AbstractMonster theMonster, final PlayerInventory theInventory) {
+    public Arena(final Player thePlayer, final AbstractMonster theMonster) {
         myPlayer = thePlayer;
         myMonster = theMonster;
-        myInventory = theInventory;
+        myInventory = PlayerInventory.getInstance();
+        myPlayerMove = -1;
+    }
 
+    /**
+     * Adds a PropertyChangeListener to listen for player input changes.
+     *
+     * @param listener the PropertyChangeListener.
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        myPCS.addPropertyChangeListener(listener);
     }
 
     /**
@@ -35,22 +48,33 @@ public class Arena {
         Random rand = new Random();
         boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).canAttack(myMonster.getSpeed());
         while(((AbstractDungeonCharacter)myPlayer).getHealth() != 0 || myMonster.getHealth() != 0){
-            int playerMove = 0;
             if(playerTurn){
                 //needs a listener to set playerMove
-                if(playerMove == 0){
+                // Wait for player input via PropertyChangeListener
+                while (myPlayerMove == -1) {
+                    try {
+                        wait(); // Wait until playerMove is updated.
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        throw new RuntimeException("Combat loop interrupted!", e);
+                    }
+                }
+
+
+                if(myPlayerMove == 0){
                     myMonster.setHealth(-((AbstractDungeonCharacter)myPlayer).getAttack());
-                } else if(playerMove == 1){
+                } else if(myPlayerMove == 1){
                     //Player inventory contains potions increase health
-                } else if(playerMove == 2){
+                } else if(myPlayerMove == 2){
                     if(myPlayer instanceof TargetedSpecial) {
                         ((TargetedSpecial)myPlayer).useTargetedSpecialAttack(myMonster);
                     } else {
                         ((AbstractDungeonCharacter)myPlayer).useSpecialAttack();
                     }
-                } else if(playerMove == 3){
+                } else if(myPlayerMove == 3){
                     myMonster.setHealth(-myMonster.getHealth());
                 }
+                myPlayerMove = -1;
 
             } else {
                 if(myMonster.canHeal()){
@@ -64,5 +88,16 @@ public class Arena {
             playerTurn = false;
 
         }
+    }
+
+    /**
+     * Updates the player's move and notifies the combat loop.
+     *
+     * @param move the player's chosen move.
+     */
+    public void setPlayerMove(int move) {
+        int oldMove = myPlayerMove;
+        myPlayerMove = move;
+        myPCS.firePropertyChange("playerMove", oldMove, move);
     }
 }
