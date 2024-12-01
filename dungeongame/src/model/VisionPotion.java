@@ -55,7 +55,7 @@ public class VisionPotion extends AbstractItem {
             // Check room contents
             if (room.getItem() != null) {
                 System.out.println("  Contains item: " + room.getItem().getMyItemName());
-            } else if (room.getContents() > 0) { // Assuming getContents > 0 indicates a monster
+            } else if (room.getMonster() != null) { // Assuming getContents > 0 indicates a monster
                 System.out.println("  Contains a monster.");
             } else {
                 System.out.println("  The room is empty.");

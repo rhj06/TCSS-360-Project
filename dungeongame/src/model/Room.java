@@ -15,7 +15,6 @@ public class Room implements Serializable {
     @Serial
     private static final long serialVersionUID = 65432135L;
 
-    private int myContents;
     private Point myCords;
     private Room myNorthNeighbor;
     private Room myEastNeighbor;
@@ -27,14 +26,11 @@ public class Room implements Serializable {
     private boolean myWestDoor;
     private AbstractMonster myMonster;
     private Item myItem;
-    private boolean myMonsterSlain;
-    private boolean myItemTaken;
 
     /**
      * Constructor for the room object.
      */
     Room() {
-        myContents = 0;
         myCords = null;
         myNorthNeighbor = null;
         myEastNeighbor = null;
@@ -46,8 +42,6 @@ public class Room implements Serializable {
         myWestDoor = false;
         myMonster = null;
         myItem = null;
-        myMonsterSlain = false;
-        myItemTaken = false;
     }
 
     /**
@@ -55,16 +49,6 @@ public class Room implements Serializable {
      */
     public Point getCords() {
         return myCords;
-    }
-
-    /**
-     * Returns the int representation of the contents of the room.
-     * 0 = empty
-     * 1 = item
-     * 2 = monster
-     */
-    public int getContents() {
-        return myContents;
     }
 
     /**
@@ -217,30 +201,6 @@ public class Room implements Serializable {
     }
 
     /**
-     * Returns true if the room contained a monster, but the monster was killed.
-     */
-    public boolean isMonsterSlain() {
-        return myMonsterSlain;
-    }
-
-    /**
-     * Returns true if the room contained an item, but the item was taken.
-     */
-    public boolean isItemTaken() {
-        return myItemTaken;
-    }
-
-    /**
-     * Sets the room contents to be the input integer.
-     * 0 = empty
-     * 1 = item
-     * 2 = monster
-     */
-    public void setContents(int theContents) {
-        myContents = theContents;
-    }
-
-    /**
      * Sets the monster of the room to be the inputted monster.
      */
     public void setMonster(AbstractMonster theMonster) {
@@ -252,20 +212,6 @@ public class Room implements Serializable {
      */
     public void setItem(Item theItem) {
         myItem = theItem;
-    }
-
-    /**
-     * Sets the slain status of the monster.
-     */
-    public void setMonsterSlain(boolean theMonsterSlainStatus) {
-        myMonsterSlain = theMonsterSlainStatus;
-    }
-
-    /**
-     * Sets the taken status of the item.
-     */
-    public void setItemTaken(boolean theItemTakenStatus) {
-        myItemTaken = theItemTakenStatus;
     }
 
     @Override
