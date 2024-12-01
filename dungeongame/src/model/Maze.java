@@ -250,6 +250,7 @@ final public class Maze implements Serializable {
         generateItems();
         generatePillars();
         generateMonsters();
+        spawnPlayerStart();
     }
 
     private void makeTraversable(){
@@ -449,6 +450,35 @@ final public class Maze implements Serializable {
             j = 0;
             myRooms[i][j].setWestDoor(true);
         }
+
+        System.out.println("Exit has been spawned.");
+    }
+
+    void spawnPlayerStart(){
+        Random random = new Random();
+        int i = 0;
+        int j = 0;
+        int side = random.nextInt(4);
+
+        if (side == 0) {
+            i = 0;
+            j = random.nextInt(mySize);
+        } else if (side == 1) {
+            i = random.nextInt(mySize);
+            j = mySize-1;
+        } else if (side == 2) {
+            i = mySize - 1;
+            j = random.nextInt(mySize);
+        } else if (side == 3) {
+            i = random.nextInt(mySize);
+            j = 0;
+        }
+
+        myPlayerCords.x = j;
+        myPlayerCords.y = i;
+
+        myRooms[i][j].setItem(null);
+        myRooms[i][j].setMonster(null);
 
         System.out.println("Exit has been spawned.");
     }

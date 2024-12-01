@@ -28,6 +28,7 @@ public class DirectionalButtons {
     public DirectionalButtons(RoomDescription theDescription) {
         myMazeTraverser = MazeTraverser.getInstance();
         roomDescription = theDescription;
+        myMazeTraverser.setRoomDescription(roomDescription);
     }
 
     /**
@@ -73,8 +74,6 @@ public class DirectionalButtons {
             case "north" -> myMazeTraverser.movePlayer(Directions.NORTH);
             case "south" -> myMazeTraverser.movePlayer(Directions.SOUTH);
         };
-
-        roomDescription.updateDescription();
 
     }
 }
