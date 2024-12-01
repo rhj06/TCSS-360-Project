@@ -1,5 +1,7 @@
 package dungeongame.src.view;
 
+import dungeongame.src.controller.MazeTraverser;
+import dungeongame.src.model.Directions;
 import dungeongame.src.model.Maze;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -13,7 +15,7 @@ import javafx.scene.layout.HBox;
 public class DirectionalButtons {
 
     /** The maze object containing the rooms and player state. */
-    private final Maze myMaze;
+    private final MazeTraverser myMazeTraverser;
 
     /** The room description object to update after movement. */
     private final RoomDescription roomDescription;
@@ -21,11 +23,10 @@ public class DirectionalButtons {
     /**
      * Constructs a DirectionalButtons instance for the specified maze and room description.
      *
-     * @param theMaze The maze to manage player movement.
      * @param theDescription The RoomDescription to update after movement.
      */
-    public DirectionalButtons(Maze theMaze, RoomDescription theDescription) {
-        myMaze = theMaze;
+    public DirectionalButtons(RoomDescription theDescription) {
+        myMazeTraverser = MazeTraverser.getInstance();
         roomDescription = theDescription;
     }
 
@@ -66,17 +67,14 @@ public class DirectionalButtons {
      * @param theDirection The direction to move ("west", "east", "north", "south").
      */
     private void movePlayer(String theDirection) {
-//        boolean moved = switch (theDirection) {
-//            case "west" -> myMaze.goWest();
-//            case "east" -> myMaze.goEast();
-//            case "north" -> myMaze.goNorth();
-//            case "south" -> myMaze.goSouth();
-//            default -> false;
-//        };
-//        if (moved) {
-//            roomDescription.updateDescription();
-//        } else {
-//            roomDescription.updateDescription("You can't move in that direction.");
-//        }
+        switch (theDirection) {
+            case "west" -> myMazeTraverser.movePlayer(Directions.WEST);
+            case "east" -> myMazeTraverser.movePlayer(Directions.EAST);
+            case "north" -> myMazeTraverser.movePlayer(Directions.NORTH);
+            case "south" -> myMazeTraverser.movePlayer(Directions.SOUTH);
+        };
+
+        roomDescription.updateDescription();
+
     }
 }

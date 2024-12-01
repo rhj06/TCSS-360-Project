@@ -52,7 +52,7 @@ public class GameScreen {
 
         // Add Bottom Pane with Directional Buttons and Map/Inventory
         MapAndInventory mapAndInventory = new MapAndInventory(myMaze);
-        DirectionalButtons directionalButtons = new DirectionalButtons(myMaze, roomDescription);
+        DirectionalButtons directionalButtons = new DirectionalButtons(roomDescription);
         mainLayout.setBottom(mapAndInventory.createBottomPane(directionalButtons));
 
         return new Scene(mainLayout, 800, 600);

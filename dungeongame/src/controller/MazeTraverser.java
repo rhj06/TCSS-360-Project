@@ -5,13 +5,26 @@ import dungeongame.src.model.*;
 import java.awt.*;
 
 public class MazeTraverser {
+    private static MazeTraverser uniqueInstance;
+
     private Maze myMaze;
     private Point myPlayerCords;
     private Player myPlayer;
 
-    public MazeTraverser(Player thePlayer){
+    private MazeTraverser(){
         myMaze = Maze.getInstance();
         myPlayerCords = myMaze.getPlayerCords();
+        myPlayer = null;
+    }
+
+    public static MazeTraverser getInstance(){
+        if(uniqueInstance == null){
+            uniqueInstance = new MazeTraverser();
+        }
+        return uniqueInstance;
+    }
+
+    public void setPlayer(Player thePlayer){
         myPlayer = thePlayer;
     }
 
