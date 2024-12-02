@@ -17,7 +17,7 @@ class PotionFactoryTest {
      */
     @Test
     void testCreateHealthPotion() {
-        AbstractItem potion = PotionFactory.createPotion(HealthPotion.class);
+        AbstractItem potion = PotionFactory.createPotion("health");
         assertNotNull(potion);
         assertInstanceOf(HealthPotion.class, potion);
         assertEquals("Health Potion", potion.getMyItemName());
@@ -33,7 +33,7 @@ class PotionFactoryTest {
      */
     @Test
     void testCreateSpeedPotion() {
-        AbstractItem potion = PotionFactory.createPotion(SpeedPotion.class);
+        AbstractItem potion = PotionFactory.createPotion("speed");
         assertNotNull(potion);
         assertInstanceOf(SpeedPotion.class, potion);
         assertEquals("Speed Potion", potion.getMyItemName());
@@ -49,7 +49,7 @@ class PotionFactoryTest {
      */
     @Test
     void testCreateVisionPotion() {
-        AbstractItem potion = PotionFactory.createPotion(VisionPotion.class);
+        AbstractItem potion = PotionFactory.createPotion("vision");
         assertNotNull(potion);
         assertInstanceOf(VisionPotion.class, potion);
         assertEquals("Vision Potion", potion.getMyItemName());
@@ -64,6 +64,6 @@ class PotionFactoryTest {
      */
     @Test
     void testCreatePotionWithUnknownType() {
-        assertThrows(IllegalArgumentException.class, () -> PotionFactory.createPotion(AbstractItem.class));
+        assertThrows(IllegalArgumentException.class, () -> PotionFactory.createPotion("unknown"));
     }
 }

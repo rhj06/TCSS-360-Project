@@ -1,25 +1,23 @@
 package dungeongame.src.model;
 
-/**
- *
- */
-public class PotionFactory {
+public final class PotionFactory {
 
     /**
-     * Creates a potion instance based on the specified potion class.
+     * Creates a potion instance based on the specified potion type.
      *
-     * @param thePotionClass The class of the potion to create (e.g., HealthPotion.class).
+     * @param thePotionType The type of the potion to create (e.g., "health", "speed", "vision").
      * @return A new instance of the specified potion type.
+     * @throws IllegalArgumentException If the potion type is invalid.
      */
-    public static AbstractItem createPotion(Class<? extends AbstractItem> thePotionClass) {
-        if (thePotionClass == HealthPotion.class) {
+    public static AbstractItem createPotion(final String thePotionType) {
+        if (thePotionType.equalsIgnoreCase("health")) {
             return new HealthPotion();
-        } else if (thePotionClass == SpeedPotion.class) {
+        } else if (thePotionType.equalsIgnoreCase("speed")) {
             return new SpeedPotion();
-        } else if (thePotionClass == VisionPotion.class) {
+        } else if (thePotionType.equalsIgnoreCase("vision")) {
             return new VisionPotion();
         } else {
-            throw new IllegalArgumentException("Unknown potion type: " + thePotionClass);
+            throw new IllegalArgumentException("Invalid potion type: " + thePotionType);
         }
     }
 }
