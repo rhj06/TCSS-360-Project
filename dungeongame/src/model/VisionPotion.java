@@ -62,5 +62,15 @@ public class VisionPotion extends AbstractItem {
             }
         }
     }
+
+    /**
+     * Returns a string representation of the Vision Potion.
+     *
+     * @return The name of the potion (e.g., "Vision Potion").
+     */
+    @Override
+    public String toString() {
+        return getMyItemName();
+    }
 }
 

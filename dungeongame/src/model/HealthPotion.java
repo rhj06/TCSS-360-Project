@@ -29,4 +29,14 @@ public class HealthPotion extends AbstractItem {
         int newHealth = theCharacter.getHealth() + getMyItemValue();
         theCharacter.setHealth(newHealth);
     }
+
+    /**
+     * Returns a string representation of the Health Potion.
+     *
+     * @return The name of the potion (e.g., "Health Potion").
+     */
+    @Override
+    public String toString() {
+        return getMyItemName();
+    }
 }

@@ -1,6 +1,7 @@
 package dungeongame.src.view;
 
 import dungeongame.src.model.Maze;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,71 +10,53 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import static javafx.scene.text.Font.loadFont;
-
-/**
- * The CharacterSelectScreen represents the character selection screen for the game.
- * It allows the player to choose from three characters.
- */
 public class CharacterSelectScreen {
 
-    private static final String THIEF_IMAGE_PATH = "file:ThiefSelectTile.jpg";
-    private static final String WARRIOR_IMAGE_PATH = "file:WarriorSelectTile.jpeg";
-    private static final String WIZARD_IMAGE_PATH = "file:WizardSelect.png";
     private static final String FONT_PATH = "file:.idea/resources/fonts/OldeEnglish.ttf";
+    private final RadioButtonHelper difficultyButtonHelper = new RadioButtonHelper();
 
-    /**
-     * Creates the character selection screen.
-     *
-     * @param thePrimaryStage The main application stage where the scene will be displayed.
-     * @return A Scene object for the character selection screen.
-     */
     public Scene createCharacterSelectScene(Stage thePrimaryStage) {
-        // Create the title label
-        Label titleLabel = new Label("Select Your Character");
-        titleLabel.setFont(loadFont(FONT_PATH, 50));
-        titleLabel.setStyle("-fx-text-fill: rgb(21,1,1); -fx-font-weight: bold;");
-        titleLabel.setPadding(new Insets(10, 0, 10, 0));
+        // Title Label
+        Label titleLabel = LabelHelper.createLabel("Select Your Character", FONT_PATH, 50, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
+        // Character Panels
         CharacterSelectPanel panelCreator = new CharacterSelectPanel();
-
-        VBox thiefPanel = panelCreator.createCharacterPanel(
-                THIEF_IMAGE_PATH,
-                "Thief",
-                () -> handleCharacterSelection("Thief", thePrimaryStage)
+        HBox characterLayout = new HBox(20,
+                panelCreator.createCharacterPanel("file:ThiefSelectTile.jpg", "Thief", () -> handleCharacterSelection(thePrimaryStage)),
+                panelCreator.createCharacterPanel("file:WarriorSelectTile.jpeg", "Warrior", () -> handleCharacterSelection(thePrimaryStage)),
+                panelCreator.createCharacterPanel("file:WizardSelect.png", "Wizard", () -> handleCharacterSelection(thePrimaryStage))
         );
-        VBox warriorPanel = panelCreator.createCharacterPanel(
-                WARRIOR_IMAGE_PATH,
-                "Warrior",
-                () -> handleCharacterSelection("Warrior", thePrimaryStage)
-        );
-        VBox wizardPanel = panelCreator.createCharacterPanel(
-                WIZARD_IMAGE_PATH,
-                "Wizard",
-                () -> handleCharacterSelection("Wizard", thePrimaryStage)
-        );
-
-        HBox characterLayout = new HBox(20, thiefPanel, warriorPanel, wizardPanel);
         characterLayout.setAlignment(Pos.CENTER);
-        characterLayout.setPadding(new Insets(20));
+        characterLayout.setPadding(new Insets(-10));
 
-        // Arrange the title and character panels in a vertical layout
-        VBox mainLayout = new VBox(20, titleLabel, characterLayout);
+        // Difficulty Selection
+        VBox difficultyLayout = createDifficultySection();
+
+        // Main Layout
+        VBox mainLayout = new VBox(15, titleLabel, characterLayout, difficultyLayout);
         mainLayout.setAlignment(Pos.CENTER);
-        mainLayout.setPadding(new Insets(20));
+        mainLayout.setPadding(new Insets(-20));
+        mainLayout.setStyle("-fx-background-color: rgb(44,37,37);");
 
         return new Scene(mainLayout, 800, 600);
     }
 
-    /**
-     * Handles the character selection process.
-     *
-     * @param theCharacterName The name of the selected character.
-     * @param thePrimaryStage  The main application stage.
-     */
-    private void handleCharacterSelection(String theCharacterName, Stage thePrimaryStage) {
+    private VBox createDifficultySection() {
+        Label difficultyLabel = LabelHelper.createLabel("Choose Your Difficulty", FONT_PATH, 30, "-fx-text-fill: rgb(120,18,4);");
+
+        HBox difficultyButtons = difficultyButtonHelper.createDifficultyButtons();
+
+        VBox difficultyLayout = new VBox(10, difficultyLabel, difficultyButtons);
+        difficultyLayout.setAlignment(Pos.CENTER);
+        difficultyLayout.setPadding(new Insets(-10, 0, 0, 0));
+
+        return difficultyLayout;
+    }
+
+    private void handleCharacterSelection(Stage thePrimaryStage) {
+        int mazeSize = difficultyButtonHelper.getSelectedMazeSize();
         Maze maze = Maze.getInstance();
-        maze.setMazeSize(10);
+        maze.setMazeSize(mazeSize);
         maze.generateMaze();
 
         GameScreen gameScreen = new GameScreen(thePrimaryStage, maze);

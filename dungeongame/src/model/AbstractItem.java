@@ -98,6 +98,15 @@ public abstract class AbstractItem implements Item, Serializable {
      */
     @Override
     public void useItem(Character theCharacter) {
+    }
 
+    /**
+     * Returns the item's name as its string representation.
+     *
+     * @return The name of the item.
+     */
+    @Override
+    public String toString() {
+        return myItemName;
     }
 }

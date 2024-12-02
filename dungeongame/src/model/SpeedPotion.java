@@ -22,11 +22,21 @@ public class SpeedPotion extends AbstractItem  {
      * Uses the Speed Potion, granting a temporary speed boost to the player.
      * This method is specific to the Speed Potion's behavior in the game.
      *
-     * @param theCharacter
+     * @param theCharacter who will receive the speed boost.
      */
     @Override
     public void useItem(Character theCharacter) {
         int newSpeed = theCharacter.getSpeed() + getMyItemValue();
         theCharacter.setSpeed(newSpeed);
     }
-}
+
+    /**
+     * Returns a string representation of the Speed Potion.
+     *
+     * @return The name of the potion (e.g., "Speed Potion").
+     */
+    @Override
+    public String toString() {
+        return getMyItemName();
+        }
+    }
