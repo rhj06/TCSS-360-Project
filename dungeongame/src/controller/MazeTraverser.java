@@ -1,6 +1,8 @@
 package dungeongame.src.controller;
 
 import dungeongame.src.model.*;
+import dungeongame.src.view.ArenaScene;
+import dungeongame.src.view.ArenaScreen;
 import dungeongame.src.view.RoomDescription;
 
 import java.awt.*;
@@ -82,6 +84,8 @@ public class MazeTraverser {
             AbstractMonster monster = myMaze.getRoomMonster(myPlayerCords.y, myPlayerCords.x);
             myRoomDescription.updateDescription(("You have encountered a monster: " + monster.toString()));
             Arena arena = new Arena(myPlayer, monster);
+            //ArenaScreen arenaScreen = new ArenaScreen(arena);
+            ArenaScene arenaScene = new ArenaScene(arena);
         }
 
     }

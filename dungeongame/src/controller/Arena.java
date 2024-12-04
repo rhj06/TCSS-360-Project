@@ -63,25 +63,31 @@ public class Arena {
 
                 if(myPlayerMove == 0){
                     myMonster.setHealth(-((AbstractDungeonCharacter)myPlayer).getAttack());
+                    System.out.println("Player Attacked");
                 } else if(myPlayerMove == 1){
                     //Player inventory contains potions increase health
+                    System.out.println("Player Used Potion");
                 } else if(myPlayerMove == 2){
                     if(myPlayer instanceof TargetedSpecial) {
                         ((TargetedSpecial)myPlayer).useTargetedSpecialAttack(myMonster);
                     } else {
                         ((AbstractDungeonCharacter)myPlayer).useSpecialAttack();
                     }
+                    System.out.println("Player Used Special");
                 } else if(myPlayerMove == 3){
                     myMonster.setHealth(-myMonster.getHealth());
+                    System.out.println("Player used debug command");
                 }
                 myPlayerMove = -1;
 
             } else {
                 if(myMonster.canHeal()){
                     myMonster.setHealth(myMonster.getMaxHealth()/10);
+                    System.out.println("Monster Healed");
                 }
 
                 ((AbstractDungeonCharacter)myPlayer).setHealth(-myMonster.getAttack());
+                System.out.println("Monster Attacked");
 
             }
 
