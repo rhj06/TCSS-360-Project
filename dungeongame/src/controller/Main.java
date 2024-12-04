@@ -8,19 +8,23 @@ import dungeongame.src.view.MainMenu;
 
 public class Main extends Application {
 
-    private MonsterDatabase monsterDatabase;
+    private MonsterDatabase myMonsterDatabase;
 
     @Override
     public void start(Stage primaryStage) {
+        // Initialize the main menu screen
         MainMenu mainMenu = new MainMenu();
-        Scene mainMenuScene = mainMenu.createMainMenuScene(primaryStage);
+        Scene mainMenuScene = mainMenu.createScene(primaryStage);
+
+        // Set up the stage
         primaryStage.setScene(mainMenuScene);
         primaryStage.setTitle("Dungeon Adventure");
         primaryStage.show();
 
+        // Initialize the monster database in a background thread
         new Thread(() -> {
-            monsterDatabase = new MonsterDatabase();
-            monsterDatabase.initializeDatabase();
+            myMonsterDatabase = new MonsterDatabase();
+            myMonsterDatabase.initializeDatabase();
         }).start();
     }
 

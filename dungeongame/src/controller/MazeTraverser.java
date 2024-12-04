@@ -3,6 +3,7 @@ package dungeongame.src.controller;
 import dungeongame.src.model.*;
 import dungeongame.src.view.ArenaScene;
 import dungeongame.src.view.ArenaScreen;
+import dungeongame.src.view.InventoryScreen;
 import dungeongame.src.view.RoomDescription;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ public class MazeTraverser {
     private Point myPlayerCords;
     private Player myPlayer;
     private RoomDescription myRoomDescription;
+    private InventoryScreen inventoryScreen;
 
     private MazeTraverser(){
         myMaze = Maze.getInstance();
@@ -36,6 +38,8 @@ public class MazeTraverser {
     public void setRoomDescription(RoomDescription theRoomDescription){
         myRoomDescription = theRoomDescription;
     }
+
+    public void setInventoryScreen(InventoryScreen theInventoryScreen){ inventoryScreen = theInventoryScreen; }
 
     public void movePlayer(Directions theDir){
         if(theDir == Directions.NORTH){
@@ -74,6 +78,10 @@ public class MazeTraverser {
 
         if(myMaze.roomHasItem(myPlayerCords.y, myPlayerCords.x)){
             Item item = myMaze.getRoomItem(myPlayerCords.y, myPlayerCords.x);
+
+            if (inventoryScreen != null) {
+                inventoryScreen.addPotion(item);
+            }
             PlayerInventory.getInstance().addItem(item);
             myRoomDescription.updateDescription((item.toString() + " has been added to the inventory"));
             System.out.println(item.toString() + " has been added to the inventory");

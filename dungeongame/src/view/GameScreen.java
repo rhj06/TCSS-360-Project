@@ -1,60 +1,61 @@
 package dungeongame.src.view;
 
+import dungeongame.src.controller.MazeTraverser;
+import dungeongame.src.model.AbstractDungeonCharacter;
 import dungeongame.src.model.Maze;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 /**
- * Represents the main game screen for the dungeon adventure game.
- * The game screen includes a menu bar, room description, directional movement buttons, and
- * map/inventory controls.
- *
+ * Represents the game screen displayed during gameplay.
+ * This screen includes a menu bar, room description,
+ * directional controls, and map/inventory views.
  */
-public class GameScreen {
-
-    /** The maze object representing the dungeon layout and player state. */
+public class GameScreen extends AbstractScreen {
     private final Maze myMaze;
-
-    /** The primary stage of the application where the game screen will be displayed. */
-    private final Stage myStage;
+    private final AbstractDungeonCharacter myCharacter;
+    private final InventoryScreen myInventoryScreen;
 
     /**
-     * Constructs a new GameScreen with the specified stage and maze.
+     * Constructs a new GameScreen instance.
      *
-     * @param theStage The primary stage of the application.
-     * @param theMaze The maze representing the dungeon layout and game state.
+     * @param theMaze      the maze instance representing the game environment
+     * @param theCharacter the character controlled by the player
      */
-    public GameScreen(Stage theStage, Maze theMaze) {
-        myStage = theStage;
+    public GameScreen(Maze theMaze, AbstractDungeonCharacter theCharacter) {
         myMaze = theMaze;
+        myCharacter = theCharacter;
+        myInventoryScreen = new InventoryScreen(theCharacter);
+
+        MazeTraverser theTraverser = MazeTraverser.getInstance();
+        theTraverser.setInventoryScreen(myInventoryScreen);
     }
 
     /**
-     * Creates and returns the main game scene.
-     * The scene includes:
-     * A menu bar for saving and quitting the game (top).
-     * A room description box displaying information about the current room (center).
-     * Directional movement buttons and map/inventory controls (bottom).
+     * Creates the game screen's scene, which includes layout elements like
+     * the menu bar, room description, directional controls, and inventory/map view.
      *
-     * @return The game scene ready to be displayed on the primary stage.
+     * @param theStage the primary stage where the scene will be displayed
+     * @return the constructed Scene for the game screen
      */
-    public Scene createGameScene() {
-        BorderPane mainLayout = new BorderPane();
+    @Override
+    public Scene createScene(Stage theStage) {
+        BorderPane myMainLayout = new BorderPane();
 
-        // Add Menu Bar (Top)
-        MenuBar menuBar = new MenuBar(myStage);
-        mainLayout.setTop(menuBar.createMenuBar());
+        MenuBar myMenuBar = new MenuBar(theStage);
+        myMainLayout.setTop(myMenuBar.createMenuBar());
 
-        // Add Room Description (Center)
-        RoomDescription roomDescription = new RoomDescription(myMaze);
-        mainLayout.setCenter(roomDescription.createDescriptionBox());
+        RoomDescription myRoomDescription = new RoomDescription(myMaze);
+        myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
 
-        // Add Bottom Pane with Directional Buttons and Map/Inventory
-        MapAndInventory mapAndInventory = new MapAndInventory(myMaze);
-        DirectionalButtons directionalButtons = new DirectionalButtons(roomDescription);
-        mainLayout.setBottom(mapAndInventory.createBottomPane(directionalButtons));
+        MazeTraverser theTraverser = MazeTraverser.getInstance();
+        theTraverser.setRoomDescription(myRoomDescription);
 
-        return new Scene(mainLayout, 800, 600);
+        MapAndInventory myMapAndInventory = new MapAndInventory(myMaze, myCharacter, myInventoryScreen);
+        DirectionalButtons myDirectionalButtons = new DirectionalButtons(myRoomDescription);
+        myMainLayout.setBottom(myMapAndInventory.createBottomPane(myDirectionalButtons));
+
+        return new Scene(myMainLayout, 800, 600);
     }
 }

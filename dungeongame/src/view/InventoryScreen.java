@@ -4,153 +4,183 @@ import dungeongame.src.model.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
- * Represents the inventory screen for the dungeon game.
- * This screen displays the player's potions and allows them to use potions directly from the UI.
- * The inventory dynamically updates when items are used or added.
- *
+ * Represents the inventory screen in the dungeon game.
+ * This screen allows players to view and use potions to modify their character's stats.
  */
-public class InventoryScreen {
+public class InventoryScreen extends AbstractScreen {
 
-    /** Local copy of the player's inventory, used for UI updates. */
-    private final Map<Class<? extends Item>, Integer> localInventory;
+    /** Factory for creating buttons with consistent styling. */
+    private final ButtonFactory myButtonFactory;
 
-    /** Button for interacting with health potions in the inventory. */
-    private Button healthPotionButton;
+    /** The character whose inventory is being displayed. */
+    private final AbstractDungeonCharacter myCharacter;
 
-    /** Button for interacting with speed potions in the inventory. */
-    private Button speedPotionButton;
+    /** Tracks the count of each type of potion in the inventory. */
+    private final Map<PotionType, Integer> myPotionCounts;
 
-    /** Button for interacting with vision potions in the inventory. */
-    private Button visionPotionButton;
+    /** Maps each potion type to its corresponding button in the inventory screen. */
+    private final Map<PotionType, Button> myPotionButtons;
 
     /**
-     * Constructs the inventory screen and initializes the local inventory.
-     * The local inventory is derived from the global PlayerInventory.
+     * Represents the different types of potions available in the game.
      */
-    public InventoryScreen() {
-        localInventory = initializeLocalInventory();
+    private enum PotionType {
+        HEALTH("Health Potion"),
+        SPEED("Speed Potion"),
+        VISION("Vision Potion");
+
+        private final String myDisplayName;
+
+        PotionType(String theDisplayName) {
+            myDisplayName = theDisplayName;
+        }
+
+        public String getDisplayName() {
+            return myDisplayName;
+        }
     }
 
     /**
-     * Displays the inventory screen in a new stage.
-     * The screen contains buttons to view and use health, speed, and vision potions.
+     * Constructs an InventoryScreen for the given character.
+     *
+     * @param theCharacter The character whose inventory will be displayed.
+     */
+    public InventoryScreen(AbstractDungeonCharacter theCharacter) {
+        myButtonFactory = new ButtonFactory(150);
+        myCharacter = theCharacter;
+
+        myPotionCounts = new HashMap<>();
+        myPotionCounts.put(PotionType.HEALTH, 0);
+        myPotionCounts.put(PotionType.SPEED, 0);
+        myPotionCounts.put(PotionType.VISION, 0);
+
+        myPotionButtons = new HashMap<>();
+    }
+
+    /**
+     * Creates and returns the scene for the inventory screen.
+     *
+     * @param theStage The stage where the scene will be displayed.
+     * @return The created Scene.
+     */
+    @Override
+    public Scene createScene(Stage theStage) {
+        VBox layout = new VBox(10);
+        layout.setAlignment(Pos.CENTER);
+
+        myPotionButtons.put(PotionType.HEALTH, createPotionButton(PotionType.HEALTH, this::useHealthPotion));
+        myPotionButtons.put(PotionType.SPEED, createPotionButton(PotionType.SPEED, this::useSpeedPotion));
+        myPotionButtons.put(PotionType.VISION, createPotionButton(PotionType.VISION, this::useVisionPotion));
+
+        updatePotionButtons();
+
+        layout.getChildren().addAll(
+                LabelHelper.createCenteredLabel("Inventory", "Arial", 20, "-fx-font-weight: bold;"),
+                myPotionButtons.get(PotionType.HEALTH),
+                myPotionButtons.get(PotionType.SPEED),
+                myPotionButtons.get(PotionType.VISION)
+        );
+
+        return new Scene(layout, 300, 400);
+    }
+
+    /**
+     * Displays the inventory screen in a new window.
      */
     public void display() {
         Stage inventoryStage = new Stage();
-        VBox inventoryLayout = new VBox(10);
-        inventoryLayout.setAlignment(Pos.CENTER);
-
-        Label inventoryLabel = new Label("Inventory");
-
-        // Buttons to display and interact with items
-        healthPotionButton = new Button();
-        speedPotionButton = new Button();
-        visionPotionButton = new Button();
-
-        // Update button text initially
-        updateButtonText(healthPotionButton, HealthPotion.class);
-        updateButtonText(speedPotionButton, SpeedPotion.class);
-        updateButtonText(visionPotionButton, VisionPotion.class);
-
-        // Set up button actions
-        healthPotionButton.setOnAction(e -> {
-            if (useItem(HealthPotion.class)) {
-                updateButtonText(healthPotionButton, HealthPotion.class);
-            }
-        });
-
-        speedPotionButton.setOnAction(e -> {
-            if (useItem(SpeedPotion.class)) {
-                updateButtonText(speedPotionButton, SpeedPotion.class);
-            }
-        });
-
-        visionPotionButton.setOnAction(e -> {
-            if (useItem(VisionPotion.class)) {
-                updateButtonText(visionPotionButton, VisionPotion.class);
-            }
-        });
-
-        inventoryLayout.getChildren().addAll(inventoryLabel, healthPotionButton, speedPotionButton, visionPotionButton);
-        Scene inventoryScene = new Scene(inventoryLayout, 300, 200);
-        inventoryStage.setScene(inventoryScene);
+        inventoryStage.setTitle("Player Inventory");
+        inventoryStage.setScene(createScene(inventoryStage));
         inventoryStage.show();
     }
 
     /**
-     * Initializes the local inventory by copying the global PlayerInventory.
+     * Creates a button for a specific potion type and action.
      *
-     * @return A map of item types to their quantities in the inventory.
+     * @param thePotionType The potion type for which the button is created.
+     * @param theAction     The action to execute when the button is clicked.
+     * @return The created Button.
      */
-    private Map<Class<? extends Item>, Integer> initializeLocalInventory() {
-        Map<Class<? extends Item>, Integer> inventory = new HashMap<>();
-        PlayerInventory globalInventory = PlayerInventory.getInstance();
-
-        for (Map.Entry<Item, Integer> entry : globalInventory.getInventory().entrySet()) {
-            inventory.put(entry.getKey().getClass(), entry.getValue());
-        }
-        return inventory;
+    private Button createPotionButton(PotionType thePotionType, Runnable theAction) {
+        Button button = myButtonFactory.createButton(thePotionType.getDisplayName(), theAction);
+        button.setDisable(true); // Start disabled until updated
+        return button;
     }
 
     /**
-     * Updates the text and state of a button to reflect the quantity of a given item in the inventory.
+     * Generic method to use a potion of a specific type.
      *
-     * @param theButton The button to update.
-     * @param theItemType The class of the item to display.
+     * @param thePotionType The potion type being used.
+     * @param theEffect     The effect to apply to the character when the potion is used.
      */
-    private void updateButtonText(Button theButton, Class<? extends Item> theItemType) {
-        int itemCount = localInventory.getOrDefault(theItemType, 0);
-        theButton.setText(theItemType.getSimpleName() + " x " + itemCount);
-        theButton.setDisable(itemCount == 0);
+    private void usePotion(PotionType thePotionType, Consumer<AbstractDungeonCharacter> theEffect) {
+        Integer count = myPotionCounts.get(thePotionType);
+        if (count != null && count > 0) {
+            myPotionCounts.put(thePotionType, count - 1);
+            theEffect.accept(myCharacter);
+            updatePotionButtons();
+            System.out.println("Used a " + thePotionType.getDisplayName() + ". Remaining: " + myPotionCounts.get(thePotionType));
+        }
     }
 
     /**
-     * Decrements the quantity of a given item in the inventory and returns whether the operation was successful.
-     *
-     * @param theItemType The class of the item to use.
-     * @return true if the item was successfully used; false otherwise.
+     * Uses a health potion to restore the character's health.
      */
-    private boolean useItem(Class<? extends Item> theItemType) {
-        if (localInventory.containsKey(theItemType) && localInventory.get(theItemType) > 0) {
-            localInventory.put(theItemType, localInventory.get(theItemType) - 1);
-            System.out.println("Used one " + theItemType.getSimpleName());
-            return true;
-        }
-        return false;
+    private void useHealthPotion() {
+        usePotion(PotionType.HEALTH, theCharacter -> theCharacter.setHealth(theCharacter.getHealth() + 20));
     }
 
     /**
-     * Adds a given item to the inventory, incrementing its quantity.
-     * If the inventory screen is open, the UI is updated to reflect the change.
-     *
-     * @param theItemType The class of the item to add.
+     * Uses a speed potion to increase the character's speed.
      */
-    public void addItem(Class<? extends Item> theItemType) {
-        localInventory.put(theItemType, localInventory.getOrDefault(theItemType, 0) + 1);
-        System.out.println("Added one " + theItemType.getSimpleName());
-        refreshButtons(); // Update buttons dynamically if the screen is open
+    private void useSpeedPotion() {
+        usePotion(PotionType.SPEED, theCharacter -> theCharacter.setSpeed(theCharacter.getSpeed() + 5));
     }
 
     /**
-     * Refreshes the buttons on the inventory screen to reflect the current inventory counts.
+     * Uses a vision potion to reveal rooms (logic can be implemented as needed).
      */
-    private void refreshButtons() {
-        if (healthPotionButton != null) {
-            updateButtonText(healthPotionButton, HealthPotion.class);
+    private void useVisionPotion() {
+        usePotion(PotionType.VISION, theCharacter -> {
+            System.out.println("Used Vision Potion");
+        });
+    }
+
+    /**
+     * Updates the state and text of all potion buttons based on inventory counts.
+     */
+    private void updatePotionButtons() {
+        for (PotionType type : PotionType.values()) {
+            Button button = myPotionButtons.get(type);
+            if (button != null) {
+                Integer count = myPotionCounts.get(type);
+                button.setDisable(count == null || count == 0);
+                button.setText(type.getDisplayName() + " (" + (count != null ? count : 0) + ")");
+            }
         }
-        if (speedPotionButton != null) {
-            updateButtonText(speedPotionButton, SpeedPotion.class);
+    }
+
+    /**
+     * Adds a potion to the inventory and updates the UI.
+     *
+     * @param thePotion The potion to add.
+     */
+    public void addPotion(Item thePotion) {
+        if (thePotion instanceof HealthPotion) {
+            myPotionCounts.merge(PotionType.HEALTH, 1, Integer::sum);
+        } else if (thePotion instanceof SpeedPotion) {
+            myPotionCounts.merge(PotionType.SPEED, 1, Integer::sum);
+        } else if (thePotion instanceof VisionPotion) {
+            myPotionCounts.merge(PotionType.VISION, 1, Integer::sum);
         }
-        if (visionPotionButton != null) {
-            updateButtonText(visionPotionButton, VisionPotion.class);
-        }
+        updatePotionButtons();
     }
 }
