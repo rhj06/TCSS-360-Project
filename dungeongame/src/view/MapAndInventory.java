@@ -72,7 +72,7 @@ public class MapAndInventory {
      */
     private void displayMap() {
         Stage myMapStage = new Stage();
-        myMapStage.setScene(new MapScreen(myMaze).createScene(myMapStage));
+        myMapStage.setScene(new MapScene(new BorderPane())); //new MapScreen(myMaze).createScene(myMapStage)
         myMapStage.show();
     }
 }

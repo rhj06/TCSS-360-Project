@@ -1,5 +1,6 @@
 package dungeongame.src.view;
 
+import dungeongame.src.model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

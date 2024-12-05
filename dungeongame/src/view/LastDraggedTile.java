@@ -1,5 +1,7 @@
 package dungeongame.src.view;
 
+import dungeongame.src.model.MapTile;
+
 /**
  * Object that contains an instance of the Tile last used in a Drag event
  */

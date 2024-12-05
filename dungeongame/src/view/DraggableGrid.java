@@ -1,5 +1,6 @@
 package dungeongame.src.view;
 
+import dungeongame.src.model.MapTile;
 import javafx.scene.layout.BorderPane;
 
 /**
