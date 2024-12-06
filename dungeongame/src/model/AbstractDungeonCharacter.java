@@ -128,16 +128,20 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @return
      */
     public int getSpeed() {
-        int speedRange = new Random().nextInt(myMaxSpeed-myMinSpeed);
+        if (myMaxSpeed <= myMinSpeed) {
+            return myMinSpeed;
+        }
+        int speedRange = new Random().nextInt(myMaxSpeed - myMinSpeed);
         return myMinSpeed + speedRange;
     }
 
     /**
      *
-     * @param theSpeed
+     * @param theSpeedBonus
      */
-    public void setSpeed(final int theSpeed) {
-
+    public void setSpeed(final int theSpeedBonus) {
+        myMinSpeed += theSpeedBonus;
+        myMaxSpeed += theSpeedBonus;
     }
 
     /**

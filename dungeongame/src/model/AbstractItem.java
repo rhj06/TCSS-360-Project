@@ -2,6 +2,7 @@ package dungeongame.src.model;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The AbstractItem class provides a common foundation for all items in the
@@ -108,5 +109,33 @@ public abstract class AbstractItem implements Item, Serializable {
     @Override
     public String toString() {
         return myItemName;
+    }
+
+    /**
+     * Checks whether this item is equal to another object. Two items are considered equal
+     * if they have the same name, description, value, and quantity.
+     *
+     * @param theObject The object to compare with.
+     * @return {@code true} if the object is equal to this item, {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object theObject) {
+        if (this == theObject) return true;
+        if (theObject == null || getClass() != theObject.getClass()) return false;
+        AbstractItem that = (AbstractItem) theObject;
+        return myItemValue == that.myItemValue &&
+                myItemQuantity == that.myItemQuantity &&
+                Objects.equals(myItemName, that.myItemName) &&
+                Objects.equals(myItemDescription, that.myItemDescription);
+    }
+
+    /**
+     * Computes the hash code for this item based on its name, description, value, and quantity.
+     *
+     * @return The hash code of this item.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(myItemName, myItemDescription, myItemValue, myItemQuantity);
     }
 }
