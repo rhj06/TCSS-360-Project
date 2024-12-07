@@ -26,8 +26,9 @@ public final class Thief extends AbstractDungeonCharacter implements Player {
      * @param theName
      */
     public Thief(final int theMaxHealth, final int theMinAttack, final int theMaxAttack,
-                  final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
-        super(theMaxHealth, theMinAttack, theMaxAttack, theMinSpeed, theMaxSpeed, theDefense, theName);
+                 final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
+        super(theMaxHealth, theMinAttack, theMaxAttack,  Math.min(theMinSpeed, theMaxSpeed), Math.max(theMinSpeed, theMaxSpeed),
+                theDefense, theName);
         myName = theName;
     }
 

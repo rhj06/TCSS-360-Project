@@ -7,7 +7,13 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
     /***/
     private static final int ATTACK_AND_DEFENSE_BONUS = 50;
     /***/
+    private int myAttackBonus = 0;
+    /***/
+    private int myDefenseBonus = 0;
+    /***/
     private final String myName;
+    /***/
+    private boolean myBonusActive = false;
 
     /**
      *
@@ -25,15 +31,34 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
         myName = theName;
     }
 
+    @Override
+    public int getAttack() {
+        int baseAttack = super.getAttack();
+        if (myBonusActive) {
+            myBonusActive = false; // Reset the bonus after one use
+            return baseAttack + ATTACK_AND_DEFENSE_BONUS;
+        }
+        return baseAttack;
+    }
+
+    @Override
+    public int getDefense() {
+        int baseDefense = super.getDefense();
+        if (myBonusActive) {
+            myBonusActive = false; // Reset the bonus after one use
+            return baseDefense + ATTACK_AND_DEFENSE_BONUS;
+        }
+        return baseDefense;
+    }
 
     /**
-     * Increase Attack and Speed by 50 units
+     * Increase Attack and Defense by 50 units
      */
     @Override
     public void useSpecialAttack() {
-        super.setAttack(ATTACK_AND_DEFENSE_BONUS);
-        super.setDefense(ATTACK_AND_DEFENSE_BONUS);
+        myBonusActive = true; // Activate the bonus for one turn
     }
+
 
     @Override
     public String toString() {
