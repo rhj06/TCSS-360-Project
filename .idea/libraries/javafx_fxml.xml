@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="javafx.fxml">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/javafx.fxml.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/libraries/javafx.fxml.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

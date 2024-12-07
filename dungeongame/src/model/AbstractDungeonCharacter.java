@@ -79,12 +79,17 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      */
     public void setHealth(final int theHealth) {
         if (theHealth > myMaxHealth) {
-
             myCurrHealth = myMaxHealth;
         } else {
             myCurrHealth = theHealth;
         }
         myPCS.firePropertyChange("Health Changed", null, myCurrHealth);
+    }
+
+    public void changeHealth(final int theHealthChange) {
+        int oldHealth = myCurrHealth;
+        myCurrHealth = myCurrHealth + theHealthChange;
+        myPCS.firePropertyChange("Health Changed", oldHealth, myCurrHealth);
     }
 
     /**

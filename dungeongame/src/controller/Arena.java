@@ -41,19 +41,34 @@ public class Arena {
         myPCS.addPropertyChangeListener(listener);
     }
 
+    public void startCombatLoop(){
+        new Thread(this::combat).start();
+    }
+
     /**
      * A combat loop that will continue until one of the entities is dead.
      */
     public void combat(){
-        Random rand = new Random();
-        boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).canAttack(myMonster.getSpeed());
-        while(((AbstractDungeonCharacter)myPlayer).getHealth() != 0 || myMonster.getHealth() != 0){
+        //Random rand = new Random();
+        System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
+                ((AbstractDungeonCharacter) myPlayer).getHealth(),
+                ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
+                myMonster.getHealth(),
+                myMonster.getMaxHealth()
+        );
+        boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).getSpeed() > myMonster.getSpeed();
+        while(((AbstractDungeonCharacter)myPlayer).getHealth() > 0 && myMonster.getHealth() > 0){
             if(playerTurn){
                 //needs a listener to set playerMove
                 // Wait for player input via PropertyChangeListener
                 while (myPlayerMove == -1) {
                     try {
-                        wait(); // Wait until playerMove is updated.
+                        synchronized (this){
+                            System.out.println("Waiting for playerMove.");
+                            wait(); // Wait until playerMove is updated.
+                            System.out.println("Resumed after wait.");
+                        }
+
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         throw new RuntimeException("Combat loop interrupted!", e);
@@ -62,7 +77,7 @@ public class Arena {
 
 
                 if(myPlayerMove == 0){
-                    myMonster.setHealth(-((AbstractDungeonCharacter)myPlayer).getAttack());
+                    myMonster.changeHealth(-((AbstractDungeonCharacter)myPlayer).getAttack());
                     System.out.println("Player Attacked");
                 } else if(myPlayerMove == 1){
                     //Player inventory contains potions increase health
@@ -75,35 +90,46 @@ public class Arena {
                     }
                     System.out.println("Player Used Special");
                 } else if(myPlayerMove == 3){
-                    myMonster.setHealth(-myMonster.getHealth());
+                    myMonster.changeHealth(-myMonster.getHealth());
                     System.out.println("Player used debug command");
                 }
                 myPlayerMove = -1;
+                playerTurn = false;
 
             } else {
                 if(myMonster.canHeal()){
-                    myMonster.setHealth(myMonster.getMaxHealth()/10);
+                    myMonster.changeHealth(myMonster.getMaxHealth()/10);
                     System.out.println("Monster Healed");
                 }
 
-                ((AbstractDungeonCharacter)myPlayer).setHealth(-myMonster.getAttack());
+                ((AbstractDungeonCharacter)myPlayer).changeHealth(-myMonster.getAttack());
                 System.out.println("Monster Attacked");
+
+                playerTurn = true;
 
             }
 
-            playerTurn = false;
-
+            System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
+                    ((AbstractDungeonCharacter) myPlayer).getHealth(),
+                    ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
+                    myMonster.getHealth(),
+                    myMonster.getMaxHealth()
+            );
         }
     }
 
     /**
      * Updates the player's move and notifies the combat loop.
      *
-     * @param move the player's chosen move.
+     * @param theMove the player's chosen move.
      */
-    public void setPlayerMove(int move) {
-        int oldMove = myPlayerMove;
-        myPlayerMove = move;
-        myPCS.firePropertyChange("playerMove", oldMove, move);
+    public synchronized void setPlayerMove(int theMove) {
+        myPlayerMove = theMove;
+        notifyAll();
+        System.out.println("Player Combat move set to " + theMove);
+
+        //        int oldMove = myPlayerMove;
+//        myPlayerMove = move;
+//        myPCS.firePropertyChange("playerMove", oldMove, move);
     }
 }

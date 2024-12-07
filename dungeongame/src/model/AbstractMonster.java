@@ -1,6 +1,7 @@
 package dungeongame.src.model;
 
 public abstract class AbstractMonster extends AbstractDungeonCharacter {
+    private int mySpeed;
 
     /***/
     private final double myItemDropRate;
@@ -12,7 +13,13 @@ public abstract class AbstractMonster extends AbstractDungeonCharacter {
                            final int theDefense, final double theItemDropRate, final String theName) {
         super(theMaxHealth, theMinAttack, theMaxAttack, theSpeed, theSpeed, theDefense, theName);
         myItemDropRate = theItemDropRate;
+        mySpeed = theSpeed;
 
+    }
+
+    @Override
+    public int getSpeed(){
+        return mySpeed;
     }
 
     public double getItemDropRate() {

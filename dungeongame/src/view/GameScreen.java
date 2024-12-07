@@ -3,6 +3,7 @@ package dungeongame.src.view;
 import dungeongame.src.controller.MazeTraverser;
 import dungeongame.src.model.AbstractDungeonCharacter;
 import dungeongame.src.model.Maze;
+import dungeongame.src.model.Player;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -29,6 +30,7 @@ public class GameScreen extends AbstractScreen {
         myInventoryScreen = new InventoryScreen(theCharacter);
 
         MazeTraverser theTraverser = MazeTraverser.getInstance();
+        theTraverser.setPlayer(((Player) myCharacter));
         theTraverser.setInventoryScreen(myInventoryScreen);
     }
 

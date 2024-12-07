@@ -88,14 +88,20 @@ public class MazeTraverser {
             myMaze.setRoomItem(myPlayerCords.y, myPlayerCords.x, null);
         }
 
-        if(myMaze.roomHasMonster(myPlayerCords.y, myPlayerCords.x)){
+        if (myMaze.roomHasMonster(myPlayerCords.y, myPlayerCords.x)) {
             AbstractMonster monster = myMaze.getRoomMonster(myPlayerCords.y, myPlayerCords.x);
-            myRoomDescription.updateDescription(("You have encountered a monster: " + monster.toString()));
+            myRoomDescription.updateDescription("You have encountered a monster: " + monster);
             Arena arena = new Arena(myPlayer, monster);
-            //ArenaScreen arenaScreen = new ArenaScreen(arena);
-            ArenaScene arenaScene = new ArenaScene(arena);
+            new ArenaScreen(myPlayer, monster, arena);// Automatically sets up and shows the window
+            //arena.combat();
         }
 
+        System.out.println("Items");
+        myMaze.printMaze();
+        System.out.println("Player");
+        myMaze.printPlayerCordMaze();
+        System.out.println("Monsters");
+        myMaze.printMonsterMaze();
     }
 
 }
