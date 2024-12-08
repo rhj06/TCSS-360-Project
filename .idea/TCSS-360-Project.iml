@@ -10,10 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="xerial.sqlite.jdbc" level="project" />
     <orderEntry type="library" exported="" name="sqlite-jdbc-3.34.0" level="project" />
-    <orderEntry type="library" exported="" name="javafx.base" level="project" />
-    <orderEntry type="library" exported="" name="javafx.controls" level="project" />
-    <orderEntry type="library" exported="" name="javafx.fxml" level="project" />
-    <orderEntry type="library" exported="" name="javafx.graphics" level="project" />
     <orderEntry type="module-library" exported="">
       <library name="JUnit5.8.1">
         <CLASSES>
@@ -47,5 +43,9 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="lib" level="application" />
+    <orderEntry type="library" exported="" name="javafx.base" level="project" />
+    <orderEntry type="library" exported="" name="javafx.controls" level="project" />
+    <orderEntry type="library" exported="" name="javafx.fxml" level="project" />
+    <orderEntry type="library" exported="" name="javafx.graphics" level="project" />
   </component>
 </module>

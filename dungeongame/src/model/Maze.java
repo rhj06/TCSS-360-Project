@@ -185,23 +185,23 @@ final public class Maze implements Serializable {
         Room[] rooms = new Room[8]; // Default initialized to null
 
         if (room.getNorthNeighbor() != null) {
-            rooms[0] = room.getNorthNeighbor();
+            rooms[1] = room.getNorthNeighbor();
 
             if (room.getNorthNeighbor().getEastNeighbor() != null) {
-                rooms[1] = room.getNorthNeighbor().getEastNeighbor();
+                rooms[2] = room.getNorthNeighbor().getEastNeighbor();
             }
         }
 
         if (room.getEastNeighbor() != null) {
-            rooms[2] = room.getEastNeighbor();
+            rooms[4] = room.getEastNeighbor();
 
             if (room.getEastNeighbor().getSouthNeighbor() != null) {
-                rooms[3] = room.getEastNeighbor().getSouthNeighbor();
+                rooms[7] = room.getEastNeighbor().getSouthNeighbor();
             }
         }
 
         if (room.getSouthNeighbor() != null) {
-            rooms[4] = room.getSouthNeighbor();
+            rooms[6] = room.getSouthNeighbor();
 
             if (room.getSouthNeighbor().getWestNeighbor() != null) {
                 rooms[5] = room.getSouthNeighbor().getWestNeighbor();
@@ -209,10 +209,10 @@ final public class Maze implements Serializable {
         }
 
         if (room.getWestNeighbor() != null) {
-            rooms[6] = room.getWestNeighbor();
+            rooms[3] = room.getWestNeighbor();
 
             if (room.getWestNeighbor().getNorthNeighbor() != null) {
-                rooms[7] = room.getWestNeighbor().getNorthNeighbor();
+                rooms[0] = room.getWestNeighbor().getNorthNeighbor();
             }
         }
 
@@ -480,7 +480,7 @@ final public class Maze implements Serializable {
             j = random.nextInt(mySize);
         } else if (side == 1) {
             i = random.nextInt(mySize);
-            j = mySize-1;
+            j = mySize - 1;
         } else if (side == 2) {
             i = mySize - 1;
             j = random.nextInt(mySize);
