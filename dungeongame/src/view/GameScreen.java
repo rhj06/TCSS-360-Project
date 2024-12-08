@@ -44,11 +44,14 @@ public class GameScreen extends AbstractScreen {
     @Override
     public Scene createScene(Stage theStage) {
         BorderPane myMainLayout = new BorderPane();
+        BorderPane mazeLayout = new MazeBorderPane(300,300);
 
         MenuBar myMenuBar = new MenuBar(theStage);
         myMainLayout.setTop(myMenuBar.createMenuBar());
 
         RoomDescription myRoomDescription = new RoomDescription(myMaze);
+
+//        myMainLayout.setCenter(mazeLayout);
         myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
 
         MazeTraverser theTraverser = MazeTraverser.getInstance();
