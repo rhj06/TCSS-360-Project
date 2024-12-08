@@ -25,7 +25,7 @@ public class MapBorderPane extends BorderPane {
     /**Instance of a Draggable Grid*/
     private DraggableGrid draggableGridBase;
     /**List of MapTiles*/
-    private final List<MapTile> myTiles;
+    private final MapTileList myTiles;
     /**BorderPane Width and Height*/
     private final double myWidth, myHeight;
     /**LastDraggedTile object*/
@@ -40,7 +40,7 @@ public class MapBorderPane extends BorderPane {
         super();
         myWidth = theWidth;
         myHeight = theHeight;
-        myTiles = new ArrayList<>();
+        myTiles = MapTileList.getInstance();
         myLastDraggedTile = new LastDraggedTile(null);
         defaultLayout();
     }
