@@ -37,65 +37,82 @@ public class MazeBorderPane extends BorderPane {
     private void defaultLayout() {
         GridHandler backgroundGridHandler = new GridHandler(myWidth, myHeight, GRID_SIZE, this);
         backgroundGridHandler.createGrid();
-
-        MapTile[] tiles = new MapTile[SIZE_OF_THREE * SIZE_OF_THREE];
-        for (int i = 0; i < SIZE_OF_THREE * SIZE_OF_THREE; i++) {
-            if (i == 4) {
-                tiles[i] = createTile(myMaze.getRooms()[myMaze.getPlayerCords().y][myMaze.getPlayerCords().x]);
-            } else {
-                tiles[i] = createTile(myRoom[i]);
+        int count = 0;
+        for (int i = 0; i < SIZE_OF_THREE; i++) {
+            for (int j = 0; j < SIZE_OF_THREE; j++) {
+                if (i == 1 && j == 1) {
+                    myTiles[i][j] = createTile(j, i, myMaze.getRooms()[myMaze.getPlayerCords().y][myMaze.getPlayerCords().x]);
+                    myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
+                    this.getChildren().add(myTiles[i][j]);
+                } else {
+                    myTiles[i][j] = createTile(j, i, myRoom[count]);
+                    myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
+                    this.getChildren().add(myTiles[i][j]);
+                }
             }
         }
-
-        for (MapTile tile : tiles) {
-            tile.setFill(new ImagePattern(new Image("file:maze_tile_images/" + tile.getImageFileName())));
-        }
+        
     }
 
     private int typeOfTile(final Room theCurrentRoom) {
         int numOfDoors = 0;
-        if (theCurrentRoom.isNorthDoor()) {
-            numOfDoors++;
-        }
-        if (theCurrentRoom.isSouthDoor()) {
-            numOfDoors++;
-        }
-        if (theCurrentRoom.isEastDoor()) {
-            numOfDoors++;
-        }
-        if (theCurrentRoom.isWestDoor()) {
-            numOfDoors++;
+        if (theCurrentRoom != null) {
+            if (theCurrentRoom.isNorthDoor()) {
+                numOfDoors++;
+            }
+            if (theCurrentRoom.isSouthDoor()) {
+                numOfDoors++;
+            }
+            if (theCurrentRoom.isEastDoor()) {
+                numOfDoors++;
+            }
+            if (theCurrentRoom.isWestDoor()) {
+                numOfDoors++;
+            }
         }
         return numOfDoors;
     }
 
-    private MapTile createTile(Room theCurrentRoom) {
-        MapTile tile;
+    private MapTile createTile(final int theJ, final int theI, Room theCurrentRoom) {
+        MapTile tile = null;
         if (typeOfTile(theCurrentRoom) == 1) {
             tile = rotateOneWayTile(theCurrentRoom, new One_Way_Tile(
-                    (int) theCurrentRoom.getCords().getX() * GRID_SIZE,
-                    (int) theCurrentRoom.getCords().getY() * GRID_SIZE));
+                    theJ * GRID_SIZE,
+                    theI * GRID_SIZE,
+                    GRID_SIZE,
+                    GRID_SIZE));
         } else if (typeOfTile(theCurrentRoom) == 2) {
             if ((theCurrentRoom.isNorthDoor() && theCurrentRoom.isSouthDoor()) || (theCurrentRoom.isEastDoor() && theCurrentRoom.isWestDoor())) {
                 tile = rotateTwoWayAcrossTile(theCurrentRoom, new Two_Way_Tile_Across(
-                        (int) theCurrentRoom.getCords().getX() * GRID_SIZE,
-                        (int) theCurrentRoom.getCords().getY() * GRID_SIZE));
+                        theJ * GRID_SIZE,
+                        theI * GRID_SIZE,
+                        GRID_SIZE,
+                        GRID_SIZE));
             } else {
                 tile = rotateTwoWayAdjacentTile(theCurrentRoom, new Two_Way_Tile_Adjacent(
-                        (int) theCurrentRoom.getCords().getX() * GRID_SIZE,
-                        (int) theCurrentRoom.getCords().getY() * GRID_SIZE));
+                        theJ * GRID_SIZE,
+                        theI * GRID_SIZE,
+                        GRID_SIZE,
+                        GRID_SIZE));
             }
         } else if (typeOfTile(theCurrentRoom) == 3) {
             tile = rotateThreeWayTile(theCurrentRoom, new Three_Way_Tile(
-                    (int) theCurrentRoom.getCords().getX() * GRID_SIZE,
-                    (int) theCurrentRoom.getCords().getY() * GRID_SIZE));
+                    theJ * GRID_SIZE,
+                    theI * GRID_SIZE,
+                    GRID_SIZE,
+                    GRID_SIZE));
         } else if (typeOfTile(theCurrentRoom) == 4) {
             tile = new Four_Way_Tile(
-                    (int) theCurrentRoom.getCords().getX() * GRID_SIZE,
-                    (int) theCurrentRoom.getCords().getY() * GRID_SIZE);
-        } else {
-            tile = new MapTile((int) theCurrentRoom.getCords().getX() * GRID_SIZE,
-                    (int) theCurrentRoom.getCords().getY() * GRID_SIZE);
+                    theJ * GRID_SIZE,
+                    theI * GRID_SIZE,
+                    GRID_SIZE,
+                    GRID_SIZE);
+        } else if (theCurrentRoom == null) {
+            tile = new MapTile(
+                    theJ * GRID_SIZE,
+                    theI * GRID_SIZE,
+                    GRID_SIZE,
+                    GRID_SIZE);
         }
 
         return tile;

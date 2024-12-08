@@ -51,8 +51,8 @@ public class GameScreen extends AbstractScreen {
 
         RoomDescription myRoomDescription = new RoomDescription(myMaze);
 
-//        myMainLayout.setCenter(mazeLayout);
-        myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
+        myMainLayout.setCenter(mazeLayout);
+//        myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
 
         MazeTraverser theTraverser = MazeTraverser.getInstance();
         theTraverser.setRoomDescription(myRoomDescription);

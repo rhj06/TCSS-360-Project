@@ -7,8 +7,8 @@ public final class Three_Way_Tile extends MapTile {
      * @param theXCoor the X coordinate
      * @param theYCoor the Y coordinate
      */
-    public Three_Way_Tile(int theXCoor, int theYCoor) {
-        super(theXCoor, theYCoor);
+    public Three_Way_Tile(final int theXCoor, final int theYCoor, final int theWidth, final int theHeight) {
+        super(theXCoor, theYCoor, theWidth, theHeight);
     }
 
     /**

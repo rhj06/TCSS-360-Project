@@ -180,32 +180,40 @@ final public class Maze implements Serializable {
         }
     }
 
-    public Room[] getNeighborsClockwise(int theI, int theJ){
+    public Room[] getNeighborsClockwise(int theI, int theJ) {
         Room room = myRooms[theI][theJ];
-        Room[] rooms = new Room[8];
-        if (room.getNorthNeighbor() != null){
+        Room[] rooms = new Room[8]; // Default initialized to null
+
+        if (room.getNorthNeighbor() != null) {
             rooms[0] = room.getNorthNeighbor();
+
+            if (room.getNorthNeighbor().getEastNeighbor() != null) {
+                rooms[1] = room.getNorthNeighbor().getEastNeighbor();
+            }
         }
-        if (room.getNorthNeighbor().getEastNeighbor() != null){
-            rooms[1] = room.getNorthNeighbor().getEastNeighbor();
-        }
-        if (room.getEastNeighbor() != null){
+
+        if (room.getEastNeighbor() != null) {
             rooms[2] = room.getEastNeighbor();
+
+            if (room.getEastNeighbor().getSouthNeighbor() != null) {
+                rooms[3] = room.getEastNeighbor().getSouthNeighbor();
+            }
         }
-        if (room.getEastNeighbor().getSouthNeighbor() != null){
-            rooms[3] = room.getEastNeighbor().getSouthNeighbor();
-        }
-        if (room.getSouthNeighbor() != null){
+
+        if (room.getSouthNeighbor() != null) {
             rooms[4] = room.getSouthNeighbor();
+
+            if (room.getSouthNeighbor().getWestNeighbor() != null) {
+                rooms[5] = room.getSouthNeighbor().getWestNeighbor();
+            }
         }
-        if (room.getSouthNeighbor().getWestNeighbor() != null){
-            rooms[5] = room.getSouthNeighbor().getWestNeighbor();
-        }
-        if (room.getWestNeighbor() != null){
+
+        if (room.getWestNeighbor() != null) {
             rooms[6] = room.getWestNeighbor();
-        }
-        if (room.getWestNeighbor().getNorthNeighbor() != null){
-            rooms[7] = room.getWestNeighbor().getNorthNeighbor();
+
+            if (room.getWestNeighbor().getNorthNeighbor() != null) {
+                rooms[7] = room.getWestNeighbor().getNorthNeighbor();
+            }
         }
 
         return rooms;
@@ -480,7 +488,6 @@ final public class Maze implements Serializable {
             i = random.nextInt(mySize);
             j = 0;
         }
-
         myPlayerCords.x = j;
         myPlayerCords.y = i;
 

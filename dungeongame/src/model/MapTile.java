@@ -8,7 +8,6 @@ import javafx.scene.shape.Rectangle;
 public class MapTile extends Rectangle {
 
     /**Constant Default size of Tile*/
-    private static final int DEFAULT_SIZE = 50;
     /**Constant Degree of Rotation*/
     private static final int DEGREE_OF_ROTATION = 90;
     /**X position*/
@@ -21,8 +20,8 @@ public class MapTile extends Rectangle {
      * @param theXCoor
      * @param theYCoor
      */
-    public MapTile(int theXCoor, int theYCoor) {
-        super(theXCoor, theYCoor, DEFAULT_SIZE, DEFAULT_SIZE);
+    public MapTile(final int theXCoor, final int theYCoor, final int theWidth, final int theHeight) {
+        super(theXCoor, theYCoor, theWidth, theHeight);
         myPositionX = theXCoor;
         myPositionY = theYCoor;
     }

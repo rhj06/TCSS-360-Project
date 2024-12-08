@@ -122,11 +122,11 @@ public class MapBorderPane extends BorderPane {
      */
     private MapTile createTile(final String theTileName) {
         return switch (theTileName) {
-            case "One Way" -> new One_Way_Tile(0, 0);
-            case "Two Way Adjacent" -> new Two_Way_Tile_Adjacent(0, 0);
-            case "Two Way Across" -> new Two_Way_Tile_Across(0, 0);
-            case "Three Way" -> new Three_Way_Tile(0, 0);
-            default -> new Four_Way_Tile(0, 0);
+            case "One Way" -> new One_Way_Tile(0, 0, GRID_SIZE, GRID_SIZE);
+            case "Two Way Adjacent" -> new Two_Way_Tile_Adjacent(0, 0, GRID_SIZE, GRID_SIZE);
+            case "Two Way Across" -> new Two_Way_Tile_Across(0, 0, GRID_SIZE, GRID_SIZE);
+            case "Three Way" -> new Three_Way_Tile(0, 0, GRID_SIZE, GRID_SIZE);
+            default -> new Four_Way_Tile(0, 0, GRID_SIZE, GRID_SIZE);
         };
     }
 
