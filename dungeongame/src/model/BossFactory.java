@@ -18,7 +18,7 @@ public class BossFactory {
         Random rand = new Random();
 
         if(theString.equals("mini_boss")){
-            boss = new Boss(150, 15, 25, 7, 10, .5,
+            boss = new Boss(150, 15, 25, 7, 10, .99,
                     NAMES[rand.nextInt(NAMES.length)], MINI_BOSS_TYPE);
         } else if(theString.equals("final_boss")){
             boss = new Boss(200, 20, 35, 10, 15, .00001,

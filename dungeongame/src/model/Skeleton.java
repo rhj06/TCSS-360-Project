@@ -15,16 +15,16 @@ public final class Skeleton extends AbstractMonster{
         myName = theName;
     }
 
-    public String getRandomItem() {
+    public Item getRandomItem() {
         final double randomNumber = Math.random() * 10;
-        String item = "none";
+        Item item = null;
         if (randomNumber > 1.99) {
             if (randomNumber < 4.01) {
-                item = "health";
+                item = new HealthPotion();
             } else if(randomNumber < 6.01) {
-                item = "speed";
+                item = new SpeedPotion();
             } else {
-                item = "vision";
+                item = new VisionPotion();
             }
         }
         return item;

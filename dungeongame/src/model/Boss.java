@@ -13,19 +13,9 @@ public class Boss extends AbstractMonster {
         myType = theType;
     }
 
-    public String getRandomItem() {
-        final double randomNumber = Math.random() * 10;
-        String item = "none";
-        if (randomNumber > 1.99) {
-            if (randomNumber < 4.01) {
-                item = "health";
-            } else if(randomNumber < 6.01) {
-                item = "speed";
-            } else {
-                item = "vision";
-            }
-        }
-        return item;
+    @Override
+    public Item getRandomItem() {
+        return new HealthPotion();
     }
 
 

@@ -106,6 +106,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         }
 
         Platform.runLater(() -> myCurHealthProperty.set(myCurrHealth));
+
     }
 
     /**

@@ -15,16 +15,17 @@ public final class Goblin extends AbstractMonster{
         myName = theName;
     }
 
-    public String getRandomItem() {
+    @Override
+    public Item getRandomItem() {
         final double randomNumber = Math.random() * 10;
-        String item = "none";
+        Item item = null;
         if (randomNumber > 1.99) {
             if (randomNumber < 5.01) {
-                item = "vision";
+                item = new VisionPotion();
             } else if(randomNumber < 7.01) {
-                item = "speed";
+                item = new SpeedPotion();
             } else {
-                item = "health";
+                item = new HealthPotion();
             }
         }
         return item;

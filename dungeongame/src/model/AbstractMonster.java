@@ -1,5 +1,7 @@
 package dungeongame.src.model;
 
+import javafx.application.Platform;
+
 public abstract class AbstractMonster extends AbstractDungeonCharacter {
     private int mySpeed;
 
@@ -20,6 +22,11 @@ public abstract class AbstractMonster extends AbstractDungeonCharacter {
     @Override
     public int getSpeed(){
         return mySpeed;
+    }
+
+
+    public Item getRandomItem() {
+        return null;
     }
 
     public double getItemDropRate() {

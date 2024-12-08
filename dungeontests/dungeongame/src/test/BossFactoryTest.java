@@ -1,8 +1,6 @@
 package dungeongame.src.test;
 
-import dungeongame.src.model.AbstractMonster;
-import dungeongame.src.model.Boss;
-import dungeongame.src.model.BossFactory;
+import dungeongame.src.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -128,9 +126,8 @@ class BossFactoryTest {
         AbstractMonster boss = myBossFactory.createBoss("Final Boss");
         assertNotNull(boss);
 
-        String randomItem = ((Boss) boss).getRandomItem();
-        assertTrue(randomItem.equals("none") || randomItem.equals("health")
-                || randomItem.equals("speed") || randomItem.equals("vision"));
+        Item randomItem = ((Boss) boss).getRandomItem();
+        assertTrue(randomItem.equals(new HealthPotion()));
 
         System.out.println(randomItem);
     }

@@ -13,7 +13,6 @@ import java.util.Random;
  * @version 11/10/2024
  */
 public class Arena {
-    private final PropertyChangeSupport myPCS = new PropertyChangeSupport(this);
     private Player myPlayer;
     private AbstractMonster myMonster;
     private PlayerInventory myInventory;
@@ -30,15 +29,6 @@ public class Arena {
         myMonster = theMonster;
         myInventory = PlayerInventory.getInstance();
         myPlayerMove = -1;
-    }
-
-    /**
-     * Adds a PropertyChangeListener to listen for player input changes.
-     *
-     * @param listener the PropertyChangeListener.
-     */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        myPCS.addPropertyChangeListener(listener);
     }
 
     public void startCombatLoop(){
@@ -83,6 +73,7 @@ public class Arena {
                     System.out.println("Player Attacked");
                 } else if(myPlayerMove == 1){
                     //Player inventory contains potions increase health
+                    myInventory.useItem(new HealthPotion());
                     System.out.println("Player Used Potion");
                 } else if(myPlayerMove == 2){
                     if(myPlayer instanceof TargetedSpecial) {
@@ -98,7 +89,7 @@ public class Arena {
                 myPlayerMove = -1;
                 playerTurn = false;
 
-            } else {
+            } else if (myMonster.getHealth() > 0){
                 if(myMonster.canHeal()){
                     myMonster.changeHealth(myMonster.getMaxHealth()/10);
                     System.out.println("Monster Healed");
@@ -119,6 +110,12 @@ public class Arena {
             int playerI = Maze.getInstance().getPlayerCords().y;
             int playerJ = Maze.getInstance().getPlayerCords().x;
             Maze.getInstance().setRoomMonster(playerI, playerJ, null);
+
+            if(Math.random() < myMonster.getItemDropRate()){
+                System.out.println(myMonster.toString() + " dropped an item.");
+                Item item = myMonster.getRandomItem();
+                myInventory.addItem(item);
+            }
         } else {
             System.out.println("Game Over");
         }
@@ -135,8 +132,5 @@ public class Arena {
         notifyAll();
         System.out.println("Player Combat move set to " + theMove);
 
-        //        int oldMove = myPlayerMove;
-//        myPlayerMove = move;
-//        myPCS.firePropertyChange("playerMove", oldMove, move);
     }
 }

@@ -15,16 +15,17 @@ public final class Slime extends AbstractMonster{
         myName = theName;
     }
 
-    public String getRandomItem() {
+    @Override
+    public Item getRandomItem() {
         final double randomNumber = Math.random() * 10;
-        String item = "none";
+        Item item = null;
         if (randomNumber > 1.99) {
             if (randomNumber < 4.01) {
-                item = "speed";
+                item = new SpeedPotion();
             } else if(randomNumber < 6.01) {
-                item = "vision";
+                item = new VisionPotion();
             } else {
-                item = "health";
+                item = new HealthPotion();
             }
         }
         return item;
