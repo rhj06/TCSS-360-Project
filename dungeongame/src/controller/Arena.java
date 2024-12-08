@@ -87,10 +87,11 @@ public class Arena {
                     }
                 }
 
-                if(myPlayerMove == 0){
-                    myMonster.changeHealth(-((AbstractDungeonCharacter)myPlayer).getAttack());
+                if(myPlayerMove == 0) {
+                    int attack = ((AbstractDungeonCharacter)myPlayer).getAttack();
+                    myMonster.changeHealth(-attack);
                     System.out.println("Player Attacked");
-                    notifyMessage(myPlayer.toString() + " use a basic attacked.");
+                    notifyMessage(myPlayer.toString() + " use a basic attacked for " + attack + " damage.");
 
                 } else if(myPlayerMove == 1) {
                     //Player inventory contains potions increase health
@@ -119,13 +120,14 @@ public class Arena {
             } else if (myMonster.getHealth() > 0){
                 if(myMonster.canHeal()){
                     myMonster.changeHealth(myMonster.getMaxHealth()/10);
-                    System.out.println("Monster Healed");
-                    notifyMessage(myMonster.toString() + " healed.");
+                    System.out.println("Monster healed " + myMonster.getMaxHealth()/10 + " health.");
+                    notifyMessage(myMonster.toString() + " healed " + myMonster.getMaxHealth()/10 + " health.");
                 }
 
-                ((AbstractDungeonCharacter)myPlayer).changeHealth(-myMonster.getAttack());
+                int attack = myMonster.getAttack();
+                ((AbstractDungeonCharacter)myPlayer).changeHealth(-attack);
                 System.out.println("Monster Attacked");
-                notifyMessage(myPlayer.toString() + " attacked.");
+                notifyMessage(myMonster.toString() + " attacked dealing " + attack + " damage.");
 
                 playerTurn = true;
 
