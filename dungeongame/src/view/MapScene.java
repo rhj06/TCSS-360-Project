@@ -1,5 +1,7 @@
 package dungeongame.src.view;
 
+import dungeongame.src.model.MapTile;
+import dungeongame.src.model.MapTileList;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 

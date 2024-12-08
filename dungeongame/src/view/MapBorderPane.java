@@ -146,7 +146,7 @@ public class MapBorderPane extends BorderPane {
                     this.getChildren().remove(myLastDraggedTile.getMyTile());
                 }
                 if (!myTiles.isEmpty()) {
-                    myLastDraggedTile.setMyTile(myTiles.getLast());
+                    myLastDraggedTile.setMyTile((MapTile) myTiles.getLast());
                 } else {
                     myLastDraggedTile.setMyTile(null);
                 }
@@ -165,7 +165,10 @@ public class MapBorderPane extends BorderPane {
         button.setPadding(new Insets(10, 20, 10, 20));
         button.setOnAction(e -> {
             if (myTiles.contains(myLastDraggedTile.getMyTile())) {
-                myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile())).rotateClockwise();
+                 MapTile tile = (MapTile) myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
+                 tile.rotateClockwise();
+                 myLastDraggedTile.setMyTile(tile);
+                 myTiles.set(myTiles.indexOf(myLastDraggedTile.getMyTile()), tile);
             }
         });
 
@@ -182,7 +185,10 @@ public class MapBorderPane extends BorderPane {
         button.setPadding(new Insets(10, 20, 10, 20));
         button.setOnAction(e -> {
             if (myTiles.contains(myLastDraggedTile.getMyTile())) {
-                myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile())).rotateCounterClockwise();
+                MapTile tile = (MapTile) myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
+                tile.rotateCounterClockwise();
+                myLastDraggedTile.setMyTile(tile);
+                myTiles.set(myTiles.indexOf(myLastDraggedTile.getMyTile()), tile);
             }
         });
 
