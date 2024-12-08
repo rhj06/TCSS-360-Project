@@ -63,6 +63,14 @@ final public class PlayerInventory implements java.io.Serializable {
         return inventoryCopy;
     }
 
+    public boolean containsItem(Item item) {
+        if (myInventory.containsKey(item)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Adds an item to the inventory and updates the quantity.
      *

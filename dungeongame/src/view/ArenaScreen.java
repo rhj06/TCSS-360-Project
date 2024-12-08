@@ -2,6 +2,7 @@ package dungeongame.src.view;
 
 import dungeongame.src.controller.Arena;
 import dungeongame.src.model.*;
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class ArenaScreen {
     /** The arena object representing the battle layout and player state. */
     private final Arena myArena;
@@ -23,6 +28,10 @@ public class ArenaScreen {
     private final Player myPlayer;
 
     private final AbstractMonster myMonster;
+
+    private final Label myMessageLabel;
+
+    private final Deque<String> myRecentMessages;
 
     /**
      * Constructs a new ArenaScreen with the specified arena.
@@ -44,15 +53,46 @@ public class ArenaScreen {
         myArena = theArena;
         myPlayer = thePlayer;
         myMonster = theMonster;
+        myRecentMessages = new ArrayDeque<>(5);
+
+        myMessageLabel = new Label("Fight begins!");
+        myMessageLabel.setStyle("-fx-font-size: 14; -fx-text-fill: black;");
 
         // Set up the scene
         Scene scene = createGameScene();
         myStage.setScene(scene);
         myStage.setTitle("Arena Battle");
 
+        myArena.addPropertyChangeListener(event -> {
+            if ("message".equals(event.getPropertyName())) {
+                addMessage((String) event.getNewValue());
+                updateMessageDisplay();
+                //myMessageLabel.setText((String) event.getNewValue());
+            }
+        });
+
         // Show the stage
         myStage.show();
         myArena.startCombatLoop();
+    }
+
+    public void addMessage(String message) {
+        if (myRecentMessages.size() == 5) {
+            myRecentMessages.pollFirst();
+        }
+
+        myRecentMessages.addLast(message);
+
+        Platform.runLater(this::updateMessageDisplay);
+    }
+
+    private void updateMessageDisplay() {
+        StringBuilder displayText = new StringBuilder();
+        for (String message : myRecentMessages) {
+            displayText.append(message).append("\n");
+        }
+
+        myMessageLabel.setText(displayText.toString());
     }
 
     /**
@@ -76,7 +116,7 @@ public class ArenaScreen {
         Label titleLabel = new Label("Arena Battle");
         titleLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 24; -fx-font-weight: bold;");
 
-        mainLayout.getChildren().addAll(titleLabel,combatDisplay, buttonLayout);
+        mainLayout.getChildren().addAll(titleLabel,combatDisplay, buttonLayout, myMessageLabel);
 
         return new Scene(mainLayout, 500, 500);
     }
