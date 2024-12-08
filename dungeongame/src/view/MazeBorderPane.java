@@ -46,6 +46,7 @@ public class MazeBorderPane extends BorderPane {
                     this.getChildren().add(myTiles[i][j]);
                 } else {
                     myTiles[i][j] = createTile(j, i, myRoom[count]);
+                    count++;
                     myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
                     this.getChildren().add(myTiles[i][j]);
                 }
