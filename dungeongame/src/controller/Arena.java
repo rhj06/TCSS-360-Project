@@ -50,14 +50,16 @@ public class Arena {
      */
     public void combat(){
         //Random rand = new Random();
-        System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
-                ((AbstractDungeonCharacter) myPlayer).getHealth(),
-                ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
-                myMonster.getHealth(),
-                myMonster.getMaxHealth()
-        );
         boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).getSpeed() > myMonster.getSpeed();
-        while(((AbstractDungeonCharacter)myPlayer).getHealth() > 0 && myMonster.getHealth() > 0){
+
+        while(((AbstractDungeonCharacter)myPlayer).getHealth() > 0 && myMonster.getHealth() > 0) {
+            System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
+                    ((AbstractDungeonCharacter) myPlayer).getHealth(),
+                    ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
+                    myMonster.getHealth(),
+                    myMonster.getMaxHealth()
+            );
+
             if(playerTurn){
                 //needs a listener to set playerMove
                 // Wait for player input via PropertyChangeListener
@@ -66,7 +68,7 @@ public class Arena {
                         synchronized (this){
                             System.out.println("Waiting for playerMove.");
                             wait(); // Wait until playerMove is updated.
-                            System.out.println("Resumed after wait.");
+                            //System.out.println("Resumed after wait.");
                         }
 
                     } catch (InterruptedException e) {
@@ -109,13 +111,18 @@ public class Arena {
 
             }
 
-            System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
-                    ((AbstractDungeonCharacter) myPlayer).getHealth(),
-                    ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
-                    myMonster.getHealth(),
-                    myMonster.getMaxHealth()
-            );
+
         }
+
+        if(myMonster.getHealth() == 0) {
+            System.out.println(myMonster.toString() + " is dead");
+            int playerI = Maze.getInstance().getPlayerCords().y;
+            int playerJ = Maze.getInstance().getPlayerCords().x;
+            Maze.getInstance().setRoomMonster(playerI, playerJ, null);
+        } else {
+            System.out.println("Game Over");
+        }
+
     }
 
     /**

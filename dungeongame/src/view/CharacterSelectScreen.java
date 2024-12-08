@@ -136,5 +136,12 @@ public class CharacterSelectScreen extends AbstractScreen {
         GameScreen myGameScreen = new GameScreen(myMaze, mySelectedHero);
         theStage.setScene(myGameScreen.createScene(theStage));
         System.out.println("Switching to GameScreen with character: " + mySelectedHero);
+
+        System.out.println("Items");
+        myMaze.printMaze();
+        System.out.println("Player");
+        myMaze.printPlayerCordMaze();
+        System.out.println("Monsters");
+        myMaze.printMonsterMaze();
     }
 }

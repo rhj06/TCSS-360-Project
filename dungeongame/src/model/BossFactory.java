@@ -13,14 +13,14 @@ public class BossFactory {
             "Vexor", "Wulfric", "Xargon", "Jeff", "Zalrok", "Zephyr", "Rynor",
             "Ryan", "Malakar"};
 
-    public AbstractMonster createBoss(String theString){
-        AbstractMonster boss = null;
+    public Boss createBoss(String theString){
+        Boss boss = null;
         Random rand = new Random();
 
-        if(theString.equals("Mini Boss")){
+        if(theString.equals("mini_boss")){
             boss = new Boss(150, 15, 25, 7, 10, .5,
                     NAMES[rand.nextInt(NAMES.length)], MINI_BOSS_TYPE);
-        } else if(theString.equals("Final Boss")){
+        } else if(theString.equals("final_boss")){
             boss = new Boss(200, 20, 35, 10, 15, .00001,
                     NAMES[rand.nextInt(NAMES.length)], FINAL_BOSS_TYPE);
         }

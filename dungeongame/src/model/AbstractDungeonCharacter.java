@@ -1,5 +1,9 @@
 package dungeongame.src.model;
 
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,6 +17,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     /***/
     private static final String DEFAULT_NAME = "Dungeon Character";
 
+    private final IntegerProperty myCurHealthProperty = new SimpleIntegerProperty();
 
     private final PropertyChangeSupport myPCS;
     /***/
@@ -49,6 +54,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         myPCS = new PropertyChangeSupport(this);
         myMaxHealth = theMaxHealth;
         myCurrHealth = theMaxHealth;
+        myCurHealthProperty.set(myCurrHealth);
         myMinAttack = theMinAttack;
         myMaxAttack = theMaxAttack;
         myMinSpeed = theMinSpeed;
@@ -66,7 +72,11 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @return
      */
     public int getHealth() {
-        return myCurrHealth;
+        return myCurHealthProperty.get();
+    }
+
+    public IntegerProperty getCurHealthProperty() {
+        return myCurHealthProperty;
     }
 
     public int getMaxHealth() {
@@ -87,9 +97,15 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     }
 
     public void changeHealth(final int theHealthChange) {
-        int oldHealth = myCurrHealth;
-        myCurrHealth = myCurrHealth + theHealthChange;
-        myPCS.firePropertyChange("Health Changed", oldHealth, myCurrHealth);
+        myCurrHealth += theHealthChange;
+
+        if (myCurrHealth > myMaxHealth) {
+            myCurrHealth = myMaxHealth;
+        } else if (myCurrHealth < 0) {
+            myCurrHealth = 0;
+        }
+
+        Platform.runLater(() -> myCurHealthProperty.set(myCurrHealth));
     }
 
     /**

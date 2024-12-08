@@ -2,6 +2,7 @@ package dungeongame.src.view;
 
 import dungeongame.src.controller.Arena;
 import dungeongame.src.model.*;
+import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -75,7 +76,7 @@ public class ArenaScreen {
         Label titleLabel = new Label("Arena Battle");
         titleLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 24; -fx-font-weight: bold;");
 
-        mainLayout.getChildren().addAll(titleLabel, combatDisplay, buttonLayout);
+        mainLayout.getChildren().addAll(titleLabel,combatDisplay, buttonLayout);
 
         return new Scene(mainLayout, 500, 500);
     }
@@ -91,9 +92,10 @@ public class ArenaScreen {
                 getPlayerImagePath(),
                 150,
                 150,
-                ((AbstractDungeonCharacter) myPlayer).getHealth(),
+                ((AbstractDungeonCharacter) myPlayer).getCurHealthProperty(),
                 ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
-                false
+                false,
+                myPlayer.toString()
         );
 
         // Monster display
@@ -101,9 +103,10 @@ public class ArenaScreen {
                 getMonsterImagePath(),
                 150,
                 150,
-                myMonster.getHealth(),
+                myMonster.getCurHealthProperty(),
                 myMonster.getMaxHealth(),
-                true
+                true,
+                myMonster.toString()
         );
 
         // Arrange both displays horizontally
@@ -124,19 +127,24 @@ public class ArenaScreen {
      * @param mirror       Whether to mirror the image horizontally.
      * @return A VBox containing the image and health label.
      */
-    private VBox createCharacterDisplay(String imagePath, int width, int height, int currentHealth, int maxHealth, boolean mirror) {
+    private VBox createCharacterDisplay(String theImagePath, int theWidth, int theHeight, IntegerProperty theCurrentHealthProperty, int theMaxHealth, boolean theMirror, String theName) {
+        // Create the name label
+        Label nameLabel = new Label(theName);
+        nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: black;");
+
         // Create the image view
-        ImageView imageView = createImageView(imagePath, width, height);
-        if (mirror) {
+        ImageView imageView = createImageView(theImagePath, theWidth, theHeight);
+        if (theMirror) {
             imageView.setScaleX(-1);
         }
 
         // Create the health label
-        Label healthLabel = new Label("Health: " + currentHealth + " / " + maxHealth);
+        Label healthLabel = new Label();
+        healthLabel.textProperty().bind(theCurrentHealthProperty.asString("Health: %d / " + theMaxHealth));
         healthLabel.setStyle("-fx-font-size: 14; -fx-text-fill: black;"); // Styling for visibility
 
         // Arrange the image and label vertically
-        VBox characterDisplay = new VBox(10, imageView, healthLabel);
+        VBox characterDisplay = new VBox(10, nameLabel, imageView, healthLabel);
         characterDisplay.setAlignment(Pos.CENTER);
         return characterDisplay;
     }
@@ -185,11 +193,11 @@ public class ArenaScreen {
      * @param height    Height of the image view.
      * @return Configured ImageView instance.
      */
-    private ImageView createImageView(String imagePath, int width, int height) {
-        Image image = new Image(imagePath);
+    private ImageView createImageView(String theImagePath, int theWidth, int theHeight) {
+        Image image = new Image(theImagePath);
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
+        imageView.setFitWidth(theWidth);
+        imageView.setFitHeight(theHeight);
         imageView.setPreserveRatio(true);
         return imageView;
     }

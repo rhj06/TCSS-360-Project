@@ -395,6 +395,7 @@ final public class Maze implements Serializable {
         pillars.add(AbstractionPillar);
 
         Random random = new Random();
+        BossFactory bossFactory = new BossFactory();
 
         while (!pillars.isEmpty()) {
             Room room = myRooms[random.nextInt(mySize)][random.nextInt(mySize)];
@@ -402,6 +403,12 @@ final public class Maze implements Serializable {
                 room.setItem(pillars.getFirst());
                 pillars.remove(pillars.getFirst());
             }
+
+            if(!(room.getMonster() instanceof Boss)){
+                Boss miniBoss = bossFactory.createBoss("mini_boss");
+                room.setMonster(miniBoss);
+            }
+
         }
     }
 
@@ -569,6 +576,8 @@ final public class Maze implements Serializable {
                     System.out.print(" S ");
                 } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() instanceof Slime) {
                     System.out.print(" L ");
+                } else if (myRooms[i][j].isSouthDoor() && myRooms[i][j].getMonster() instanceof Boss) {
+                    System.out.print(" B ");
                 } else if (myRooms[i][j].getMonster() instanceof Goblin) {
                     System.out.print("_G_");
                 } else if (myRooms[i][j].getMonster() instanceof Ogre) {
@@ -577,6 +586,8 @@ final public class Maze implements Serializable {
                     System.out.print("_S_");
                 } else if (myRooms[i][j].getMonster() instanceof Slime) {
                     System.out.print("_L_");
+                } else if (myRooms[i][j].getMonster() instanceof Boss) {
+                    System.out.print("_B_");
                 } else {
                     System.out.print("___");
                 }
