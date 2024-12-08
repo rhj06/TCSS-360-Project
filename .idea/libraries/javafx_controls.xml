@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="javafx.controls">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/.idea/libraries/javafx.controls.jar!/" />
+      <root url="jar://$USER_HOME$/.jdks/javafx-sdk-23.0.1/lib/javafx.controls.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

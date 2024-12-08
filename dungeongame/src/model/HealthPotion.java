@@ -26,8 +26,12 @@ public class HealthPotion extends AbstractItem {
      */
     @Override
     public void useItem(Character theCharacter) {
-        int newHealth = theCharacter.getHealth() + getMyItemValue();
-        theCharacter.setHealth(newHealth);
+        if (theCharacter instanceof AbstractDungeonCharacter dungeonCharacter) {
+            int healthBoost = getMyItemValue();
+            dungeonCharacter.changeHealth(healthBoost);
+        } else {
+            throw new IllegalArgumentException("HealthPotion can only be used by a dungeon character.");
+        }
     }
 
     /**

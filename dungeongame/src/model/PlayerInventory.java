@@ -44,16 +44,19 @@ final public class PlayerInventory implements java.io.Serializable {
      * Returns a deep copy of the inventory map.
      */
     public HashMap<Item, Integer> getInventory() {
-        HashMap<Item, Integer> inventoryCopy = new HashMap<Item, Integer>();
-        for(Map.Entry<Item, Integer> entry : myInventory.entrySet()) {
-            if(entry instanceof SpeedPotion) {
-                Item itemCopy = new SpeedPotion();
-                inventoryCopy.put(itemCopy, entry.getValue());
-            } else if (entry instanceof HealthPotion) {
-                Item itemCopy = new HealthPotion();
-                inventoryCopy.put(itemCopy, entry.getValue());
-            } else if (entry instanceof VisionPotion) {
-                Item itemCopy = new VisionPotion();
+        HashMap<Item, Integer> inventoryCopy = new HashMap<>();
+        for (Map.Entry<Item, Integer> entry : myInventory.entrySet()) {
+            Item itemCopy = null;
+            if (entry.getKey() instanceof SpeedPotion) {
+                itemCopy = new SpeedPotion();
+            } else if (entry.getKey() instanceof HealthPotion) {
+                itemCopy = new HealthPotion();
+            } else if (entry.getKey() instanceof VisionPotion) {
+                itemCopy = new VisionPotion();
+            } else if (entry.getKey() instanceof Pillar) {
+                itemCopy = new Pillar(entry.getKey().getMyItemName());
+            }
+            if (itemCopy != null) {
                 inventoryCopy.put(itemCopy, entry.getValue());
             }
         }

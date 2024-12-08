@@ -365,26 +365,24 @@ final public class Maze implements Serializable {
         }
     }
 
-    private void generateItems(){
+    private void generateItems() {
         Random random = new Random();
-        List<Integer> items = new ArrayList<>();
-        items.add(1);
-        items.add(2);
-        items.add(3);
+        List<Integer> items = new ArrayList<>(Arrays.asList(1, 2, 3));
 
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
                 int gen = random.nextInt(100);
-                if(gen <= ITEM_GEN_PERCENT) {
+                if (gen <= ITEM_GEN_PERCENT) {
                     Collections.shuffle(items);
-                    int potion = items.getFirst();
-                    if(potion == 1){
+                    int potion = items.get(0);
+                    if (potion == 1) {
                         myRooms[i][j].setItem(new HealthPotion());
-                    } else if (potion == 2){
+                    } else if (potion == 2) {
                         myRooms[i][j].setItem(new SpeedPotion());
-                    } else if (potion == 3){
+                    } else if (potion == 3) {
                         myRooms[i][j].setItem(new VisionPotion());
                     }
+                    System.out.println("Item added at (" + i + ", " + j + "): " + myRooms[i][j].getItem());
                 }
             }
         }
