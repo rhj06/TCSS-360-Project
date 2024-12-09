@@ -3,7 +3,7 @@ package dungeongame.src.view;
 import dungeongame.src.model.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -108,7 +108,7 @@ public class MazeBorderPane extends BorderPane {
 
         this.getChildren().add(sprite);
         if (!myVisionPostionCheck) {
-            this.getChildren().add(createVisionBoarder());
+            this.getChildren().add(createVisionBorder());
         }
 
     }
@@ -117,11 +117,11 @@ public class MazeBorderPane extends BorderPane {
      * Create a Shape where the Rectangle covers the 8 neighboring tiles
      * @return Shape
      */
-    private Shape createVisionBoarder() {
+    private Shape createVisionBorder() {
         Rectangle outer = new Rectangle(0,0,SIZE_OF_VISION_RECTANGLE,SIZE_OF_VISION_RECTANGLE);
         Rectangle inner = new Rectangle(SIZE_OF_CENTER_RECTANGLE,SIZE_OF_CENTER_RECTANGLE,SIZE_OF_CENTER_RECTANGLE,SIZE_OF_CENTER_RECTANGLE);
         Shape hole = Shape.subtract(outer, inner);
-        hole.setFill(Color.BLACK);
+        hole.setFill(new ImagePattern(new Image("file:.idea/resources/fonts/inventory.jpg")));
         return hole;
     }
     private int typeOfTile(final Room theCurrentRoom) {

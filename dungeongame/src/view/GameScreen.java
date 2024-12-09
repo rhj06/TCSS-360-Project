@@ -6,6 +6,7 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -97,8 +98,7 @@ public class GameScreen extends AbstractScreen {
         myMainLayout.setBottom(bottomPane);
 
         // Set background styling
-        myMainLayout.setStyle("-fx-background-color: #2b2b2b;");
-
+        //myMainLayout.setStyle("-fx-background-color: #2b2b2b;");
         return new Scene(myMainLayout, 800, 600);
     }
 
