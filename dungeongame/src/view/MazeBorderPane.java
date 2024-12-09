@@ -2,15 +2,19 @@ package dungeongame.src.view;
 
 import dungeongame.src.model.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 public class MazeBorderPane extends BorderPane {
 
     /**Grid size constant*/
-    private static final int GRID_SIZE = 100;
+    private static final int GRID_SIZE = 150;
     /**The Difference of BorderPanes height and Grid height*/
     private static final int BORDERPANE_TO_GRID_DIFFERENCE = 150;
 
@@ -19,24 +23,36 @@ public class MazeBorderPane extends BorderPane {
     /**List of MapTiles*/
     private final MapTile[][] myTiles;
     private final Maze myMaze;
-    private final Room[] myRoom;
+    private Room[] myRoom;
     /**BorderPane Width and Height*/
     private final double myWidth, myHeight;
+    private final String myPlayerSprite;
 
-    public MazeBorderPane(final double theWidth, final double theHeight) {
+    public MazeBorderPane(final double theWidth, final double theHeight, final String thePlayerSprite) {
         super();
         myWidth = theWidth;
         myHeight = theHeight;
         myMaze = Maze.getInstance();
         myRoom = myMaze.getNeighborsClockwise(myMaze.getPlayerCords().y, myMaze.getPlayerCords().x);
         myTiles = new MapTile[SIZE_OF_THREE][SIZE_OF_THREE];
-
+        myPlayerSprite = thePlayerSprite;
+        myMaze.addPropertyChangeListener(event -> {
+            if("change in direction".equals(event.getPropertyName())) {
+                updateBorderPane();
+            }
+        });
         defaultLayout();
     }
 
     private void defaultLayout() {
         GridHandler backgroundGridHandler = new GridHandler(myWidth, myHeight, GRID_SIZE, this);
         backgroundGridHandler.createGrid();
+
+        updateBorderPane();
+    }
+
+    private void updateBorderPane() {
+        myRoom = myMaze.getNeighborsClockwise(myMaze.getPlayerCords().y, myMaze.getPlayerCords().x);
         int count = 0;
         for (int i = 0; i < SIZE_OF_THREE; i++) {
             for (int j = 0; j < SIZE_OF_THREE; j++) {
@@ -44,6 +60,7 @@ public class MazeBorderPane extends BorderPane {
                     myTiles[i][j] = createTile(j, i, myMaze.getRooms()[myMaze.getPlayerCords().y][myMaze.getPlayerCords().x]);
                     myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
                     this.getChildren().add(myTiles[i][j]);
+
                 } else {
                     myTiles[i][j] = createTile(j, i, myRoom[count]);
                     count++;
@@ -52,7 +69,14 @@ public class MazeBorderPane extends BorderPane {
                 }
             }
         }
-        
+        ImageView sprite = new ImageView(new Image("file:character_sprite/" + myPlayerSprite));
+        sprite.setFitWidth((double) GRID_SIZE/2);
+        sprite.setFitHeight((double) GRID_SIZE/2);
+        sprite.setX(GRID_SIZE + 30);
+        sprite.setY(GRID_SIZE + 30);
+
+        this.getChildren().add(sprite);
+
     }
 
     private int typeOfTile(final Room theCurrentRoom) {
@@ -73,6 +97,10 @@ public class MazeBorderPane extends BorderPane {
         }
         return numOfDoors;
     }
+
+//    private Image createPlayerTile(final int theJ, final int theI, final MapTile theCurrentTile) {
+//
+//    }
 
     private MapTile createTile(final int theJ, final int theI, Room theCurrentRoom) {
         MapTile tile = null;
@@ -118,6 +146,7 @@ public class MazeBorderPane extends BorderPane {
 
         return tile;
     }
+
 
     private MapTile rotateOneWayTile(final Room theCurrentRoom, final MapTile theCurrentTile) {
         if (!theCurrentRoom.isWestDoor()) {
@@ -169,4 +198,5 @@ public class MazeBorderPane extends BorderPane {
         }
         return theCurrentTile;
     }
+
 }

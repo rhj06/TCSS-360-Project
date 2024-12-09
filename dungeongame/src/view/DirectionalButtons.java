@@ -5,6 +5,8 @@ import dungeongame.src.model.Directions;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
+import java.beans.PropertyChangeSupport;
+
 /**
  * Represents directional buttons for navigating the maze.
  * Provides buttons for moving in all cardinal directions.

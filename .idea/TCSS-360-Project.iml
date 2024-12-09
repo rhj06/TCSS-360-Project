@@ -42,7 +42,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lib" level="application" />
+    <orderEntry type="library" exported="" name="lib" level="application" />
     <orderEntry type="library" exported="" name="javafx.base" level="project" />
     <orderEntry type="library" exported="" name="javafx.controls" level="project" />
     <orderEntry type="library" exported="" name="javafx.fxml" level="project" />

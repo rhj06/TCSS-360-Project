@@ -44,7 +44,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public Scene createScene(Stage theStage) {
         BorderPane myMainLayout = new BorderPane();
-        BorderPane mazeLayout = new MazeBorderPane(300,300);
+        BorderPane mazeLayout = new MazeBorderPane(450,450, myCharacter.getImageFileName());
 
         MenuBar myMenuBar = new MenuBar(theStage);
         myMainLayout.setTop(myMenuBar.createMenuBar());

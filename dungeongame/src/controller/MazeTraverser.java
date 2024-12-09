@@ -11,6 +11,7 @@ import java.awt.*;
 public class MazeTraverser {
     private static MazeTraverser uniqueInstance;
 
+
     private Maze myMaze;
     private Point myPlayerCords;
     private Player myPlayer;

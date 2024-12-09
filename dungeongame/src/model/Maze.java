@@ -1,5 +1,7 @@
 package dungeongame.src.model;
 
+import javafx.application.Platform;
+
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -22,7 +24,7 @@ final public class Maze implements Serializable {
     private static final int ITEM_GEN_PERCENT = 30;
     private static final int MONSTER_SPAWN_RATE = 30;
 
-    private PropertyChangeSupport myPCS;
+    private final PropertyChangeSupport myPCS;
     private Room[][] myRooms;
     private Point myPlayerCords;
     private int mySize;
@@ -108,6 +110,17 @@ final public class Maze implements Serializable {
         return myPlayerCords;
     }
 
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPCS.addPropertyChangeListener(theListener);
+    }
+
+    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        myPCS.removePropertyChangeListener(theListener);
+    }
+
+    public void notifyMessage(String theMessage) {
+            myPCS.firePropertyChange("change in direction", null, theMessage);
+    }
     public boolean canGoNorth(){
         boolean canGoNorth = false;
         Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
@@ -150,6 +163,7 @@ final public class Maze implements Serializable {
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y-1);
             myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+            notifyMessage("change in direction");
         }
     }
 
@@ -159,6 +173,7 @@ final public class Maze implements Serializable {
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x+1, myPlayerCords.y);
             myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+            notifyMessage("change in direction");
         }
     }
 
@@ -168,6 +183,7 @@ final public class Maze implements Serializable {
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y+1);
             myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+            notifyMessage("change in direction");
         }
     }
 
@@ -177,6 +193,7 @@ final public class Maze implements Serializable {
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x-1, myPlayerCords.y);
             myPCS.firePropertyChange("Player Moved", oldCords, myPlayerCords);
+            notifyMessage("change in direction");
         }
     }
 
