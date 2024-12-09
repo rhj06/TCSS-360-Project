@@ -4,6 +4,7 @@ import dungeongame.src.model.AbstractDungeonCharacter;
 import dungeongame.src.model.Item;
 import dungeongame.src.model.Pillar;
 import dungeongame.src.model.PlayerInventory;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -60,6 +61,17 @@ public class InventoryScreen extends AbstractScreen {
         }
 
         myPillarStatusLabel = createPillarStatusLabel();
+
+        // Add a listener to update the inventory UI in real-time
+        myInventory.addPropertyChangeListener(evt -> {
+            if ("Item Added".equals(evt.getPropertyName()) || "Item Used".equals(evt.getPropertyName())) {
+                Platform.runLater(() -> {
+                    updatePotionCounts();
+                    updateButtonStates();
+                    updatePillarStatus();
+                });
+            }
+        });
     }
 
     /**
