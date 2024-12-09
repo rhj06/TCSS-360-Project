@@ -127,9 +127,9 @@ public class CharacterSelectScreen extends AbstractScreen {
         myMaze.generateMaze();
 
         AbstractDungeonCharacter mySelectedHero = switch (theCharacterType.toLowerCase()) {
-            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20, 5, 10, 15, "Gandalf");
-            case "thief" -> HeroFactory.createHero("thief", 90, 8, 15, 10, 20, 10, "Locke");
-            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 25, 3, 8, 20, "Aragorn");
+            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20, 5, 10, 5, "Gandalf");
+            case "thief" -> HeroFactory.createHero("thief", 90, 8, 15, 10, 20, 3, "Locke");
+            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 25, 3, 8, 7, "Aragorn");
             default -> throw new IllegalArgumentException("Invalid character type: " + theCharacterType);
         };
 

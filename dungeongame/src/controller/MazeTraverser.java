@@ -103,6 +103,8 @@ public class MazeTraverser {
         myMaze.printPlayerCordMaze();
         System.out.println("Monsters");
         myMaze.printMonsterMaze();
+
+
     }
 
 }

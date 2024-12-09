@@ -89,15 +89,25 @@ public class Arena {
 
                 if(myPlayerMove == 0) {
                     int attack = ((AbstractDungeonCharacter)myPlayer).getAttack();
-                    myMonster.changeHealth(-attack);
+                    int damage = Math.max(attack - myMonster.getDefense(), 0);
+                    myMonster.changeHealth(-damage);
                     System.out.println("Player Attacked");
-                    notifyMessage(myPlayer.toString() + " use a basic attacked for " + attack + " damage.");
+                    notifyMessage(myPlayer.toString() + " use a basic attacked for " + damage + " damage.");
+                    myPlayerMove = -1;
+                    playerTurn = false;
 
                 } else if(myPlayerMove == 1) {
-                    //Player inventory contains potions increase health
-                    myInventory.useItem(new HealthPotion());
-                    System.out.println("Player used a health potion.");
-                    notifyMessage(myPlayer.toString() + " used a health potion.");
+                    if(!myInventory.containsItem(new HealthPotion())){
+                        notifyMessage("Inventory does not contain a health potion.");
+                        myPlayerMove = -1;
+                    } else {
+                        //Player inventory contains potions increase health
+                        myInventory.useItem(new HealthPotion());
+                        System.out.println("Player used a health potion.");
+                        notifyMessage(myPlayer.toString() + " used a health potion.");
+                        myPlayerMove = -1;
+                        playerTurn = false;
+                    }
 
                 } else if(myPlayerMove == 2){
                     if(myPlayer instanceof TargetedSpecial) {
@@ -107,15 +117,16 @@ public class Arena {
                     }
                     System.out.println("Player Used Special");
                     notifyMessage(myPlayer.toString() + " used a special ability.");
+                    myPlayerMove = -1;
+                    playerTurn = false;
 
                 } else if(myPlayerMove == 3){
                     myMonster.changeHealth(-myMonster.getHealth());
                     System.out.println("Player used debug command");
                     notifyMessage(myPlayer.toString() + " used debug command attack.");
+                    myPlayerMove = -1;
+                    playerTurn = false;
                 }
-
-                myPlayerMove = -1;
-                playerTurn = false;
 
             } else if (myMonster.getHealth() > 0){
                 if(myMonster.canHeal()){
@@ -125,15 +136,13 @@ public class Arena {
                 }
 
                 int attack = myMonster.getAttack();
-                ((AbstractDungeonCharacter)myPlayer).changeHealth(-attack);
+                int damage = Math.max(attack - ((AbstractDungeonCharacter)myPlayer).getDefense(), 0);
+                ((AbstractDungeonCharacter)myPlayer).changeHealth(-damage);
                 System.out.println("Monster Attacked");
-                notifyMessage(myMonster.toString() + " attacked dealing " + attack + " damage.");
+                notifyMessage(myMonster.toString() + " attacked dealing " + damage + " damage.");
 
                 playerTurn = true;
-
             }
-
-
         }
 
         if(myMonster.getHealth() == 0) {
