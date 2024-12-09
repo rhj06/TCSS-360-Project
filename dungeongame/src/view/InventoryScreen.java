@@ -18,7 +18,10 @@ import java.util.stream.Collectors;
 
 /**
  * Represents the inventory screen where players can manage items and track collected Pillars.
- * Allows the use of potions and displays inventory details in a graphical user interface.
+ * This screen allows the player to:
+ * - View and use potions (Health, Speed, Vision).
+ * - Track collected Pillars.
+ * - See real-time updates when the inventory changes.
  */
 public class InventoryScreen extends AbstractScreen {
 
@@ -76,6 +79,9 @@ public class InventoryScreen extends AbstractScreen {
 
     /**
      * Displays the inventory screen in a new stage.
+     * The screen is shown in a new window with details about the player's inventory and allows the player to interact
+     * with items such as potions and Pillars.
+     *
      */
     public void display() {
         Stage inventoryStage = new Stage();
@@ -87,11 +93,18 @@ public class InventoryScreen extends AbstractScreen {
         updatePillarStatus();
     }
 
+    /**
+     * Creates the scene for the inventory screen.
+     *
+     * @param theStage the stage on which the scene will be displayed
+     * @return the created Scene instance
+     */
     @Override
     public Scene createScene(Stage theStage) {
         VBox layout = createLayout();
         for (String potionName : MY_POTION_NAMES) {
-            layout.getChildren().add(createButtonWithCount(myPotionButtons.get(potionName), myPotionCountLabels.get(potionName)));
+            layout.getChildren().add(createButtonWithCount(myPotionButtons.get(potionName),
+                    myPotionCountLabels.get(potionName)));
         }
         layout.getChildren().add(myPillarStatusLabel);
         return new Scene(layout, 400, 400);
@@ -130,7 +143,7 @@ public class InventoryScreen extends AbstractScreen {
     /**
      * Creates a label for displaying potion counts.
      *
-     * @return a styled Label with initial count set to 0
+     * @return a styled Label with the initial count set to 0
      */
     private Label createPotionCountLabel() {
         Label label = new Label("x 0");
@@ -141,7 +154,7 @@ public class InventoryScreen extends AbstractScreen {
     /**
      * Creates a label for displaying collected Pillar status.
      *
-     * @return a styled Label for pillar status
+     * @return a styled Label for Pillar status
      */
     private Label createPillarStatusLabel() {
         Label label = new Label("Pillars Collected:\nNone");
@@ -165,6 +178,7 @@ public class InventoryScreen extends AbstractScreen {
 
     /**
      * Updates the states of potion buttons based on inventory quantities.
+     * Disables buttons for potions that are not available in the inventory.
      */
     private void updateButtonStates() {
         for (String potionName : MY_POTION_NAMES) {
@@ -213,24 +227,21 @@ public class InventoryScreen extends AbstractScreen {
                 .findFirst()
                 .ifPresentOrElse(entry -> {
                     Item potion = entry.getKey();
-                    int previousHealth = myCharacter.getHealth();
                     potion.useItem(myCharacter);
                     myInventory.useItem(potion);
-                    System.out.println("Used " + thePotionName + ".");
-                    System.out.println("Health before: " + previousHealth);
-                    System.out.println("Health after: " + myCharacter.getHealth());
                     updatePotionCounts();
                     updateButtonStates();
                 }, () -> System.err.println("Potion '" + thePotionName + "' not available in inventory."));
     }
 
     /**
-     * Updates the pillar status label based on the current inventory.
+     * Updates the Pillar status label based on the current inventory.
+     * Displays the names of all collected Pillars or "None" if no Pillars are collected.
      */
     private void updatePillarStatus() {
         HashMap<Item, Integer> inventory = myInventory.getInventory();
         String collectedPillars = inventory.keySet().stream()
-                .filter(integer -> integer instanceof Pillar)
+                .filter(item -> item instanceof Pillar)
                 .map(Item::getMyItemName)
                 .collect(Collectors.joining(", "));
         myPillarStatusLabel.setText(collectedPillars.isEmpty()

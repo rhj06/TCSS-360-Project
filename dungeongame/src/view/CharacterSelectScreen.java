@@ -15,22 +15,54 @@ import javafx.stage.Stage;
 /**
  * Represents the character selection screen where the player selects their character
  * and game difficulty before starting the dungeon adventure.
+ * <p>
+ * This screen allows users to choose from different characters (e.g., Wizard, Warrior, Thief)
+ * and set the game difficulty. Upon selection, the game transitions to the main game screen.
+ * </p>
  */
 public class CharacterSelectScreen extends AbstractScreen {
+    /**
+     * The fixed width of the character selection buttons.
+     */
     private static final double BUTTON_WIDTH = 150;
+
+    /**
+     * The font size used for character selection buttons.
+     */
     private static final double BUTTON_FONT_SIZE = 18;
+
+    /**
+     * The file path to the font used for screen labels.
+     */
     private static final String FONT_PATH = "file:.idea/resources/fonts/OldeEnglish.ttf";
+
+    /**
+     * The file path to the font used for character selection buttons.
+     */
     private static final String BUTTON_FONT_PATH = "file:.idea/resources/fonts/VIKING-N.TTF";
+
+    /**
+     * The file path to the background image for the character selection screen.
+     */
     private static final String BACKGROUND_IMAGE = "file:.idea/resources/characterselect.jpg";
 
+    /**
+     * Factory for creating styled buttons used throughout the screen.
+     */
     private final ButtonFactory myButtonFactory;
 
     /**
+     * Helper for managing and retrieving the selected game difficulty.
+     */
+    private final RadioButtonHelper myRadioButtonHelper;
+
+    /**
      * Constructs a new CharacterSelectScreen instance.
-     * Initializes the button factory used for creating character and difficulty buttons.
+     * Initializes the button factory and difficulty radio button helper.
      */
     public CharacterSelectScreen() {
         myButtonFactory = new ButtonFactory(BUTTON_FONT_PATH, BUTTON_FONT_SIZE, BUTTON_WIDTH);
+        myRadioButtonHelper = new RadioButtonHelper();
     }
 
     /**
@@ -59,7 +91,7 @@ public class CharacterSelectScreen extends AbstractScreen {
     /**
      * Creates the title label for the character selection screen.
      *
-     * @return the title label
+     * @return the title label styled with a specific font and color
      */
     private Label createTitleLabel() {
         return LabelHelper.createCenteredLabel("Select Your Character", FONT_PATH, 50,
@@ -76,24 +108,27 @@ public class CharacterSelectScreen extends AbstractScreen {
         CharacterSelectPanel myPanelCreator = new CharacterSelectPanel(myButtonFactory);
 
         HBox myCharacterPanels = new HBox(10,
-                createCharacterPanel(myPanelCreator, "file:ThiefSelectTile.jpg", "Thief", theStage),
-                createCharacterPanel(myPanelCreator, "file:WarriorSelectTile.jpeg", "Warrior", theStage),
-                createCharacterPanel(myPanelCreator, "file:WizardSelect.png", "Wizard", theStage)
+                createCharacterPanel(myPanelCreator, "file:ThiefSelectTile.jpg", "Thief",
+                        theStage),
+                createCharacterPanel(myPanelCreator, "file:WarriorSelectTile.jpeg", "Warrior",
+                        theStage),
+                createCharacterPanel(myPanelCreator, "file:WizardSelect.png", "Wizard",
+                        theStage)
         );
         myCharacterPanels.setAlignment(Pos.CENTER);
         return myCharacterPanels;
     }
 
     /**
-     * Creates the difficulty selection section with a label and buttons.
+     * Creates the difficulty selection section with a label and difficulty buttons.
      *
      * @return the container for difficulty selection elements
      */
     private VBox createDifficultySection() {
-        Label myDifficultyLabel = LabelHelper.createCenteredLabel("Choose Your Difficulty", FONT_PATH, 30,
-                "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
+        Label myDifficultyLabel = LabelHelper.createCenteredLabel("Choose Your Difficulty", FONT_PATH,
+                30, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
-        HBox myDifficultyButtons = new RadioButtonHelper().createDifficultyButtons();
+        HBox myDifficultyButtons = myRadioButtonHelper.createDifficultyButtons();
 
         VBox myDifficultyLayout = new VBox(10, myDifficultyLabel, myDifficultyButtons);
         myDifficultyLayout.setAlignment(Pos.CENTER);
@@ -110,8 +145,10 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @param theStage        the primary stage used for transitioning to the next screen
      * @return the character selection panel
      */
-    private VBox createCharacterPanel(CharacterSelectPanel thePanelCreator, String theImagePath, String theCharacterType, Stage theStage) {
-        return thePanelCreator.createCharacterPanel(theImagePath, theCharacterType, () -> handleCharacterSelection(theStage, theCharacterType));
+    private VBox createCharacterPanel(CharacterSelectPanel thePanelCreator, String theImagePath,
+                                      String theCharacterType, Stage theStage) {
+        return thePanelCreator.createCharacterPanel(theImagePath, theCharacterType, () ->
+                handleCharacterSelection(theStage, theCharacterType));
     }
 
     /**
@@ -122,14 +159,17 @@ public class CharacterSelectScreen extends AbstractScreen {
      */
     private void handleCharacterSelection(Stage theStage, String theCharacterType) {
         Maze myMaze = Maze.getInstance();
-        int myMazeSize = new RadioButtonHelper().getSelectedMazeSize();
+        int myMazeSize = myRadioButtonHelper.getSelectedMazeSize(); // Use the shared instance
         myMaze.setMazeSize(myMazeSize);
         myMaze.generateMaze();
 
         AbstractDungeonCharacter mySelectedHero = switch (theCharacterType.toLowerCase()) {
-            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20, 5, 10, 5, "Gandalf");
-            case "thief" -> HeroFactory.createHero("thief", 90, 8, 15, 10, 20, 3, "Locke");
-            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 25, 3, 8, 7, "Aragorn");
+            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20,
+                    5, 10, 15, "Gandalf");
+            case "thief" -> HeroFactory.createHero("thief", 90, 8, 15, 10,
+                    20, 10, "Locke");
+            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 25,
+                    3, 8, 20, "Aragorn");
             default -> throw new IllegalArgumentException("Invalid character type: " + theCharacterType);
         };
 
