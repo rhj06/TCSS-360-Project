@@ -466,20 +466,28 @@ final public class Maze implements Serializable {
         int side = random.nextInt(4);
         BossFactory bossFactory = new BossFactory();
 
-        if (side == 0) {
-            i = 0;
-            j = random.nextInt(mySize);
-        } else if (side == 1) {
-            i = random.nextInt(mySize);
-            j = mySize-1;
-        } else if (side == 2) {
-            i = mySize - 1;
-            j = random.nextInt(mySize);
-        } else if (side == 3) {
-            i = random.nextInt(mySize);
-            j = 0;
-        }
+        boolean roomSpawnable = false;
 
+        while (!roomSpawnable) {
+            if (side == 0) {
+                i = 0;
+                j = random.nextInt(mySize);
+            } else if (side == 1) {
+                i = random.nextInt(mySize);
+                j = mySize - 1;
+            } else if (side == 2) {
+                i = mySize - 1;
+                j = random.nextInt(mySize);
+            } else if (side == 3) {
+                i = random.nextInt(mySize);
+                j = 0;
+            }
+
+            if(myRooms[i][j].getItem() != myRooms[myPlayerCords.y][myPlayerCords.x]){
+                roomSpawnable = true;
+            }
+
+        }
         Boss finalBoss = new BossFactory().createBoss("final_boss");
         myRooms[i][j].setMonster(finalBoss);
 
