@@ -1,5 +1,6 @@
 package dungeongame.src.model;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.util.ArrayList;
@@ -94,6 +95,9 @@ final public class PlayerInventory implements java.io.Serializable {
             } else if (myInventory.get(theItem) == 1) {
                 myInventory.remove(theItem);
             }
+            if (("Vision Potion").equals(theItem.getMyItemName())) {
+                myPCS.firePropertyChange("use_vision", null, "use_vision");
+            }
             myPCS.firePropertyChange("Item Used", null, myInventory);
         } else {
             throw new IllegalArgumentException("No item found / Can not use Item");
@@ -114,4 +118,9 @@ final public class PlayerInventory implements java.io.Serializable {
             Maze.getInstance().spawnExit();
         }
     }
+
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPCS.addPropertyChangeListener(theListener);
+    }
+
 }

@@ -25,7 +25,7 @@ public class MapBorderPane extends BorderPane {
     /**Instance of a Draggable Grid*/
     private DraggableGrid draggableGridBase;
     /**List of MapTiles*/
-    private final MapTileList myTiles;
+    private final MapTileList<MapTile> myTiles;
     /**BorderPane Width and Height*/
     private final double myWidth, myHeight;
     /**LastDraggedTile object*/
@@ -66,6 +66,13 @@ public class MapBorderPane extends BorderPane {
         this.setRight(buttonTiles);
         this.setBottom(buttonFunctions);
 
+        if(!myTiles.isEmpty()) {
+            for(MapTile tile : myTiles) {
+                this.getChildren().add(tile);
+                myLastDraggedTile.setMyTile(tile);
+                draggableGridBase.makeDraggable(tile, myLastDraggedTile);
+            }
+        }
     }
 
     /**

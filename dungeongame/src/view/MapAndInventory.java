@@ -1,12 +1,16 @@
 package dungeongame.src.view;
 
 import dungeongame.src.model.AbstractDungeonCharacter;
+import dungeongame.src.model.MapTile;
 import dungeongame.src.model.MapTileList;
 import dungeongame.src.model.Maze;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a combined view for the map and inventory in the dungeon game.

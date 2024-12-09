@@ -121,6 +121,7 @@ final public class Maze implements Serializable {
     public void notifyMessage(String theMessage) {
             myPCS.firePropertyChange("change in direction", null, theMessage);
     }
+
     public boolean canGoNorth(){
         boolean canGoNorth = false;
         Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];

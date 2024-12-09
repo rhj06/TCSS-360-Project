@@ -5,6 +5,8 @@ import dungeongame.src.model.MapTileList;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import java.util.ArrayList;
+
 /**
  * MapScene is a Scene
  * Used to create an instance of MapBorderPane
