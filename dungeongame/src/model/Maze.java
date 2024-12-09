@@ -466,20 +466,28 @@ final public class Maze implements Serializable {
         int side = random.nextInt(4);
         BossFactory bossFactory = new BossFactory();
 
-        if (side == 0) {
-            i = 0;
-            j = random.nextInt(mySize);
-        } else if (side == 1) {
-            i = random.nextInt(mySize);
-            j = mySize-1;
-        } else if (side == 2) {
-            i = mySize - 1;
-            j = random.nextInt(mySize);
-        } else if (side == 3) {
-            i = random.nextInt(mySize);
-            j = 0;
-        }
+        boolean roomSpawnable = false;
 
+        while (!roomSpawnable) {
+            if (side == 0) {
+                i = 0;
+                j = random.nextInt(mySize);
+            } else if (side == 1) {
+                i = random.nextInt(mySize);
+                j = mySize - 1;
+            } else if (side == 2) {
+                i = mySize - 1;
+                j = random.nextInt(mySize);
+            } else if (side == 3) {
+                i = random.nextInt(mySize);
+                j = 0;
+            }
+
+            if(myRooms[i][j].getItem() != myRooms[myPlayerCords.y][myPlayerCords.x]){
+                roomSpawnable = true;
+            }
+
+        }
         Boss finalBoss = new BossFactory().createBoss("final_boss");
         myRooms[i][j].setMonster(finalBoss);
 
@@ -674,43 +682,5 @@ final public class Maze implements Serializable {
             }
             System.out.println();
         }
-    }
-
-    public static void main(String[] args) {
-        Maze maze = Maze.getInstance();
-        maze.setMazeSize(5);
-
-//
-
-        maze.generateMaze();
-        maze.printMaze();
-        System.out.println();
-        maze.printPlayerCordMaze();
-        System.out.println();
-        maze.printMonsterMaze();
-
-        maze.spawnExit();
-        maze.printMaze();
-//
-//        maze.goEast();
-//        maze.printPlayerCordMaze();
-//        maze.goSouth();
-//        maze.printPlayerCordMaze();
-//        maze.goWest();
-//        maze.printPlayerCordMaze();
-//        maze.goNorth();
-//        maze.printPlayerCordMaze();
-//
-//        maze.goSouth();
-//        maze.printPlayerCordMaze();
-//        maze.goEast();
-//        maze.printPlayerCordMaze();
-//        maze.goNorth();
-//        maze.printPlayerCordMaze();
-//        maze.goWest();
-//        maze.printPlayerCordMaze();
-
-//        AbstractMonster goblin = MonsterFactory.createMonster("Goblin");
-//        System.out.println(goblin.toString());
     }
 }
