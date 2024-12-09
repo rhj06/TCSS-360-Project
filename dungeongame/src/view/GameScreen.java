@@ -2,8 +2,10 @@ package dungeongame.src.view;
 
 import dungeongame.src.controller.MazeTraverser;
 import dungeongame.src.model.*;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -43,14 +45,21 @@ public class GameScreen extends AbstractScreen {
     @Override
     public Scene createScene(Stage theStage) {
         BorderPane myMainLayout = new BorderPane();
-        BorderPane mazeLayout = new MazeBorderPane(450,450, myCharacter.getImageFileName());
+        StackPane mazeContainer = new StackPane();
+        BorderPane mazeLayout = new MazeBorderPane(300,300, myCharacter.getImageFileName());
+
+        mazeContainer.getChildren().add(mazeLayout);
+        mazeContainer.setAlignment(Pos.CENTER);
+        mazeContainer.setStyle("-fx-padding: -70px;");
+        mazeContainer.setMaxWidth(300);
+        mazeContainer.setMaxHeight(300);
 
         MenuBar myMenuBar = new MenuBar(theStage);
         myMainLayout.setTop(myMenuBar.createMenuBar());
+        myMainLayout.setCenter(mazeContainer);
 
         RoomDescription myRoomDescription = new RoomDescription(myMaze);
 
-        myMainLayout.setCenter(mazeLayout);
 //        myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
 
         MazeTraverser theTraverser = MazeTraverser.getInstance();

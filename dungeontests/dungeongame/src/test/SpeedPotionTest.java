@@ -3,6 +3,7 @@ package dungeongame.src.test;
 import dungeongame.src.model.SpeedPotion;
 import dungeongame.src.model.Character;
 import dungeongame.src.model.Thief;  // Example concrete Character class
+import dungeongame.src.model.Warrior;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,7 @@ public class SpeedPotionTest {
     @BeforeEach
     public void setUp() {
         speedPotion = new SpeedPotion();
-        character = new Thief(70, 50, 10, 15, 10, 20, "Test Thief"); // Speed = 15
+        character = new Warrior(70, 50, 10, 15, 10, 20, "Test Thief"); // Speed = 15
     }
 
     /**

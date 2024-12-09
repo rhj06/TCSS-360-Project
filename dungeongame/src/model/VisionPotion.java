@@ -31,12 +31,16 @@ public class VisionPotion extends AbstractItem {
         int playerX = playerCoords.x;
         int playerY = playerCoords.y;
 
-        // Reveal the player's current room and surrounding rooms
-        revealRoomContents(theMaze, playerX, playerY); // Current room
-        revealRoomContents(theMaze, playerX - 1, playerY); // North
-        revealRoomContents(theMaze, playerX + 1, playerY); // South
-        revealRoomContents(theMaze, playerX, playerY - 1); // West
-        revealRoomContents(theMaze, playerX, playerY + 1); // East
+        // Loop through all surrounding coordinates (including diagonals)
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                int newX = playerX + dx;
+                int newY = playerY + dy;
+
+                // Reveal room contents if the coordinates are within bounds
+                revealRoomContents(theMaze, newX, newY);
+            }
+        }
     }
 
     /**
@@ -47,15 +51,13 @@ public class VisionPotion extends AbstractItem {
      * @param theY The y-coordinate of the room.
      */
     private void revealRoomContents(Maze theMaze, int theX, int theY) {
-        // Check if the coordinates are within bounds
         if (theX >= 0 && theX < theMaze.getSize() && theY >= 0 && theY < theMaze.getSize()) {
             Room room = theMaze.getRooms()[theX][theY];
             System.out.println("Room at (" + theX + ", " + theY + "):");
 
-            // Check room contents
             if (room.getItem() != null) {
                 System.out.println("  Contains item: " + room.getItem().getMyItemName());
-            } else if (room.getMonster() != null) { // Assuming getContents > 0 indicates a monster
+            } else if (room.getMonster() != null) {
                 System.out.println("  Contains a monster.");
             } else {
                 System.out.println("  The room is empty.");
