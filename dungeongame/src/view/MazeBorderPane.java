@@ -61,7 +61,7 @@ public class MazeBorderPane extends BorderPane {
             }
         });
         myPlayerInventory.addPropertyChangeListener(event -> {
-            if("use_vision".equals(event.getPropertyName())) {
+            if("VisionPotionUsed".equals(event.getPropertyName())) {
                 myVisionPostionCheck = true;
                 updateBorderPane();
             }
