@@ -56,8 +56,8 @@ public class MazeBorderPane extends BorderPane {
         myPlayerInventory = PlayerInventory.getInstance();
         myMaze.addPropertyChangeListener(event -> {
             if("change in direction".equals(event.getPropertyName())) {
-                myVisionPostionCheck = false;
                 updateBorderPane();
+                myVisionPostionCheck = false;
             }
         });
         myPlayerInventory.addPropertyChangeListener(event -> {
