@@ -683,42 +683,4 @@ final public class Maze implements Serializable {
             System.out.println();
         }
     }
-
-    public static void main(String[] args) {
-        Maze maze = Maze.getInstance();
-        maze.setMazeSize(5);
-
-//
-
-        maze.generateMaze();
-        maze.printMaze();
-        System.out.println();
-        maze.printPlayerCordMaze();
-        System.out.println();
-        maze.printMonsterMaze();
-
-        maze.spawnExit();
-        maze.printMaze();
-//
-//        maze.goEast();
-//        maze.printPlayerCordMaze();
-//        maze.goSouth();
-//        maze.printPlayerCordMaze();
-//        maze.goWest();
-//        maze.printPlayerCordMaze();
-//        maze.goNorth();
-//        maze.printPlayerCordMaze();
-//
-//        maze.goSouth();
-//        maze.printPlayerCordMaze();
-//        maze.goEast();
-//        maze.printPlayerCordMaze();
-//        maze.goNorth();
-//        maze.printPlayerCordMaze();
-//        maze.goWest();
-//        maze.printPlayerCordMaze();
-
-//        AbstractMonster goblin = MonsterFactory.createMonster("Goblin");
-//        System.out.println(goblin.toString());
-    }
 }
