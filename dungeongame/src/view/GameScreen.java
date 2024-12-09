@@ -4,8 +4,10 @@ import dungeongame.src.controller.MazeTraverser;
 import dungeongame.src.model.AbstractDungeonCharacter;
 import dungeongame.src.model.Maze;
 import dungeongame.src.model.Player;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -44,21 +46,22 @@ public class GameScreen extends AbstractScreen {
     @Override
     public Scene createScene(Stage theStage) {
         BorderPane myMainLayout = new BorderPane();
-        BorderPane mazeLayout = new MazeBorderPane(450,450, myCharacter.getImageFileName());
+        StackPane mazeContainer = new StackPane();
+        MazeBorderPane mazeLayout = new MazeBorderPane(300, 300, "defaultTheme");
+
+        mazeContainer.getChildren().add(mazeLayout);
+        mazeContainer.setAlignment(Pos.CENTER);
+        mazeContainer.setTranslateX(-20);
+        mazeContainer.setStyle("-fx-padding: -60px;");
+        mazeContainer.setMaxWidth(300);
+        mazeContainer.setMaxHeight(300);
 
         MenuBar myMenuBar = new MenuBar(theStage);
         myMainLayout.setTop(myMenuBar.createMenuBar());
-
-        RoomDescription myRoomDescription = new RoomDescription(myMaze);
-
-        myMainLayout.setCenter(mazeLayout);
-//        myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
-
-        MazeTraverser theTraverser = MazeTraverser.getInstance();
-        theTraverser.setRoomDescription(myRoomDescription);
+        myMainLayout.setCenter(mazeContainer);
 
         MapAndInventory myMapAndInventory = new MapAndInventory(myMaze, myCharacter, myInventoryScreen);
-        DirectionalButtons myDirectionalButtons = new DirectionalButtons(myRoomDescription);
+        DirectionalButtons myDirectionalButtons = new DirectionalButtons(new RoomDescription(myMaze));
         myMainLayout.setBottom(myMapAndInventory.createBottomPane(myDirectionalButtons));
 
         return new Scene(myMainLayout, 800, 600);

@@ -18,10 +18,10 @@ public class ButtonFactory {
      * @param theButtonWidth the minimum width for the button
      */
     public ButtonFactory(String theFontPath, double theFontSize, double theButtonWidth) {
-        Font font = Font.loadFont(theFontPath, theFontSize); // Attempt to load the font
+        Font font = Font.loadFont(theFontPath, theFontSize);
         if (font == null) {
             System.err.println("Font loading failed for: " + theFontPath + ". Using default font.");
-            font = Font.font("Arial", theFontSize); // Fallback to default system font
+            font = Font.font("Arial", theFontSize);
         }
         myFont = font;
         myButtonWidth = theButtonWidth;
@@ -33,7 +33,7 @@ public class ButtonFactory {
      * @param theButtonWidth the minimum width for the button
      */
     public ButtonFactory(double theButtonWidth) {
-        this(Font.font("Arial", 16), theButtonWidth); // Use Arial with default size
+        this(Font.font("Arial", 16), theButtonWidth);
     }
 
     /**
@@ -58,7 +58,7 @@ public class ButtonFactory {
         Button myButton = new Button(theText);
         myButton.setFont(myFont); // Apply the preloaded font
         myButton.setMinWidth(myButtonWidth); // Set minimum width
-        myButton.setOnAction(e -> theAction.run()); // Set action
+        myButton.setOnAction(e -> theAction.run());
         return myButton;
     }
 }
