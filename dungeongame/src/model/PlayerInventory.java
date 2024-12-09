@@ -95,12 +95,14 @@ final public class PlayerInventory implements java.io.Serializable {
             } else if (myInventory.get(theItem) == 1) {
                 myInventory.remove(theItem);
             }
-            if (("Vision Potion").equals(theItem.getMyItemName())) {
-                myPCS.firePropertyChange("use_vision", null, "use_vision");
+
+            if (theItem instanceof HealthPotion) {
+                myPCS.firePropertyChange("HealthPotionUsed", null, theItem);
             }
+
             myPCS.firePropertyChange("Item Used", null, myInventory);
         } else {
-            throw new IllegalArgumentException("No item found / Can not use Item");
+            throw new IllegalArgumentException("No item found / Cannot use item");
         }
     }
 

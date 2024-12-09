@@ -4,12 +4,8 @@ import dungeongame.src.controller.MazeTraverser;
 import dungeongame.src.model.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents the game screen displayed during gameplay.
@@ -20,6 +16,7 @@ public class GameScreen extends AbstractScreen {
     private final Maze myMaze;
     private final AbstractDungeonCharacter myCharacter;
     private final InventoryScreen myInventoryScreen;
+
     /**
      * Constructs a new GameScreen instance.
      *
@@ -45,29 +42,35 @@ public class GameScreen extends AbstractScreen {
     @Override
     public Scene createScene(Stage theStage) {
         BorderPane myMainLayout = new BorderPane();
-        StackPane mazeContainer = new StackPane();
-        BorderPane mazeLayout = new MazeBorderPane(300,300, myCharacter.getImageFileName());
 
+        // Center: Maze layout
+        StackPane mazeContainer = new StackPane();
+        BorderPane mazeLayout = new MazeBorderPane(300, 300, myCharacter.getImageFileName());
         mazeContainer.getChildren().add(mazeLayout);
         mazeContainer.setAlignment(Pos.CENTER);
         mazeContainer.setStyle("-fx-padding: -70px;");
         mazeContainer.setMaxWidth(300);
         mazeContainer.setMaxHeight(300);
-
-        MenuBar myMenuBar = new MenuBar(theStage);
-        myMainLayout.setTop(myMenuBar.createMenuBar());
+        mazeContainer.setTranslateY(-20);
         myMainLayout.setCenter(mazeContainer);
 
-        RoomDescription myRoomDescription = new RoomDescription(myMaze);
+        // Top: Menu bar
+        MenuBar myMenuBar = new MenuBar(theStage);
+        myMainLayout.setTop(myMenuBar.createMenuBar());
 
-//        myMainLayout.setCenter(myRoomDescription.createDescriptionBox());
-
-        MazeTraverser theTraverser = MazeTraverser.getInstance();
-        theTraverser.setRoomDescription(myRoomDescription);
-
+        // Bottom: Map and inventory buttons + directional buttons in an HBox
         MapAndInventory myMapAndInventory = new MapAndInventory(myMaze, myCharacter, myInventoryScreen);
-        DirectionalButtons myDirectionalButtons = new DirectionalButtons(myRoomDescription);
-        myMainLayout.setBottom(myMapAndInventory.createBottomPane(myDirectionalButtons));
+        VBox mapAndInventoryButtons = myMapAndInventory.createMapAndInventoryButtons();
+
+        DirectionalButtons myDirectionalButtons = new DirectionalButtons(new RoomDescription(myMaze));
+        GridPane directionalButtons = myDirectionalButtons.createDirectionalButtons();
+
+        // Create an HBox for the bottom pane
+        HBox bottomPane = new HBox(220);
+        bottomPane.setAlignment(Pos.CENTER_LEFT);
+        bottomPane.getChildren().addAll(mapAndInventoryButtons, directionalButtons);
+        myMainLayout.setBottom(bottomPane);
+        myMainLayout.setStyle("-fx-background-color: #2b2b2b;");
 
         return new Scene(myMainLayout, 800, 600);
     }

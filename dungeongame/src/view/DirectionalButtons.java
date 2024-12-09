@@ -2,8 +2,11 @@ package dungeongame.src.view;
 
 import dungeongame.src.controller.MazeTraverser;
 import dungeongame.src.model.Directions;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 
 import java.beans.PropertyChangeSupport;
 
@@ -26,24 +29,38 @@ public class DirectionalButtons {
         myMazeTraverser = MazeTraverser.getInstance();
         myRoomDescription = theRoomDescription;
         myMazeTraverser.setRoomDescription(myRoomDescription);
-
         myButtonFactory = new ButtonFactory(80);
     }
 
     /**
-     * Creates an HBox containing directional buttons for navigation.
+     * Creates a GridPane containing directional buttons for navigation.
      *
-     * @return an HBox with directional buttons
+     * @return a GridPane with directional buttons
      */
-    public HBox createDirectionalButtons() {
-        Button myMoveWestButton = myButtonFactory.createButton("Move West", () -> movePlayer("west"));
-        Button myMoveEastButton = myButtonFactory.createButton("Move East", () -> movePlayer("east"));
-        Button myMoveNorthButton = myButtonFactory.createButton("Move North", () -> movePlayer("north"));
-        Button myMoveSouthButton = myButtonFactory.createButton("Move South", () -> movePlayer("south"));
+    public GridPane createDirectionalButtons() {
+        String[] directions = {"North", "West", "East", "South"};
+        int[][] gridPositions = {
+                {1, 0}, // North
+                {0, 1}, // West
+                {2, 1}, // East
+                {1, 2}  // South
+        };
 
-        HBox myMovementButtons = new HBox(10, myMoveWestButton, myMoveEastButton, myMoveNorthButton, myMoveSouthButton);
-        myMovementButtons.setStyle("-fx-alignment: center; -fx-padding: 40 0 0 -150;");
-        return myMovementButtons;
+        GridPane directionalButtonsGrid = new GridPane();
+        directionalButtonsGrid.setHgap(-52);
+        directionalButtonsGrid.setVgap(3);
+        directionalButtonsGrid.setAlignment(Pos.CENTER);
+        directionalButtonsGrid.setTranslateX(-90);
+        directionalButtonsGrid.setTranslateY(-5);
+
+        for (int i = 0; i < directions.length; i++) {
+            String direction = directions[i];
+            int[] position = gridPositions[i];
+            Button button = myButtonFactory.createButton("Move " + direction, () -> movePlayer(direction.toLowerCase()));
+            GridPane.setConstraints(button, position[0], position[1], 1, 1, HPos.CENTER, VPos.CENTER);
+            directionalButtonsGrid.getChildren().add(button);
+        }
+        return directionalButtonsGrid;
     }
 
     /**

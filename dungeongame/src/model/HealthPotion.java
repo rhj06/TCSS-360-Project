@@ -15,7 +15,7 @@ public class HealthPotion extends AbstractItem {
      */
     public HealthPotion() {
 
-        super("Health Potion", "Restores health", 20, 1);
+        super("Health Potion", "Restores health", 50, 1);
     }
 
     /**

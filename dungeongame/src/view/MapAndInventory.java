@@ -1,20 +1,16 @@
 package dungeongame.src.view;
 
 import dungeongame.src.model.AbstractDungeonCharacter;
-import dungeongame.src.model.MapTile;
-import dungeongame.src.model.MapTileList;
 import dungeongame.src.model.Maze;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Represents a combined view for the map and inventory in the dungeon game.
- * Provides functionality to display a map or inventory screen and directional controls.
+ * Represents a view for the map and inventory in the dungeon game.
+ * Provides buttons for displaying the map or inventory screen.
  */
 public class MapAndInventory {
 
@@ -41,33 +37,19 @@ public class MapAndInventory {
     }
 
     /**
-     * Creates the bottom pane containing map, inventory, and directional buttons.
-     *
-     * @param theDirectionalButtons the directional buttons for navigation
-     * @return the created bottom pane
-     */
-    public BorderPane createBottomPane(DirectionalButtons theDirectionalButtons) {
-        BorderPane myBottomPane = new BorderPane();
-        VBox myLeftButtons = createLeftButtons();
-        myBottomPane.setLeft(myLeftButtons);
-        myBottomPane.setCenter(theDirectionalButtons.createDirectionalButtons());
-
-        return myBottomPane;
-    }
-
-    /**
      * Creates a VBox containing buttons for the map and inventory.
+     * These buttons are aligned to the bottom-left of the screen.
      *
      * @return the VBox with map and inventory buttons
      */
-    private VBox createLeftButtons() {
-        VBox myLeftButtons = new VBox(10);
-        myLeftButtons.setPadding(new Insets(10));
-        myLeftButtons.setStyle("-fx-alignment: bottom-left;");
-
+    public VBox createMapAndInventoryButtons() {
+        VBox myLeftButtons = new VBox(0);
+        myLeftButtons.setPadding(new Insets(5));
+        myLeftButtons.setAlignment(Pos.BOTTOM_LEFT);
         myLeftButtons.getChildren().addAll(
                 myButtonFactory.createButton("Map", this::displayMap),
                 myButtonFactory.createButton("Inventory", myInventoryScreen::display)
+
         );
         return myLeftButtons;
     }
@@ -77,7 +59,7 @@ public class MapAndInventory {
      */
     private void displayMap() {
         Stage myMapStage = new Stage();
-        myMapStage.setScene(new MapScene(new BorderPane())); //new MapScreen(myMaze).createScene(myMapStage)
+        myMapStage.setScene(new MapScene(new BorderPane()));
         myMapStage.show();
     }
 }
