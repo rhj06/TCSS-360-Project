@@ -29,6 +29,7 @@ final public class Maze implements Serializable {
     private Point myPlayerCords;
     private int mySize;
 
+
     /**
      * Constructor for the maze object.
      *
@@ -463,24 +464,24 @@ final public class Maze implements Serializable {
         int i = 0;
         int j = 0;
         int side = random.nextInt(4);
+        BossFactory bossFactory = new BossFactory();
 
         if (side == 0) {
             i = 0;
             j = random.nextInt(mySize);
-            myRooms[i][j].setNorthDoor(true);
         } else if (side == 1) {
             i = random.nextInt(mySize);
             j = mySize-1;
-            myRooms[i][j].setEastDoor(true);
         } else if (side == 2) {
             i = mySize - 1;
             j = random.nextInt(mySize);
-            myRooms[i][j].setSouthDoor(true);
         } else if (side == 3) {
             i = random.nextInt(mySize);
             j = 0;
-            myRooms[i][j].setWestDoor(true);
         }
+
+        Boss finalBoss = new BossFactory().createBoss("final_boss");
+        myRooms[i][j].setMonster(finalBoss);
 
         System.out.println("Exit has been spawned.");
     }
@@ -489,21 +490,30 @@ final public class Maze implements Serializable {
         Random random = new Random();
         int i = 0;
         int j = 0;
-        int side = random.nextInt(4);
+        boolean roomSpawnable = false;
 
-        if (side == 0) {
-            i = 0;
-            j = random.nextInt(mySize);
-        } else if (side == 1) {
-            i = random.nextInt(mySize);
-            j = mySize - 1;
-        } else if (side == 2) {
-            i = mySize - 1;
-            j = random.nextInt(mySize);
-        } else if (side == 3) {
-            i = random.nextInt(mySize);
-            j = 0;
+        while (!roomSpawnable) {
+            int side = random.nextInt(4);
+
+            if (side == 0) {
+                i = 0;
+                j = random.nextInt(mySize);
+            } else if (side == 1) {
+                i = random.nextInt(mySize);
+                j = mySize - 1;
+            } else if (side == 2) {
+                i = mySize - 1;
+                j = random.nextInt(mySize);
+            } else if (side == 3) {
+                i = random.nextInt(mySize);
+                j = 0;
+            }
+
+            if(!(myRooms[i][j].getItem() instanceof Pillar)){
+                roomSpawnable = true;
+            }
         }
+
         myPlayerCords.x = j;
         myPlayerCords.y = i;
 
