@@ -42,10 +42,14 @@ public class Arena {
         myPCS.removePropertyChangeListener(theListener);
     }
 
+    public void monsterIsDead(boolean theMonsterState){
+        Platform.runLater(() -> {
+            myPCS.firePropertyChange("monsterIsDead", false, theMonsterState);
+        });
+    }
+
     public void notifyMessage(String theMessage) {
         //Platform.runLater(() -> addMessage(message));
-
-
         Platform.runLater(() -> {
             myPCS.firePropertyChange("message", null, theMessage);
         });
@@ -151,6 +155,12 @@ public class Arena {
             int playerI = Maze.getInstance().getPlayerCords().y;
             int playerJ = Maze.getInstance().getPlayerCords().x;
             Maze.getInstance().setRoomMonster(playerI, playerJ, null);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            monsterIsDead(true);
 
             if(Math.random() < myMonster.getItemDropRate()){
                 System.out.println(myMonster.toString() + " dropped an item.");

@@ -74,6 +74,17 @@ public class ArenaScreen {
         // Show the stage
         myStage.show();
         myArena.startCombatLoop();
+
+        myArena.addPropertyChangeListener(event -> {
+            if ("monsterIsDead".equals(event.getPropertyName())) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(myStage::close);
+            }
+        });
     }
 
     public void addMessage(String message) {

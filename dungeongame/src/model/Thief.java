@@ -2,7 +2,7 @@ package dungeongame.src.model;
 
 import java.io.Serializable;
 
-public final class Thief extends AbstractDungeonCharacter implements Player {
+public final class Thief extends AbstractDungeonCharacter implements Player, TargetedSpecial {
 
     /***/
     private static final String DEFAULT_NAME = "Thief";
@@ -37,10 +37,12 @@ public final class Thief extends AbstractDungeonCharacter implements Player {
      * Increase Speed by 50 units, adds an 80% chance to Attack Twice
      */
     @Override
-    public void useSpecialAttack() {
+    public void useTargetedSpecialAttack(AbstractMonster theMonster) {
         super.setSpeed(SPEED_BONUS);
         if(ableToAttackTwice()) {
-            canAttack(super.getSpeed());
+            int attack = this.getAttack();
+            int damage = Math.max(attack - theMonster.getDefense(), 0);
+            theMonster.changeHealth(-damage * 2);
         }
     }
 
