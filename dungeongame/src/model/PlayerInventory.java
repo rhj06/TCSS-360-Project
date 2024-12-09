@@ -104,6 +104,7 @@ final public class PlayerInventory implements java.io.Serializable {
                 myPCS.firePropertyChange("VisionPotionUsed", null, theItem);
             }
 
+
             myPCS.firePropertyChange("Item Used", null, myInventory);
         } else {
             throw new IllegalArgumentException("No item found / Cannot use item");
