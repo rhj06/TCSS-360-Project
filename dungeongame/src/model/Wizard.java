@@ -33,7 +33,6 @@ public final class Wizard extends AbstractDungeonCharacter implements Player, Ta
         int newHealth = Math.min(this.getHealth() + HEALTH_BONUS, this.getMaxHealth());
         this.getMyPCS().firePropertyChange("Health Changed", this.getHealth(), newHealth);
         super.setHealth(newHealth);
-        // How to decrease Attack of monster?
     }
 
     @Override
