@@ -165,11 +165,11 @@ public class CharacterSelectScreen extends AbstractScreen {
 
         AbstractDungeonCharacter mySelectedHero = switch (theCharacterType.toLowerCase()) {
             case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20,
-                    5, 10, 15, "Gandalf");
-            case "thief" -> HeroFactory.createHero("thief", 90, 8, 15, 10,
-                    20, 10, "Locke");
-            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 25,
-                    3, 8, 20, "Aragorn");
+                    5, 10, 7, "Gandalf");
+            case "thief" -> HeroFactory.createHero("thief", 90, 10, 25, 10,
+                    20, 5, "Locke");
+            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 18,
+                    3, 8, 10, "Aragorn");
             default -> throw new IllegalArgumentException("Invalid character type: " + theCharacterType);
         };
 

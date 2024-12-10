@@ -28,6 +28,7 @@ final public class Maze implements Serializable {
     private Room[][] myRooms;
     private Point myPlayerCords;
     private int mySize;
+    private boolean myHasExit;
 
 
     /**
@@ -40,6 +41,7 @@ final public class Maze implements Serializable {
         mySize = 0;
         myRooms = new Room[0][0];
         myPlayerCords = new Point(0, 0);
+        myHasExit = false;
     }
 
     public static Maze getInstance() {
@@ -72,6 +74,10 @@ final public class Maze implements Serializable {
      */
     public Room[][] getRooms() {
         return myRooms;
+    }
+
+    public boolean hasExit() {
+        return myHasExit;
     }
 
     /**
@@ -483,14 +489,14 @@ final public class Maze implements Serializable {
                 j = 0;
             }
 
-            if(myRooms[i][j].getItem() != myRooms[myPlayerCords.y][myPlayerCords.x]){
+            if(myRooms[i][j] != myRooms[myPlayerCords.y][myPlayerCords.x]){
                 roomSpawnable = true;
             }
 
         }
         Boss finalBoss = new BossFactory().createBoss("final_boss");
         myRooms[i][j].setMonster(finalBoss);
-
+        myHasExit = true;
         System.out.println("Exit has been spawned.");
     }
 

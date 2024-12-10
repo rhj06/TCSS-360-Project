@@ -21,6 +21,7 @@ final public class PlayerInventory implements java.io.Serializable {
 
     private PropertyChangeSupport myPCS;
     private Map<Item, Integer> myInventory;
+    private Player myPlayer;
 
     /**
      * Constructs an empty inventory that tracks the items the player has picked up and used.
@@ -28,6 +29,7 @@ final public class PlayerInventory implements java.io.Serializable {
     public PlayerInventory() {
         myPCS = new PropertyChangeSupport(this);
         myInventory = new HashMap<Item, Integer>();
+        myPlayer = null;
     }
 
     public static PlayerInventory getInstance() {
@@ -39,6 +41,10 @@ final public class PlayerInventory implements java.io.Serializable {
 
     public void updateFrom(PlayerInventory theOtherInventory) {
         myInventory = theOtherInventory.myInventory;
+    }
+
+    public void setPlayer(Player thePlayer) {
+        myPlayer = thePlayer;
     }
 
     /**
@@ -96,16 +102,22 @@ final public class PlayerInventory implements java.io.Serializable {
                 myInventory.remove(theItem);
             }
 
-            if (theItem instanceof HealthPotion) {
-                myPCS.firePropertyChange("HealthPotionUsed", null, theItem);
+            if (!(theItem instanceof VisionPotion)) {
+                theItem.useItem(((AbstractDungeonCharacter)myPlayer));
             }
 
+
+
+//            if (theItem instanceof HealthPotion) {
+//                myPCS.firePropertyChange("HealthPotionUsed", null, theItem);
+//            }
+//
             if (theItem instanceof VisionPotion) {
                 myPCS.firePropertyChange("VisionPotionUsed", null, theItem);
             }
-
-
-            myPCS.firePropertyChange("Item Used", null, myInventory);
+//
+//
+//            myPCS.firePropertyChange("Item Used", null, myInventory);
         } else {
             throw new IllegalArgumentException("No item found / Cannot use item");
         }
@@ -121,7 +133,8 @@ final public class PlayerInventory implements java.io.Serializable {
         if (pillars.contains("Encapsulation Pillar") &&
                 pillars.contains("Inheritance Pillar") &&
                 pillars.contains("Polymorphism Pillar") &&
-                pillars.contains("Abstraction Pillar")) {
+                pillars.contains("Abstraction Pillar") &&
+                !Maze.getInstance().hasExit()) {
             Maze.getInstance().spawnExit();
         }
     }

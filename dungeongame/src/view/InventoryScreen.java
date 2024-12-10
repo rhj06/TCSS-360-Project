@@ -1,9 +1,6 @@
 package dungeongame.src.view;
 
-import dungeongame.src.model.AbstractDungeonCharacter;
-import dungeongame.src.model.Item;
-import dungeongame.src.model.Pillar;
-import dungeongame.src.model.PlayerInventory;
+import dungeongame.src.model.*;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -54,6 +51,7 @@ public class InventoryScreen extends AbstractScreen {
     public InventoryScreen(AbstractDungeonCharacter theCharacter) {
         myCharacter = theCharacter;
         myInventory = PlayerInventory.getInstance();
+        myInventory.setPlayer(((Player)myCharacter));
         myButtonFactory = new ButtonFactory(150);
 
         myPotionButtons = new HashMap<>();
