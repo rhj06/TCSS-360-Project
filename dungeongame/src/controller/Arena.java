@@ -86,7 +86,7 @@ public class Arena {
                     myMonster.getMaxHealth()
             );
 
-            if(playerTurn){
+            if(playerTurn && ((AbstractDungeonCharacter) myPlayer).getHealth() != 0){
                 //needs a listener to set playerMove
                 // Wait for player input via PropertyChangeListener
                 while (myPlayerMove == -1) {
@@ -144,7 +144,9 @@ public class Arena {
                     playerTurn = false;
                 }
 
-            } else if (myMonster.getHealth() > 0){
+            }
+
+            if (!playerTurn && myMonster.getHealth() != 0){
                 if(myMonster.canHeal()){
                     myMonster.changeHealth(myMonster.getMaxHealth()/10);
                     System.out.println("Monster healed " + myMonster.getMaxHealth()/10 + " health.");
@@ -199,15 +201,15 @@ public class Arena {
                 Item item = myMonster.getRandomItem();
                 myInventory.addItem(item);
             }
-        }
-        else {
-            //System.out.println("Game Over");
+        } else {
+            System.out.println("Game Over");
             notifyMessage(myPlayer.toString() + " is dead. Game over.");
-            Platform.runLater(() -> {
-                System.out.println("Game Over");
-                notifyMessage(myPlayer.toString() + " is dead. Game over.");
-                playerIsDead(true);
-            });
+            playerIsDead(true);
+//            Platform.runLater(() -> {
+//                //System.out.println("Game Over");
+//                //notifyMessage(myPlayer.toString() + " is dead. Game over.");
+//                playerIsDead(true);
+//            });
 
         }
 
