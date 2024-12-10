@@ -4,6 +4,8 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * MapTile is a Rectangle with a uniques image file name and a constant size
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
  */
 public class MapTile extends Rectangle {
 

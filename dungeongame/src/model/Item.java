@@ -7,6 +7,7 @@ package dungeongame.src.model;
  * Implementing classes must define how the item is used by the player.
  *
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
+ * @version 1.0
  */
 public interface Item {
 
@@ -39,16 +40,9 @@ public interface Item {
     int getMyItemQuantity();
 
     /**
-     * Checks if the player has this item.
-     *
-     * @return True if the player has the item, false otherwise.
-     */
-    boolean hasItem();
-
-    /**
      * Defines the behavior when the item is used by the player
      *
      * @param
      */
-    void useItem(Character theCharacter);
+    void useItem(final Character theCharacter);
 }

@@ -1,5 +1,10 @@
 package dungeongame.src.model;
 
+/**
+ * Four way tile object
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
+ */
 public final class Four_Way_Tile extends MapTile {
 
     /**

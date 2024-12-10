@@ -4,6 +4,11 @@ import javafx.beans.property.IntegerProperty;
 
 import java.beans.PropertyChangeSupport;
 
+/**
+ * Character interface for dungeon game
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
+ */
 public interface Character {
 
     /**

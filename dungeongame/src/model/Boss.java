@@ -2,7 +2,9 @@ package dungeongame.src.model;
 
 /**
  * Boss class extends Abstract Monster
- * Creates a boss monster to
+ * Creates a boss monster
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
  */
 public final class Boss extends AbstractMonster {
 
