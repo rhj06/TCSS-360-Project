@@ -145,7 +145,6 @@ public class ArenaScreen {
                 150,
                 ((AbstractDungeonCharacter) myPlayer).getCurHealthProperty(),
                 ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
-                false,
                 myPlayer.toString()
         );
 
@@ -156,7 +155,6 @@ public class ArenaScreen {
                 150,
                 myMonster.getCurHealthProperty(),
                 myMonster.getMaxHealth(),
-                true,
                 myMonster.toString()
         );
 
@@ -178,16 +176,13 @@ public class ArenaScreen {
      * @param mirror       Whether to mirror the image horizontally.
      * @return A VBox containing the image and health label.
      */
-    private VBox createCharacterDisplay(String theImagePath, int theWidth, int theHeight, IntegerProperty theCurrentHealthProperty, int theMaxHealth, boolean theMirror, String theName) {
+    private VBox createCharacterDisplay(String theImagePath, int theWidth, int theHeight, IntegerProperty theCurrentHealthProperty, int theMaxHealth, String theName) {
         // Create the name label
         Label nameLabel = new Label(theName);
         nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: black;");
 
         // Create the image view
         ImageView imageView = createImageView(theImagePath, theWidth, theHeight);
-        if (theMirror) {
-            imageView.setScaleX(-1);
-        }
 
         // Create the health label
         Label healthLabel = new Label();
