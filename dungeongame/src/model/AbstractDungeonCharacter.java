@@ -124,9 +124,8 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @param theAttackBonus
      */
     @Override
-    public void setAttack(int theAttackBonus) {
-//         myMinAttack += theAttackBonus;
-//         myMaxAttack += theAttackBonus;
+    public int setAttack(int theAttackBonus) {
+        return getAttack();
     }
 
     /**

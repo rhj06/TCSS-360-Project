@@ -101,10 +101,10 @@ public class MazeBorderPane extends BorderPane {
             }
         }
         ImageView sprite = new ImageView(new Image("file:character_sprite/" + myPlayerSprite));
-        sprite.setFitWidth((double) GRID_SIZE/2);
-        sprite.setFitHeight((double) GRID_SIZE/2);
-        sprite.setX(CHARACTER_SPRITE_SHIFT);
-        sprite.setY(CHARACTER_SPRITE_SHIFT);
+        sprite.setFitWidth((double) GRID_SIZE/2.5);
+        sprite.setFitHeight((double) GRID_SIZE/2.5);
+        sprite.setX(CHARACTER_SPRITE_SHIFT+5);
+        sprite.setY(CHARACTER_SPRITE_SHIFT+5);
 
         this.getChildren().add(sprite);
         if (!myVisionPostionCheck) {

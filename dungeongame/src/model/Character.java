@@ -52,7 +52,7 @@ public interface Character {
      * @param theAttackBonus
      * @return
      */
-    void setAttack(int theAttackBonus);
+    int setAttack(int theAttackBonus);
 
     /**
      * get special attack of character

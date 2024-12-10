@@ -18,6 +18,6 @@ public final class MapTileList<MapTile> extends ArrayList<MapTile> implements Se
     }
 
     public void updateFrom(MapTileList<MapTile> theOtherList) {
-
+        uniqueInstance = theOtherList;
     }
 }
