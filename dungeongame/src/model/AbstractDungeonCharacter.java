@@ -52,7 +52,6 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
      * @param theDefense The Defence
      * @param theName The Name
      */
-
     public AbstractDungeonCharacter(final int theMaxHealth,
                                      final int theMinAttack, final int theMaxAttack,
                                     final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {

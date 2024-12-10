@@ -25,7 +25,7 @@ public class HealthPotion extends AbstractItem {
      * @param theCharacter who will receive the health boost.
      */
     @Override
-    public void useItem(Character theCharacter) {
+    public void useItem(final Character theCharacter) {
         if (theCharacter instanceof AbstractDungeonCharacter dungeonCharacter) {
             int healthBoost = getMyItemValue();
             dungeonCharacter.changeHealth(healthBoost);

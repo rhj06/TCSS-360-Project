@@ -84,16 +84,6 @@ public abstract class AbstractItem implements Item, Serializable {
     public int getMyItemQuantity() { return myItemQuantity; }
 
     /**
-     * Checks whether the player has this item.
-     *
-     * @return True if the player has the item, false otherwise.
-     */
-    @Override
-    public boolean hasItem() {
-        return myItemValue >= 0;
-    }
-
-    /**
      * Defines the behavior when this item is used by a player. Subclasses must provide a specific implementation
      * of how the item affects the player.
      *
