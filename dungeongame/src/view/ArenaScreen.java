@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayDeque;
@@ -54,6 +55,9 @@ public class ArenaScreen {
         myPlayer = thePlayer;
         myMonster = theMonster;
         myRecentMessages = new ArrayDeque<>(5);
+
+        myStage.initModality(Modality.APPLICATION_MODAL);
+        //yStage.initOwner(primaryStage);
 
         myMessageLabel = new Label("Fight begins!");
         myMessageLabel.setStyle("-fx-font-size: 14; -fx-text-fill: black;");

@@ -146,6 +146,12 @@ public class Arena {
 
             }
 
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+
             if (!playerTurn && myMonster.getHealth() != 0){
                 if(myMonster.canHeal()){
                     myMonster.changeHealth(myMonster.getMaxHealth()/10);
@@ -202,8 +208,16 @@ public class Arena {
                 myInventory.addItem(item);
             }
         } else {
+            //Javafx Alert
+            //modally (window has focus)
+            //dialog class
             System.out.println("Game Over");
             notifyMessage(myPlayer.toString() + " is dead. Game over.");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             playerIsDead(true);
 //            Platform.runLater(() -> {
 //                //System.out.println("Game Over");
