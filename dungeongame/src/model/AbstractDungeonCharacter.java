@@ -17,7 +17,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     /***/
     private static final String DEFAULT_NAME = "Dungeon Character";
 
-    private final IntegerProperty myCurHealthProperty = new SimpleIntegerProperty();
+    private transient final IntegerProperty myCurHealthProperty = new SimpleIntegerProperty();
 
     private final PropertyChangeSupport myPCS;
     /***/

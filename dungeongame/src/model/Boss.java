@@ -13,6 +13,10 @@ public class Boss extends AbstractMonster {
         myType = theType;
     }
 
+    public String getType() {
+        return myType;
+    }
+
     @Override
     public Item getRandomItem() {
         return new HealthPotion();

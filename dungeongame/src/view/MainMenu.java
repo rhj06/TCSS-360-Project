@@ -1,5 +1,6 @@
 package dungeongame.src.view;
 
+import dungeongame.src.controller.GameSaver;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -87,6 +88,6 @@ public class MainMenu extends AbstractScreen {
      * Placeholder for the game loading logic.
      */
     private void loadGame() {
-        // Placeholder for loading game logic
+        GameSaver.getInstance().loadGame(); // Placeholder for loading game logic
     }
 }

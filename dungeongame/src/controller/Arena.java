@@ -155,6 +155,15 @@ public class Arena {
             int playerI = Maze.getInstance().getPlayerCords().y;
             int playerJ = Maze.getInstance().getPlayerCords().x;
             Maze.getInstance().setRoomMonster(playerI, playerJ, null);
+
+            if(myMonster instanceof Boss) {
+                if(((Boss)myMonster).getType() == "Dragon") {
+                    Platform.runLater(() -> {
+                        myPCS.firePropertyChange("final_boss_killed", null, null);
+                    });
+                }
+            }
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -171,6 +180,10 @@ public class Arena {
         } else {
             System.out.println("Game Over");
             notifyMessage(myPlayer.toString() + " is dead. Game over.");
+            Platform.runLater(() -> {
+                myPCS.firePropertyChange("player_killed", null, null);
+            });
+
         }
 
     }

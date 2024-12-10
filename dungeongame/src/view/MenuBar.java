@@ -1,5 +1,6 @@
 package dungeongame.src.view;
 
+import dungeongame.src.controller.GameSaver;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
@@ -18,7 +19,8 @@ public class MenuBar {
         menuButton.setStyle("-fx-font-size: 16px;");
 
         MenuItem saveGame = new MenuItem("Save Game");
-        saveGame.setOnAction(e -> System.out.println("Game saved!"));
+        saveGame.setOnAction(e -> {save();
+            System.out.println("Game saved!");});
 
         MenuItem quitGame = new MenuItem("Quit");
         quitGame.setOnAction(e -> myStage.close());
@@ -29,4 +31,9 @@ public class MenuBar {
         menuBox.setStyle("-fx-alignment: top-left; -fx-padding: 10;");
         return menuBox;
     }
+
+    public void save() {
+        GameSaver.getInstance().saveGame();
+    }
+
 }

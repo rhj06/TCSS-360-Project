@@ -16,6 +16,8 @@ public class GameSaver implements Serializable {
     @Serial
     private static final long serialVersionUID = 35681618646L;
 
+    private static GameSaver uniqueInstance;
+
     //private Maze myMaze;
     //private PlayerInventory myPlayerInventory;
     private Player myPlayer;
@@ -27,9 +29,20 @@ public class GameSaver implements Serializable {
      * //@param thePlayerInventory the player's inventory.
      * @param thePlayer the game player.
      */
-    public GameSaver(Player thePlayer) {
+    private GameSaver() {
         //myMaze = theMaze;
         //myPlayerInventory = thePlayerInventory;
+        myPlayer = null;
+    }
+
+    public static GameSaver getInstance() {
+        if (uniqueInstance == null) {
+            uniqueInstance = new GameSaver();
+        }
+        return uniqueInstance;
+    }
+
+    public void setPlayer(Player thePlayer) {
         myPlayer = thePlayer;
     }
 
@@ -85,25 +98,25 @@ public class GameSaver implements Serializable {
         }
     }
 
-    //test main
-    public static void main(String[] args){
-        Maze maze = Maze.getInstance();
-        maze.setMazeSize(5);
-        PlayerInventory playerInventory = PlayerInventory.getInstance();
-        Wizard wizard = new Wizard(10,10,10,10,10, 10, "10");
-        maze.generateMaze();
-        maze.printMaze();
-        System.out.println();
-
-        GameSaver gameSaver = new GameSaver(wizard);
-        gameSaver.saveGame();
-
-        Maze.getInstance().setMazeSize(4);
-        maze.generateMaze();
-
-        gameSaver.loadGame();
-
-        Maze.getInstance().printMaze();
-
-    }
+//    //test main
+//    public static void main(String[] args){
+//        Maze maze = Maze.getInstance();
+//        maze.setMazeSize(5);
+//        PlayerInventory playerInventory = PlayerInventory.getInstance();
+//        Wizard wizard = new Wizard(10,10,10,10,10, 10, "10");
+//        maze.generateMaze();
+//        maze.printMaze();
+//        System.out.println();
+//
+//        GameSaver gameSaver = new GameSaver(wizard);
+//        gameSaver.saveGame();
+//
+//        Maze.getInstance().setMazeSize(4);
+//        maze.generateMaze();
+//
+//        gameSaver.loadGame();
+//
+//        Maze.getInstance().printMaze();
+//
+//    }
 }
