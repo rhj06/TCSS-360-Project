@@ -66,7 +66,7 @@ public class Arena {
         //Random rand = new Random();
         boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).getSpeed() > myMonster.getSpeed();
 
-        while(((AbstractDungeonCharacter)myPlayer).getHealth() > 0 && myMonster.getHealth() > 0) {
+        while((((AbstractDungeonCharacter)myPlayer).getHealth() > 0) && (myMonster.getHealth() > 0)) {
             System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
                     ((AbstractDungeonCharacter) myPlayer).getHealth(),
                     ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
@@ -144,6 +144,13 @@ public class Arena {
                 ((AbstractDungeonCharacter)myPlayer).changeHealth(-damage);
                 System.out.println("Monster Attacked");
                 notifyMessage(myMonster.toString() + " attacked dealing " + damage + " damage.");
+                Platform.runLater(() -> {
+                    if (((AbstractDungeonCharacter)myPlayer).getHealth() <= 0) {
+                        System.out.println("Game Over");
+                        notifyMessage(myPlayer.toString() + " is dead. Game over.");
+                        myPCS.firePropertyChange("player_killed", null, null);
+                    }
+                });
 
                 playerTurn = true;
             }
@@ -177,14 +184,15 @@ public class Arena {
                 Item item = myMonster.getRandomItem();
                 myInventory.addItem(item);
             }
-        } else {
-            System.out.println("Game Over");
-            notifyMessage(myPlayer.toString() + " is dead. Game over.");
-            Platform.runLater(() -> {
-                myPCS.firePropertyChange("player_killed", null, null);
-            });
-
         }
+//        else {
+//            System.out.println("Game Over");
+//            notifyMessage(myPlayer.toString() + " is dead. Game over.");
+//            Platform.runLater(() -> {
+//                myPCS.firePropertyChange("player_killed", null, null);
+//            });
+//
+//        }
 
     }
 
