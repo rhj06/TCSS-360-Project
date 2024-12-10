@@ -2,20 +2,28 @@ package dungeongame.src.model;
 
 import javafx.scene.shape.Rectangle;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * MapTile is a Rectangle with a uniques image file name and a constant size
  * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
  * @version 1.0
  */
-public class MapTile extends Rectangle {
+public class MapTile extends Rectangle implements Serializable {
 
-    /**Constant Default size of Tile*/
-    /**Constant Degree of Rotation*/
+    @Serial
+    private static final long serialVersionUID = 354215342543L;
+    /** Constant of 360 */
+    private static final int THREE_SIXTY = 360;
+    /** Constant Degree of Rotation */
     private static final int DEGREE_OF_ROTATION = 90;
     /**X position*/
-    private final int myPositionX;
+    private int myPositionX;
     /**Y position*/
-    private final int myPositionY;
+    private int myPositionY;
+    /** Size of Square */
+    private int mySize;
 
     /**
      * MapTile Constructor
@@ -26,8 +34,14 @@ public class MapTile extends Rectangle {
         super(theXCoor, theYCoor, theWidth, theHeight);
         myPositionX = theXCoor;
         myPositionY = theYCoor;
+        mySize = theWidth;
     }
 
+//    public void updateFrom(final MapTile theOther) {
+//        myPositionX = theOther.myPositionX;
+//        myPositionY = theOther.myPositionY;
+//        mySize = theOther.mySize;
+//    }
     /**
      * Default file Name
      * @return Basic_Tile.png
@@ -40,7 +54,7 @@ public class MapTile extends Rectangle {
      * get tiles current X position
      * @return myPositionX
      */
-    public int getMyPositionX() {
+    public int getPositionX() {
         return myPositionX;
     }
 
@@ -48,7 +62,7 @@ public class MapTile extends Rectangle {
      * get tiles current Y position
      * @return myPositionY
      */
-    public int getStartPositionY() {
+    public int getPositionY() {
         return myPositionY;
     }
 
@@ -56,13 +70,13 @@ public class MapTile extends Rectangle {
      * Rotate Method for rotating object clockwise 90 degrees
      */
     public void rotateClockwise() {
-        this.setRotate((this.getRotate() + DEGREE_OF_ROTATION) % 360);
+        this.setRotate((this.getRotate() + DEGREE_OF_ROTATION) % THREE_SIXTY);
     }
 
     /**
      * Rotate Method for rotating object counterclockwise 90 degrees
      */
     public void rotateCounterClockwise() {
-        this.setRotate((this.getRotate() - DEGREE_OF_ROTATION + 360) % 360);
+        this.setRotate((this.getRotate() - DEGREE_OF_ROTATION + THREE_SIXTY) % THREE_SIXTY);
     }
 }
