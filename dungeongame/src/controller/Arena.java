@@ -152,6 +152,7 @@ public class Arena {
                     }
                 });
 
+
                 playerTurn = true;
             }
         }
