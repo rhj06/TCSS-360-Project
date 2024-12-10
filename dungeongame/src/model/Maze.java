@@ -37,6 +37,8 @@ final public class Maze implements Serializable {
     private static final int SEVEN = 7;
     /** Constant of 8 */
     private static final int EIGHT = 8;
+    /** Constant of 100 */
+    private static final int HUNDRED = 100;
     /** Property change support */
     private final PropertyChangeSupport myPCS;
     /** Matrix containing each room*/
@@ -254,7 +256,7 @@ final public class Maze implements Serializable {
      * Move Player coordinates north in Room Matrix
      */
     public void goNorth(){
-        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x]; //Needed?
         if (canGoNorth()){
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y-1);
@@ -267,7 +269,7 @@ final public class Maze implements Serializable {
      * Move Player coordinates east in Room Matrix
      */
     public void goEast(){
-        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x]; //Needed?
         if (canGoEast()){
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x+1, myPlayerCords.y);
@@ -280,7 +282,7 @@ final public class Maze implements Serializable {
      * Move Player coordinates south in Room Matrix
      */
     public void goSouth(){
-        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x]; //Needed?
         if (canGoSouth()){
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x, myPlayerCords.y+1);
@@ -293,7 +295,7 @@ final public class Maze implements Serializable {
      * Move Player coordinates west in Room Matrix
      */
     public void goWest(){
-        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x];
+        Room playerStartRoom = myRooms[myPlayerCords.y][myPlayerCords.x]; //Needed?
         if (canGoWest()){
             Point oldCords = myPlayerCords;
             myPlayerCords.setLocation(myPlayerCords.x-1, myPlayerCords.y);
@@ -510,19 +512,19 @@ final public class Maze implements Serializable {
      */
     private void generateItems() {
         Random random = new Random();
-        List<Integer> items = new ArrayList<>(Arrays.asList(1, 2, 3));
+        List<Integer> items = new ArrayList<>(Arrays.asList(1, TWO, THREE));
 
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
-                int gen = random.nextInt(100);
+                int gen = random.nextInt(HUNDRED);
                 if (gen <= ITEM_GEN_PERCENT) {
                     Collections.shuffle(items);
-                    int potion = items.get(0);
+                    int potion = items.getFirst();
                     if (potion == 1) {
                         myRooms[i][j].setItem(new HealthPotion());
-                    } else if (potion == 2) {
+                    } else if (potion == TWO) {
                         myRooms[i][j].setItem(new SpeedPotion());
-                    } else if (potion == 3) {
+                    } else if (potion == THREE) {
                         myRooms[i][j].setItem(new VisionPotion());
                     }
                     System.out.println("Item added at (" + i + ", " + j + "): " + myRooms[i][j].getItem());
@@ -576,7 +578,7 @@ final public class Maze implements Serializable {
 
         Random random = new Random();
 
-        int monstersToSpawn = ((mySize*mySize) * MONSTER_SPAWN_RATE) / 100;
+        int monstersToSpawn = ((mySize*mySize) * MONSTER_SPAWN_RATE) / HUNDRED;
 
         while(monstersToSpawn != 0) {
             Room room = myRooms[random.nextInt(mySize)][random.nextInt(mySize)];
@@ -596,24 +598,25 @@ final public class Maze implements Serializable {
         Random random = new Random();
         int i = 0;
         int j = 0;
-        int side = random.nextInt(4);
+        int side = random.nextInt(FOUR);
         BossFactory bossFactory = new BossFactory(); //Is this needed?
 
         boolean roomSpawnable = false;
 
         while (!roomSpawnable) {
             if (side == 0) {
-                i = 0;
+//                i = 0;
                 j = random.nextInt(mySize);
             } else if (side == 1) {
                 i = random.nextInt(mySize);
                 j = mySize - 1;
-            } else if (side == 2) {
+            } else if (side == TWO) {
                 i = mySize - 1;
                 j = random.nextInt(mySize);
-            } else if (side == 3) {
+            } else {
+//                if (side == THREE)
                 i = random.nextInt(mySize);
-                j = 0;
+//                j = 0;
             }
 
             if(myRooms[i][j] != myRooms[myPlayerCords.y][myPlayerCords.x]){
@@ -645,10 +648,11 @@ final public class Maze implements Serializable {
             } else if (side == 1) {
                 i = random.nextInt(mySize);
                 j = mySize - 1;
-            } else if (side == 2) {
+            } else if (side == TWO) {
                 i = mySize - 1;
                 j = random.nextInt(mySize);
-            } else if (side == 3) {
+            } else {
+//                if (side == THREE)
                 i = random.nextInt(mySize);
                 j = 0;
             }
