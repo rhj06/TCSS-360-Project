@@ -11,6 +11,7 @@ import java.util.Objects;
  * and checking whether the player possesses the item.
  *
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
+ * @version 1.0
  */
 public abstract class AbstractItem implements Item, Serializable {
     @Serial
@@ -27,6 +28,7 @@ public abstract class AbstractItem implements Item, Serializable {
 
     /** The number of this item available. */
     private final int myItemQuantity;
+
     /**
      * Constructs an AbstractItem with the specified name, description, value,
      * and item quantity.
@@ -36,7 +38,7 @@ public abstract class AbstractItem implements Item, Serializable {
      * @param theItemValue The value of the item.
      * @param theItemQuantity The initial number of this item.
      */
-    public AbstractItem(String theItemName, String theItemDescription, int theItemValue, int theItemQuantity) {
+    public AbstractItem(final String theItemName, final String theItemDescription, final int theItemValue, final int theItemQuantity) {
         myItemName = theItemName;
         myItemDescription = theItemDescription;
         myItemValue = theItemValue;
@@ -98,7 +100,7 @@ public abstract class AbstractItem implements Item, Serializable {
      * @param theCharacter allows the player to use this item.
      */
     @Override
-    public void useItem(Character theCharacter) {
+    public void useItem(final Character theCharacter) {
     }
 
     /**
@@ -119,7 +121,7 @@ public abstract class AbstractItem implements Item, Serializable {
      * @return {@code true} if the object is equal to this item, {@code false} otherwise.
      */
     @Override
-    public boolean equals(Object theObject) {
+    public boolean equals(final Object theObject) {
         if (this == theObject) return true;
         if (theObject == null || getClass() != theObject.getClass()) return false;
         AbstractItem that = (AbstractItem) theObject;

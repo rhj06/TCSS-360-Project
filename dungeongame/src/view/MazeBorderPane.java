@@ -4,7 +4,6 @@ import dungeongame.src.model.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -14,7 +13,7 @@ import javafx.scene.shape.Shape;
  */
 public class MazeBorderPane extends BorderPane {
 
-    /**Grid size constant*/
+    /** Grid size constant */
     private static final int GRID_SIZE = 150;
     /** Warrior sprite offset for center placement */
     private static final int WARRIOR_SPRITE_SHIFT = GRID_SIZE + 40;
@@ -38,7 +37,7 @@ public class MazeBorderPane extends BorderPane {
     private final MapTile[][] myTiles;
     /** My instance of maze */
     private final Maze myMaze;
-    /***/
+    /** my Instance of PlayerInventory */
     private final PlayerInventory myPlayerInventory;
     /** my neighboring rooms */
     private Room[] myRoom;
@@ -110,7 +109,7 @@ public class MazeBorderPane extends BorderPane {
                 }
             }
         }
-        ImageView sprite = getCharacterSpriteImage();
+        ImageView sprite = createCharacterSpriteImage();
 
         this.getChildren().add(sprite);
         if (!myVisionPostionCheck) {
@@ -119,7 +118,11 @@ public class MazeBorderPane extends BorderPane {
 
     }
 
-    private ImageView getCharacterSpriteImage() {
+    /**
+     * Create current character sprite for MazeBorderPane
+     * @return ImageView (Character Sprite PNG)
+     */
+    private ImageView createCharacterSpriteImage() {
         ImageView sprite = new ImageView(new Image("file:character_sprite/" + myPlayerSprite));
         if ("warrior.png".equals(myPlayerSprite)) {
             sprite.setFitWidth(WARRIOR_SPRITE_SCALE);

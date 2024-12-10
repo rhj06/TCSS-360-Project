@@ -2,7 +2,7 @@ package dungeongame.src.model;
 
 import java.util.Random;
 
-public class BossFactory {
+public final class BossFactory {
     private static final String MINI_BOSS_TYPE = "Lich";
     private static final String FINAL_BOSS_TYPE = "Dragon";
 
@@ -13,7 +13,7 @@ public class BossFactory {
             "Vexor", "Wulfric", "Xargon", "Jeff", "Zalrok", "Zephyr", "Rynor",
             "Ryan", "Malakar"};
 
-    public Boss createBoss(String theString){
+    public Boss createBoss(final String theString){
         Boss boss = null;
         Random rand = new Random();
 

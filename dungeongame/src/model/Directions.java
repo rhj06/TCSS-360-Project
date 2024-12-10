@@ -8,7 +8,7 @@ public enum Directions {
 
     final private int myValue;
 
-    Directions(int theValue) {
+    Directions(final int theValue) {
         myValue = theValue;
     }
 

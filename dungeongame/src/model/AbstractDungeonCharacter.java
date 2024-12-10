@@ -3,49 +3,54 @@ package dungeongame.src.model;
 import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
 import java.beans.PropertyChangeSupport;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Locale;
 import java.util.Random;
 
+/**
+ * Abstract Class for Dungeon Character
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
+ */
 public abstract class AbstractDungeonCharacter implements Character, Serializable {
     @Serial
     private static final long serialVersionUID = 1351355L;
 
-    /***/
+    /** Default Name */
     private static final String DEFAULT_NAME = "Dungeon Character";
-
+    /** Communicate CurrentHealth with GUI */
     private transient final IntegerProperty myCurHealthProperty = new SimpleIntegerProperty();
-
+    /** Property Change Listener */
     private final PropertyChangeSupport myPCS;
-    /***/
+    /** My Maximum Health */
     private final int myMaxHealth;
-    /***/
-    private int myCurrHealth;
-    /***/
+    /** My Minimum possible attack */
     private final int myMinAttack;
-    /***/
+    /** my maximum possible attack */
     private final int myMaxAttack;
-    /***/
-    private int myMinSpeed;
-    /***/
-    private int myMaxSpeed;
-    /***/
-    private int myDefense;
-    /***/
+    /** my defense for incoming attacks */
+    private final int myDefense;
+    /** Name of Character */
     private final String myName;
+    /** my Current Health */
+    private int myCurrHealth;
+    /** My minimum speed */
+    private int myMinSpeed;
+    /** My maximum speed */
+    private int myMaxSpeed;
+
 
     /**
-     *
-     * @param theMaxHealth
-     * @param theMinAttack
-     * @param theMaxAttack
-     * @param theMinSpeed
-     * @param theMaxSpeed
-     * @param theDefense
-     * @param theName
+     * Abstract Class for a Dungeon Character
+     * @param theMaxHealth The Max Health
+     * @param theMinAttack The Min Attack
+     * @param theMaxAttack The Max Attack
+     * @param theMinSpeed the Min Speed
+     * @param theMaxSpeed The Max Speed
+     * @param theDefense The Defence
+     * @param theName The Name
      */
     public AbstractDungeonCharacter(final int theMaxHealth,
                                      final int theMinAttack, final int theMaxAttack,
@@ -67,10 +72,6 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         return myPCS;
     }
 
-    /**
-     *
-     * @return
-     */
     public int getHealth() {
         return myCurHealthProperty.get();
     }
@@ -83,10 +84,6 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         return myMaxHealth;
     }
 
-    /**
-     *
-     * @param theHealth
-     */
     public void setHealth(final int theHealth) {
         if (theHealth > myMaxHealth) {
             myCurrHealth = myMaxHealth;
@@ -109,45 +106,16 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
 
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public int getAttack() {
         int attackRange = new Random().nextInt(myMaxAttack-myMinAttack);
         return myMinAttack + attackRange;
     }
 
-    /**
-     *
-     * @param theAttackBonus
-     */
-    @Override
-    public int setAttack(int theAttackBonus) {
-        return getAttack();
-    }
-
-    /**
-     *
-     * @return
-     */
     public int getDefense() {
         return myDefense;
     }
 
-    /**
-     *
-     * @param theDefense
-     */
-    public void setDefense(final int theDefense) {
-        myDefense += theDefense;
-    }
-
-    /**
-     *
-     * @return
-     */
     public int getSpeed() {
         if (myMaxSpeed <= myMinSpeed) {
             return myMinSpeed;
@@ -156,28 +124,15 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         return myMinSpeed + speedRange;
     }
 
-    /**
-     *
-     * @param theSpeedBonus
-     */
     public void setSpeed(final int theSpeedBonus) {
         myMinSpeed += theSpeedBonus;
         myMaxSpeed += theSpeedBonus;
     }
 
-    /**
-     *
-     * @param theOtherSpeed
-     * @return
-     */
     public boolean canAttack(int theOtherSpeed) {
         return getSpeed() >= theOtherSpeed;
     }
 
-    /**
-     *
-     * @return
-     */
     public String getImageFileName() {
         final StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName().toLowerCase(Locale.ENGLISH));
@@ -192,10 +147,6 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         return myCurrHealth <= 0;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public String toString() {
         return myName + " the " + DEFAULT_NAME;
