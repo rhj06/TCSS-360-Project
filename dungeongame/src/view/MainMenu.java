@@ -79,7 +79,7 @@ public class MainMenu extends AbstractScreen {
                 TITLE_TEXT, FONT_PATH, TITLE_FONT_SIZE,
                 "-fx-text-fill: rgba(186,8,8,0.99); -fx-font-weight: bold;"
         );
-        titleLabel.setPadding(new Insets(30, 0, 50, 0)); // Add padding separately
+        titleLabel.setPadding(new Insets(30, 0, 50, 0));
         return titleLabel;
     }
 

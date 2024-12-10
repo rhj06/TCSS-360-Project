@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,46 +16,17 @@ import javafx.stage.Stage;
 /**
  * Represents the character selection screen where the player selects their character
  * and game difficulty before starting the dungeon adventure.
- * <p>
- * This screen allows users to choose from different characters (e.g., Wizard, Warrior, Thief)
- * and set the game difficulty. Upon selection, the game transitions to the main game screen.
- * </p>
  */
 public class CharacterSelectScreen extends AbstractScreen {
-    /**
-     * The fixed width of the character selection buttons.
-     */
     private static final double BUTTON_WIDTH = 150;
-
-    /**
-     * The font size used for character selection buttons.
-     */
     private static final double BUTTON_FONT_SIZE = 18;
-
-    /**
-     * The file path to the font used for screen labels.
-     */
     private static final String FONT_PATH = "file:.idea/resources/fonts/OldeEnglish.ttf";
-
-    /**
-     * The file path to the font used for character selection buttons.
-     */
     private static final String BUTTON_FONT_PATH = "file:.idea/resources/fonts/VIKING-N.TTF";
-
-    /**
-     * The file path to the background image for the character selection screen.
-     */
     private static final String BACKGROUND_IMAGE = "file:.idea/resources/characterselect.jpg";
 
-    /**
-     * Factory for creating styled buttons used throughout the screen.
-     */
     private final ButtonFactory myButtonFactory;
-
-    /**
-     * Helper for managing and retrieving the selected game difficulty.
-     */
     private final RadioButtonHelper myRadioButtonHelper;
+    private TextField playerNameField; // Text field for player name input
 
     /**
      * Constructs a new CharacterSelectScreen instance.
@@ -75,6 +47,7 @@ public class CharacterSelectScreen extends AbstractScreen {
     public Scene createScene(Stage theStage) {
         VBox myMainLayout = new VBox(10,
                 createTitleLabel(),
+                createPlayerNameInput(),
                 createCharacterPanels(theStage),
                 createDifficultySection()
         );
@@ -99,6 +72,28 @@ public class CharacterSelectScreen extends AbstractScreen {
     }
 
     /**
+     * Creates an input field for the player to set their custom name.
+     *
+     * @return the VBox containing the label and text field
+     */
+    private HBox createPlayerNameInput() {
+        Label nameLabel = LabelHelper.createCenteredLabel("Enter Your Name:", FONT_PATH, 20,
+                "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
+
+        playerNameField = new TextField();
+        playerNameField.setPromptText("Enter your hero's name");
+        playerNameField.setMaxWidth(300);
+        playerNameField.setStyle("-fx-background-color: grey; " + "-fx-text-fill: black; ");
+
+        // Create an HBox to align the label and text field horizontally
+        HBox nameInputBox = new HBox(10, nameLabel, playerNameField);
+        nameInputBox.setAlignment(Pos.CENTER);
+        nameInputBox.setPadding(new Insets(-5, 0, 20, 50));
+
+        return nameInputBox;
+    }
+
+    /**
      * Creates the character selection panels, each representing a character type.
      *
      * @param theStage the primary stage used for transitioning to the next screen
@@ -108,13 +103,11 @@ public class CharacterSelectScreen extends AbstractScreen {
         CharacterSelectPanel myPanelCreator = new CharacterSelectPanel(myButtonFactory);
 
         HBox myCharacterPanels = new HBox(10,
-                createCharacterPanel(myPanelCreator, "file:ThiefSelectTile.jpg", "Thief",
-                        theStage),
-                createCharacterPanel(myPanelCreator, "file:WarriorSelectTile.jpeg", "Warrior",
-                        theStage),
-                createCharacterPanel(myPanelCreator, "file:WizardSelect.png", "Wizard",
-                        theStage)
+                createCharacterPanel(myPanelCreator, "file:ThiefSelectTile.jpg", "Thief", theStage),
+                createCharacterPanel(myPanelCreator, "file:WarriorSelectTile.jpeg", "Warrior", theStage),
+                createCharacterPanel(myPanelCreator, "file:WizardSelect.png", "Wizard", theStage)
         );
+        myCharacterPanels.setTranslateY(-20);
         myCharacterPanels.setAlignment(Pos.CENTER);
         return myCharacterPanels;
     }
@@ -124,16 +117,21 @@ public class CharacterSelectScreen extends AbstractScreen {
      *
      * @return the container for difficulty selection elements
      */
-    private VBox createDifficultySection() {
-        Label myDifficultyLabel = LabelHelper.createCenteredLabel("Choose Your Difficulty", FONT_PATH,
-                30, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
+    private HBox createDifficultySection() {
+        // Create the label for the difficulty section
+        Label myDifficultyLabel = LabelHelper.createCenteredLabel("Choose Your Difficulty:", FONT_PATH,
+                20, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
-        HBox myDifficultyButtons = myRadioButtonHelper.createDifficultyButtons();
+        // Create the radio buttons using the existing helper
+        HBox difficultyButtons = myRadioButtonHelper.createDifficultyButtons();
+        difficultyButtons.setAlignment(Pos.CENTER_LEFT);
 
-        VBox myDifficultyLayout = new VBox(10, myDifficultyLabel, myDifficultyButtons);
-        myDifficultyLayout.setAlignment(Pos.CENTER);
-        myDifficultyLayout.setPadding(new Insets(-10, 0, 0, 0));
-        return myDifficultyLayout;
+        // Combine the label and radio buttons in an HBox
+        HBox difficultyLayout = new HBox(20, myDifficultyLabel, difficultyButtons);
+        difficultyLayout.setAlignment(Pos.CENTER);
+        difficultyLayout.setPadding(new Insets(-20, 50, 20, 50));
+
+        return difficultyLayout;
     }
 
     /**
@@ -158,30 +156,25 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @param theCharacterType the type of character selected by the player
      */
     private void handleCharacterSelection(Stage theStage, String theCharacterType) {
+        String playerName = playerNameField.getText().trim();
+        if (playerName.isEmpty()) {
+            playerName = "Unknown Hero"; // Default name if no name is entered
+        }
         Maze myMaze = Maze.getInstance();
-        int myMazeSize = myRadioButtonHelper.getSelectedMazeSize(); // Use the shared instance
+        int myMazeSize = myRadioButtonHelper.getSelectedMazeSize();
         myMaze.setMazeSize(myMazeSize);
         myMaze.generateMaze();
 
         AbstractDungeonCharacter mySelectedHero = switch (theCharacterType.toLowerCase()) {
-            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20,
-                    5, 10, 7, "Gandalf");
-            case "thief" -> HeroFactory.createHero("thief", 90, 10, 25, 10,
-                    20, 5, "Locke");
-            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 18,
-                    3, 8, 10, "Aragorn");
+            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20, 5, 10, 7, playerName);
+            case "thief" -> HeroFactory.createHero("thief", 90, 10, 25, 10, 20, 5, playerName);
+            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 18, 3, 8, 10, playerName);
             default -> throw new IllegalArgumentException("Invalid character type: " + theCharacterType);
         };
-
         GameScreen myGameScreen = new GameScreen(myMaze, mySelectedHero);
         theStage.setScene(myGameScreen.createScene(theStage));
         System.out.println("Switching to GameScreen with character: " + mySelectedHero);
-
-        System.out.println("Items");
+        System.out.println("Maze Layout");
         myMaze.printMaze();
-        System.out.println("Player");
-        myMaze.printPlayerCordMaze();
-        System.out.println("Monsters");
-        myMaze.printMonsterMaze();
     }
 }
