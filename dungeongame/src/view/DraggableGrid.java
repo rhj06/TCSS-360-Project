@@ -37,8 +37,8 @@ public final class DraggableGrid extends AbstractGrid {
             final int x = (int) ((myMouseXCoordinate / getMySingleTileSize()) % getMyRowTiles()) * getMySingleTileSize();
             final int y = (int) ((myMouseYCoordinate / getMySingleTileSize()) % getMyColumnTiles()) * getMySingleTileSize();
 
-            theTile.setLayoutX(x - theTile.getMyPositionX());
-            theTile.setLayoutY(y - theTile.getStartPositionY());
+            theTile.setLayoutX(x - theTile.getPositionX());
+            theTile.setLayoutY(y - theTile.getPositionY());
 
             theLastDraggedTile.setMyTile(theTile);
         });

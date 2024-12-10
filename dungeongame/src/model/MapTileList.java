@@ -1,7 +1,6 @@
 package dungeongame.src.model;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -35,5 +34,15 @@ public final class MapTileList<MapTile> extends ArrayList<MapTile> implements Se
      */
     public void updateFrom(MapTileList<MapTile> theOtherList) {
         uniqueInstance = theOtherList;
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject(); // Serialize the default fields// Serialize additional fields
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject(); // Deserialize the default fields
     }
 }
