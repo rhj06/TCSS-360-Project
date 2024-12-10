@@ -16,8 +16,18 @@ public class MazeBorderPane extends BorderPane {
 
     /**Grid size constant*/
     private static final int GRID_SIZE = 150;
-    /** Character sprite offset for center placement */
-    private static final int CHARACTER_SPRITE_SHIFT = GRID_SIZE + 30;
+    /** Warrior sprite offset for center placement */
+    private static final int WARRIOR_SPRITE_SHIFT = GRID_SIZE + 40;
+    /** Warrior sprite scale to fit inside maze tile */
+    private static final double WARRIOR_SPRITE_SCALE = GRID_SIZE / 2.1;
+    /** Thief sprite offset for center placement */
+    private static final int THIEF_SPRITE_SHIFT = GRID_SIZE + 47;
+    /** Thief sprite scale to fit inside maze tile */
+    private static final double Thief_SPRITE_SCALE = GRID_SIZE / 2.5;
+    /** Wizard sprite offset for center placement */
+    private static final int WIZARD_SPRITE_SHIFT = GRID_SIZE + 35;
+    /** Wizard sprite scale to fit inside maze tile */
+    private static final double WIZARD_SPRITE_SCALE = GRID_SIZE / 2.0;
     /** Size of the vision rectangle */
     private static final int SIZE_OF_VISION_RECTANGLE = 450;
     /** Size of center tile */
@@ -100,17 +110,34 @@ public class MazeBorderPane extends BorderPane {
                 }
             }
         }
-        ImageView sprite = new ImageView(new Image("file:character_sprite/" + myPlayerSprite));
-        sprite.setFitWidth((double) GRID_SIZE/2.5);
-        sprite.setFitHeight((double) GRID_SIZE/2.5);
-        sprite.setX(CHARACTER_SPRITE_SHIFT+5);
-        sprite.setY(CHARACTER_SPRITE_SHIFT+5);
+        ImageView sprite = getCharacterSpriteImage();
 
         this.getChildren().add(sprite);
         if (!myVisionPostionCheck) {
             this.getChildren().add(createVisionBorder());
         }
 
+    }
+
+    private ImageView getCharacterSpriteImage() {
+        ImageView sprite = new ImageView(new Image("file:character_sprite/" + myPlayerSprite));
+        if ("warrior.png".equals(myPlayerSprite)) {
+            sprite.setFitWidth(WARRIOR_SPRITE_SCALE);
+            sprite.setFitHeight(WARRIOR_SPRITE_SCALE);
+            sprite.setX(WARRIOR_SPRITE_SHIFT);
+            sprite.setY(WARRIOR_SPRITE_SHIFT);
+        } else if ("thief.png".equals(myPlayerSprite)) {
+            sprite.setFitWidth(Thief_SPRITE_SCALE);
+            sprite.setFitHeight(Thief_SPRITE_SCALE);
+            sprite.setX(THIEF_SPRITE_SHIFT);
+            sprite.setY(THIEF_SPRITE_SHIFT);
+        } else {
+            sprite.setFitWidth(WIZARD_SPRITE_SCALE);
+            sprite.setFitHeight(WIZARD_SPRITE_SCALE);
+            sprite.setX(WIZARD_SPRITE_SHIFT);
+            sprite.setY(WIZARD_SPRITE_SHIFT);
+        }
+        return sprite;
     }
 
     /**
