@@ -81,7 +81,7 @@ public class GameScreen extends AbstractScreen {
         myMainLayout.setRight(healthDisplay);
 
         // Top: Menu bar
-        MenuBar myMenuBar = new MenuBar(theStage);
+        MenuBar myMenuBar = new MenuBar(theStage, myCharacter);
         myMainLayout.setTop(myMenuBar.createMenuBar());
 
         // Bottom: Map and inventory buttons + directional buttons

@@ -1,9 +1,7 @@
 package dungeongame.src.controller;
 
-import dungeongame.src.model.Maze;
-import dungeongame.src.model.Player;
-import dungeongame.src.model.PlayerInventory;
-import dungeongame.src.model.Wizard;
+import dungeongame.src.model.*;
+
 import java.io.*;
 
 /**
@@ -46,6 +44,10 @@ public class GameSaver implements Serializable {
         myPlayer = thePlayer;
     }
 
+    public AbstractDungeonCharacter getPlayer() {
+        return ((AbstractDungeonCharacter)myPlayer);
+    }
+
     public void saveGame(){
         String filename = "DungeonAdventureSave.da";
         try{
@@ -81,7 +83,21 @@ public class GameSaver implements Serializable {
             //myPlayerInventory = (PlayerInventory)in.readObject();
             Maze.getInstance().updateFrom((Maze)in.readObject());
             PlayerInventory.getInstance().updateFrom((PlayerInventory)in.readObject());
-            myPlayer = (Player)in.readObject();
+            Player thePlayer = (Player)in.readObject();
+            String playerClass = thePlayer.getClass().getName();
+
+            //System.out.println(playerClass);
+
+            if(playerClass.contains("Wizard")) {
+                myPlayer = new Wizard(0, 0, 0, 0, 0,0, null);
+            } else if (playerClass.contains("Warrior")) {
+                myPlayer = new Warrior(0, 0, 0, 0, 0,0, null);
+            } else if (playerClass.contains("Thief")) {
+                myPlayer = new Thief(0, 0, 0, 0, 0,0, null);
+            }
+
+            ((AbstractDungeonCharacter)myPlayer).updateFrom((AbstractDungeonCharacter) thePlayer);
+            //((AbstractDungeonCharacter)myPlayer).initializeTransientFields();
 
             in.close();
             file.close();
@@ -98,7 +114,7 @@ public class GameSaver implements Serializable {
         }
     }
 
-//    //test main
+////    //test main
 //    public static void main(String[] args){
 //        Maze maze = Maze.getInstance();
 //        maze.setMazeSize(5);
@@ -108,11 +124,18 @@ public class GameSaver implements Serializable {
 //        maze.printMaze();
 //        System.out.println();
 //
-//        GameSaver gameSaver = new GameSaver(wizard);
+//        GameSaver gameSaver = GameSaver.getInstance();
 //        gameSaver.saveGame();
+//
+//        AbstractDungeonCharacter character = new Warrior(1,1,1,1,1,1,"10");
+//        System.out.println(character);
 //
 //        Maze.getInstance().setMazeSize(4);
 //        maze.generateMaze();
+//        maze.printMaze();
+//        character = gameSaver.getPlayer();
+//        System.out.println(character);
+//
 //
 //        gameSaver.loadGame();
 //

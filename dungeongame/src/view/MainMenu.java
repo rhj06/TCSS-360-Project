@@ -1,6 +1,8 @@
 package dungeongame.src.view;
 
 import dungeongame.src.controller.GameSaver;
+import dungeongame.src.model.AbstractDungeonCharacter;
+import dungeongame.src.model.Maze;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -56,7 +58,11 @@ public class MainMenu extends AbstractScreen {
     public Scene createScene(Stage theStage) {
         VBox menu = new VBox(20, createTitleLabel(),
                 myButtonFactory.createButton("New Game", () -> theStage.setScene(new CharacterSelectScreen().createScene(theStage))),
-                myButtonFactory.createButton("Load Game", this::loadGame),
+                myButtonFactory.createButton("Load Game", () -> {
+                    GameSaver.getInstance().loadGame();
+                    AbstractDungeonCharacter player = ((AbstractDungeonCharacter) GameSaver.getInstance().getPlayer());
+                    theStage.setScene(new GameScreen(Maze.getInstance(), player).createScene(theStage));
+                }),
                 myButtonFactory.createButton("Exit", theStage::close)
         );
 

@@ -1,6 +1,8 @@
 package dungeongame.src.view;
 
 import dungeongame.src.controller.GameSaver;
+import dungeongame.src.model.AbstractDungeonCharacter;
+import dungeongame.src.model.Player;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
@@ -9,9 +11,11 @@ import javafx.stage.Stage;
 public class MenuBar {
 
     private final Stage myStage;
+    private AbstractDungeonCharacter myCharacter;
 
-    public MenuBar(Stage theStage) {
+    public MenuBar(Stage theStage, AbstractDungeonCharacter theCharacter) {
         myStage = theStage;
+        myCharacter = theCharacter;
     }
 
     public VBox createMenuBar() {
@@ -33,6 +37,7 @@ public class MenuBar {
     }
 
     public void save() {
+        GameSaver.getInstance().setPlayer((Player) myCharacter);
         GameSaver.getInstance().saveGame();
     }
 

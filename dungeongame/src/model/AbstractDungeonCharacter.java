@@ -21,19 +21,19 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     /** Default Name */
     private static final String DEFAULT_NAME = "Dungeon Character";
     /** Communicate CurrentHealth with GUI */
-    private transient final IntegerProperty myCurHealthProperty = new SimpleIntegerProperty();
+    private transient IntegerProperty myCurHealthProperty;
     /** Property Change Listener */
-    private final PropertyChangeSupport myPCS;
+    private PropertyChangeSupport myPCS;
     /** My Maximum Health */
-    private final int myMaxHealth;
+    private int myMaxHealth;
     /** My Minimum possible attack */
-    private final int myMinAttack;
+    private int myMinAttack;
     /** my maximum possible attack */
-    private final int myMaxAttack;
+    private int myMaxAttack;
     /** my defense for incoming attacks */
-    private final int myDefense;
+    private int myDefense;
     /** Name of Character */
-    private final String myName;
+    private String myName;
     /** my Current Health */
     private int myCurrHealth;
     /** My minimum speed */
@@ -57,6 +57,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
                                      final int theMinAttack, final int theMaxAttack,
                                     final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
 
+        myCurHealthProperty = new SimpleIntegerProperty();
         myPCS = new PropertyChangeSupport(this);
         myMaxHealth = theMaxHealth;
         myCurrHealth = theMaxHealth;
@@ -73,11 +74,42 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         return myPCS;
     }
 
+    /**
+     * Takes an instance of AbstractDungeonCharacter and modifies the fields of the called instance to match.
+     *
+     * @param theOther
+     */
+    public void updateFrom(AbstractDungeonCharacter theOther) {
+        myPCS = new PropertyChangeSupport(this);
+        myMaxHealth = theOther.myMaxHealth;
+        myCurrHealth = theOther.myCurrHealth;
+        //myCurHealthProperty.set(myCurrHealth);
+        myMinAttack = theOther.myMinAttack;
+        myMaxAttack = theOther.myMaxAttack;
+        myMinSpeed = theOther.myMinSpeed;
+        myMaxSpeed = theOther.myMaxSpeed;
+        myDefense = theOther.myDefense;
+        myName = theOther.myName;
+
+        initializeTransientFields();
+
+    }
+
+    private void initializeTransientFields() {
+        myCurHealthProperty = new SimpleIntegerProperty();
+        myPCS = new PropertyChangeSupport(this);
+        myCurHealthProperty.set(myCurrHealth); // Ensure it reflects the current health
+    }
+
     public int getHealth() {
         return myCurHealthProperty.get();
     }
 
     public IntegerProperty getCurHealthProperty() {
+        if(myCurHealthProperty == null) {
+            myCurHealthProperty = new SimpleIntegerProperty();
+            myCurHealthProperty.set(myCurrHealth);
+        }
         return myCurHealthProperty;
     }
 
