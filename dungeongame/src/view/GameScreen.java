@@ -93,12 +93,12 @@ public class GameScreen extends AbstractScreen {
 
         // Create an HBox for the bottom pane
         HBox bottomPane = new HBox(220);
-        bottomPane.setAlignment(Pos.CENTER_LEFT);
+        bottomPane.setAlignment(Pos.CENTER);
         bottomPane.getChildren().addAll(mapAndInventoryButtons, directionalButtons);
+        bottomPane.setTranslateX(-100);
         myMainLayout.setBottom(bottomPane);
+        myMainLayout.setStyle("-fx-background-color: black;");
 
-        // Set background styling
-        //myMainLayout.setStyle("-fx-background-color: #2b2b2b;");
         return new Scene(myMainLayout, 800, 600);
     }
 

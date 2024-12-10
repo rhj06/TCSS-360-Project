@@ -151,7 +151,7 @@ public class MazeBorderPane extends BorderPane {
         Rectangle outer = new Rectangle(0,0,SIZE_OF_VISION_RECTANGLE,SIZE_OF_VISION_RECTANGLE);
         Rectangle inner = new Rectangle(SIZE_OF_CENTER_RECTANGLE,SIZE_OF_CENTER_RECTANGLE,SIZE_OF_CENTER_RECTANGLE,SIZE_OF_CENTER_RECTANGLE);
         Shape hole = Shape.subtract(outer, inner);
-        hole.setFill(new ImagePattern(new Image("file:.idea/resources/fonts/inventory.jpg")));
+        hole.setFill(new ImagePattern(new Image("file:.idea/resources/dungeon.jpg")));
         return hole;
     }
     private int typeOfTile(final Room theCurrentRoom) {
