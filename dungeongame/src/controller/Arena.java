@@ -48,6 +48,12 @@ public class Arena {
         });
     }
 
+    public void playerIsDead(boolean thePlayerState){
+        Platform.runLater(() -> {
+            myPCS.firePropertyChange("playerIsDead", false, thePlayerState);
+        });
+    }
+
     public void notifyMessage(String theMessage) {
         //Platform.runLater(() -> addMessage(message));
         Platform.runLater(() -> {
@@ -67,6 +73,12 @@ public class Arena {
         boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).getSpeed() > myMonster.getSpeed();
 
         while((((AbstractDungeonCharacter)myPlayer).getHealth() > 0) && (myMonster.getHealth() > 0)) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             System.out.printf("Player: %d/%d HP | Monster: %d/%d HP\n",
                     ((AbstractDungeonCharacter) myPlayer).getHealth(),
                     ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
@@ -144,16 +156,18 @@ public class Arena {
                 ((AbstractDungeonCharacter)myPlayer).changeHealth(-damage);
                 System.out.println("Monster Attacked");
                 notifyMessage(myMonster.toString() + " attacked dealing " + damage + " damage.");
-                Platform.runLater(() -> {
-                    if (((AbstractDungeonCharacter)myPlayer).getHealth() <= 0) {
-                        System.out.println("Game Over");
-                        notifyMessage(myPlayer.toString() + " is dead. Game over.");
-                        myPCS.firePropertyChange("player_killed", null, null);
-                    }
-                });
 
+                if(((AbstractDungeonCharacter)myPlayer).getHealth() > 0) {
+                    playerTurn = true;
+                }
 
-                playerTurn = true;
+               // Platform.runLater(() -> {
+//                    if (((AbstractDungeonCharacter)myPlayer).getHealth() <= 0) {
+//                        System.out.println("Game Over");
+//                        notifyMessage(myPlayer.toString() + " is dead. Game over.");
+//                        playerIsDead(true);
+//                    }
+                //});
             }
         }
 
@@ -186,14 +200,16 @@ public class Arena {
                 myInventory.addItem(item);
             }
         }
-//        else {
-//            System.out.println("Game Over");
-//            notifyMessage(myPlayer.toString() + " is dead. Game over.");
-//            Platform.runLater(() -> {
-//                myPCS.firePropertyChange("player_killed", null, null);
-//            });
-//
-//        }
+        else {
+            //System.out.println("Game Over");
+            notifyMessage(myPlayer.toString() + " is dead. Game over.");
+            Platform.runLater(() -> {
+                System.out.println("Game Over");
+                notifyMessage(myPlayer.toString() + " is dead. Game over.");
+                playerIsDead(true);
+            });
+
+        }
 
     }
 

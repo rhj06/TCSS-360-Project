@@ -85,6 +85,17 @@ public class ArenaScreen {
                 Platform.runLater(myStage::close);
             }
         });
+
+        myArena.addPropertyChangeListener(event -> {
+            if ("playerIsDead".equals(event.getPropertyName())) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(myStage::close);
+            }
+        });
     }
 
     public void addMessage(String message) {
