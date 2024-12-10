@@ -146,11 +146,11 @@ public class Arena {
 
             }
 
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
             if (!playerTurn && myMonster.getHealth() != 0){
                 if(myMonster.canHeal()){
@@ -167,6 +167,12 @@ public class Arena {
 
                 if(((AbstractDungeonCharacter)myPlayer).getHealth() > 0) {
                     playerTurn = true;
+                }
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
 
                // Platform.runLater(() -> {
@@ -226,6 +232,7 @@ public class Arena {
 //            });
 
         }
+
 
     }
 

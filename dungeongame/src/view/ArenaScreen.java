@@ -56,6 +56,7 @@ public class ArenaScreen {
         myMonster = theMonster;
         myRecentMessages = new ArrayDeque<>(5);
 
+
         myStage.initModality(Modality.APPLICATION_MODAL);
         //yStage.initOwner(primaryStage);
 
