@@ -152,7 +152,7 @@ public class ArenaScreen extends AbstractScreen{
             }
         }
         BorderPane background = new BorderPane(mainLayout);
-        background.setBackground(createBackground("file:FinalBossFight.jpg"));
+        background.setBackground(createBackground(temp));
         return new Scene(background, 750, 500);
     }
 
