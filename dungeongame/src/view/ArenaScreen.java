@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.LinkedList;
 
 public class ArenaScreen {
     /** The arena object representing the battle layout and player state. */
@@ -130,7 +129,7 @@ public class ArenaScreen {
     public Scene createGameScene() {
         // Combat buttons
         CombatButtons combatButtons = new CombatButtons(myArena);
-        HBox buttonLayout = combatButtons.createDirectionalButtons();
+        HBox buttonLayout = combatButtons.createCombatButtons();
 
         // Create combat display with player and monster
         HBox combatDisplay = createCombatDisplay();
