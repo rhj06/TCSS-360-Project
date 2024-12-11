@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -18,7 +19,7 @@ import javafx.stage.Stage;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class ArenaScreen {
+public class ArenaScreen extends AbstractScreen{
     /** The arena object representing the battle layout and player state. */
     private final Arena myArena;
 
@@ -60,7 +61,7 @@ public class ArenaScreen {
         //yStage.initOwner(primaryStage);
 
         myMessageLabel = new Label("Fight begins!");
-        myMessageLabel.setStyle("-fx-font-size: 14; -fx-text-fill: black;");
+        myMessageLabel.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
 
         // Set up the scene
         Scene scene = createGameScene();
@@ -129,6 +130,7 @@ public class ArenaScreen {
     public Scene createGameScene() {
         // Combat buttons
         CombatButtons combatButtons = new CombatButtons(myArena);
+
         HBox buttonLayout = combatButtons.createCombatButtons();
 
         // Create combat display with player and monster
@@ -140,11 +142,18 @@ public class ArenaScreen {
         mainLayout.setPadding(new Insets(10));
 
         Label titleLabel = new Label("Arena Battle");
-        titleLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 24; -fx-font-weight: bold;");
+        titleLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
 
         mainLayout.getChildren().addAll(titleLabel,combatDisplay, buttonLayout, myMessageLabel);
-
-        return new Scene(mainLayout, 500, 500);
+        String temp = "file:AnyMonsterFight.jpg";
+        if (myMonster instanceof Boss) {
+            if (("Dragon").equals(((Boss) myMonster).getType())) {
+                temp = "file:FinalBossFight.jpg";
+            }
+        }
+        BorderPane background = new BorderPane(mainLayout);
+        background.setBackground(createBackground("file:FinalBossFight.jpg"));
+        return new Scene(background, 750, 500);
     }
 
     /**
@@ -194,7 +203,7 @@ public class ArenaScreen {
     private VBox createCharacterDisplay(String theImagePath, int theWidth, int theHeight, IntegerProperty theCurrentHealthProperty, int theMaxHealth, String theName) {
         // Create the name label
         Label nameLabel = new Label(theName);
-        nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: black;");
+        nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
 
         // Create the image view
         ImageView imageView = createImageView(theImagePath, theWidth, theHeight);
@@ -202,7 +211,7 @@ public class ArenaScreen {
         // Create the health label
         Label healthLabel = new Label();
         healthLabel.textProperty().bind(theCurrentHealthProperty.asString("Health: %d / " + theMaxHealth));
-        healthLabel.setStyle("-fx-font-size: 14; -fx-text-fill: black;"); // Styling for visibility
+        healthLabel.setStyle("-fx-font-size: 17; -fx-text-fill: white; -fx-font-weight: bold;"); // Styling for visibility
 
         // Arrange the image and label vertically
         VBox characterDisplay = new VBox(10, nameLabel, imageView, healthLabel);
@@ -261,5 +270,10 @@ public class ArenaScreen {
         imageView.setFitHeight(theHeight);
         imageView.setPreserveRatio(true);
         return imageView;
+    }
+
+    @Override
+    public Scene createScene(Stage theStage) {
+        return null;
     }
 }
