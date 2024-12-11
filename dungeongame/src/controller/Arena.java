@@ -48,10 +48,13 @@ public class Arena {
         });
     }
 
-    public void playerIsDead(boolean thePlayerState){
+    public void playerIsDead(boolean thePlayerState) {
         Platform.runLater(() -> {
-            myPCS.firePropertyChange("playerIsDead", false, thePlayerState);
+            myPCS.firePropertyChange("player_dead", false, thePlayerState); // Notify Arena listeners
         });
+
+        // Notify MazeTraverser
+        MazeTraverser.getInstance().firePlayerDeadEvent();
     }
 
     public void notifyMessage(String theMessage) {
@@ -213,27 +216,21 @@ public class Arena {
                 Item item = myMonster.getRandomItem();
                 myInventory.addItem(item);
             }
-        } else {
-            //Javafx Alert
-            //modally (window has focus)
-            //dialog class
+        }
+        else {
             System.out.println("Game Over");
             notifyMessage(myPlayer.toString() + " is dead. Game over.");
+
+            Platform.runLater(() -> {
+                playerIsDead(true);
+            });
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             playerIsDead(true);
-//            Platform.runLater(() -> {
-//                //System.out.println("Game Over");
-//                //notifyMessage(myPlayer.toString() + " is dead. Game over.");
-//                playerIsDead(true);
-//            });
-
         }
-
-
     }
 
     /**
@@ -245,6 +242,5 @@ public class Arena {
         myPlayerMove = theMove;
         notifyAll();
         System.out.println("Player Combat move set to " + theMove);
-
     }
 }

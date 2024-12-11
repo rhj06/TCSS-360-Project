@@ -14,12 +14,12 @@ public class MazeTraverser {
     private static MazeTraverser uniqueInstance;
 
 
-    private Maze myMaze;
-    private Point myPlayerCords;
+    private final Maze myMaze;
+    private final Point myPlayerCords;
     private Player myPlayer;
     private RoomDescription myRoomDescription;
     private InventoryScreen inventoryScreen;
-    private PropertyChangeSupport myPcs;
+    private final PropertyChangeSupport myPcs;
 
     private MazeTraverser(){
         myMaze = Maze.getInstance();
@@ -46,14 +46,8 @@ public class MazeTraverser {
 
     public void setInventoryScreen(InventoryScreen theInventoryScreen){ inventoryScreen = theInventoryScreen; }
 
-    // Add a listener
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         myPcs.addPropertyChangeListener(listener);
-    }
-
-    // Remove a listener
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        myPcs.removePropertyChangeListener(listener);
     }
 
     public void movePlayer(Directions theDir){
@@ -112,6 +106,10 @@ public class MazeTraverser {
             if (monster instanceof Boss && ((Boss) monster).getType().equals("Dragon")) {
                 myPcs.firePropertyChange("final_boss_killed", null, null);
             }
+
+            if (((AbstractDungeonCharacter) myPlayer).getHealth() <= 0) {
+                firePlayerDeadEvent();
+            }
         }
 
         System.out.println("Items");
@@ -122,6 +120,11 @@ public class MazeTraverser {
         myMaze.printMonsterMaze();
 
 
+    }
+
+    public void firePlayerDeadEvent() {
+        myPcs.firePropertyChange("player_dead", false, true);
+        System.out.println("Player dead event fired from MazeTraverser.");
     }
 
 }

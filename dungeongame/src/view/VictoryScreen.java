@@ -24,7 +24,6 @@ public class VictoryScreen extends AbstractScreen {
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: black;");
 
-        // Label displaying the victory message
         Label victoryLabel = new Label("You did it!");
         victoryLabel.setStyle("-fx-font-size: 36px; -fx-text-fill: white;");
 

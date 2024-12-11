@@ -7,11 +7,9 @@ import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.beans.PropertyChangeListener;
 
 /**
  * Represents the game screen displayed during gameplay.
@@ -37,8 +35,6 @@ public class GameScreen extends AbstractScreen {
      */
     private final InventoryScreen myInventoryScreen;
 
-    private final Stage myStage;
-
     /**
      * Constructs a new GameScreen instance.
      * Initializes the maze, player character, inventory screen, and sets up the maze traverser to manage player
@@ -55,12 +51,14 @@ public class GameScreen extends AbstractScreen {
         MazeTraverser theTraverser = MazeTraverser.getInstance();
         theTraverser.setPlayer((Player) myCharacter);
         theTraverser.setInventoryScreen(myInventoryScreen);
-        myStage = theStage;
 
         theTraverser.addPropertyChangeListener(evt -> {
             if ("final_boss_killed".equals(evt.getPropertyName())) {
                 System.out.println("Victory event received in GameScreen. Transitioning to VictoryScreen.");
                 Platform.runLater(() -> transitionToVictoryScreen(theStage));
+            } else if ("player_dead".equals(evt.getPropertyName())) {
+                System.out.println("Player dead event received in GameScreen. Transitioning to GameOverScreen.");
+                Platform.runLater(() -> transitionToGameOverScreen(theStage));
             }
         });
 
@@ -123,6 +121,13 @@ public class GameScreen extends AbstractScreen {
         theStage.setScene(victoryScene);
     }
 
+    private void transitionToGameOverScreen(Stage theStage) {
+        System.out.println("Transitioning to GameOverScreen.");
+        GameOverScreen gameOverScreen = new GameOverScreen();
+        Scene gameOverScene = gameOverScreen.createScene(theStage);
+        theStage.setScene(gameOverScene);
+    }
+
     /**
      * Creates a health display panel to show the character's current health.
      * The health display dynamically updates using bindings to reflect the character's current and maximum health.
@@ -135,11 +140,9 @@ public class GameScreen extends AbstractScreen {
         healthDisplay.setTranslateX(-80);
         healthDisplay.setTranslateY(-200);
 
-        // Label for "Health" text
         Label healthLabel = new Label("Health:");
         healthLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: rgba(205,12,12,0.99);");
 
-        // Label displaying current health value
         Label healthValue = new Label();
         healthValue.textProperty().bind(Bindings.concat(myCharacter.getCurHealthProperty(), "/",
                 myCharacter.getMaxHealth()));
