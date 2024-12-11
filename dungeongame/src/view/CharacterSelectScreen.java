@@ -27,6 +27,7 @@ public class CharacterSelectScreen extends AbstractScreen {
     private final ButtonFactory myButtonFactory;
     private final RadioButtonHelper myRadioButtonHelper;
     private TextField playerNameField; // Text field for player name input
+    private Stage myStage;
 
     /**
      * Constructs a new CharacterSelectScreen instance.
@@ -171,7 +172,7 @@ public class CharacterSelectScreen extends AbstractScreen {
             case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 18, 3, 8, 10, playerName);
             default -> throw new IllegalArgumentException("Invalid character type: " + theCharacterType);
         };
-        GameScreen myGameScreen = new GameScreen(myMaze, mySelectedHero);
+        GameScreen myGameScreen = new GameScreen(myMaze, mySelectedHero, theStage);
         theStage.setScene(myGameScreen.createScene(theStage));
         System.out.println("Switching to GameScreen with character: " + mySelectedHero);
         System.out.println("Maze Layout");

@@ -2,6 +2,7 @@ package dungeongame.src.view;
 
 import dungeongame.src.controller.MazeTraverser;
 import dungeongame.src.model.*;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * Represents the game screen displayed during gameplay.
@@ -34,6 +37,8 @@ public class GameScreen extends AbstractScreen {
      */
     private final InventoryScreen myInventoryScreen;
 
+    private final Stage myStage;
+
     /**
      * Constructs a new GameScreen instance.
      * Initializes the maze, player character, inventory screen, and sets up the maze traverser to manage player
@@ -42,7 +47,7 @@ public class GameScreen extends AbstractScreen {
      * @param theMaze      the maze instance representing the game environment
      * @param theCharacter the character controlled by the player
      */
-    public GameScreen(Maze theMaze, AbstractDungeonCharacter theCharacter) {
+    public GameScreen(Maze theMaze, AbstractDungeonCharacter theCharacter, Stage theStage) {
         myMaze = theMaze;
         myCharacter = theCharacter;
         myInventoryScreen = new InventoryScreen(theCharacter);
@@ -50,6 +55,15 @@ public class GameScreen extends AbstractScreen {
         MazeTraverser theTraverser = MazeTraverser.getInstance();
         theTraverser.setPlayer((Player) myCharacter);
         theTraverser.setInventoryScreen(myInventoryScreen);
+        myStage = theStage;
+
+        theTraverser.addPropertyChangeListener(evt -> {
+            if ("final_boss_killed".equals(evt.getPropertyName())) {
+                System.out.println("Victory event received in GameScreen. Transitioning to VictoryScreen.");
+                Platform.runLater(() -> transitionToVictoryScreen(theStage));
+            }
+        });
+
     }
 
     /**
@@ -100,6 +114,13 @@ public class GameScreen extends AbstractScreen {
         myMainLayout.setStyle("-fx-background-color: black;");
 
         return new Scene(myMainLayout, 800, 600);
+    }
+
+    private void transitionToVictoryScreen(Stage theStage) {
+        System.out.println("Transitioning to VictoryScreen.");
+        VictoryScreen victoryScreen = new VictoryScreen();
+        Scene victoryScene = victoryScreen.createScene(theStage);
+        theStage.setScene(victoryScene);
     }
 
     /**

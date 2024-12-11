@@ -7,6 +7,8 @@ import dungeongame.src.view.InventoryScreen;
 import dungeongame.src.view.RoomDescription;
 
 import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class MazeTraverser {
     private static MazeTraverser uniqueInstance;
@@ -17,12 +19,14 @@ public class MazeTraverser {
     private Player myPlayer;
     private RoomDescription myRoomDescription;
     private InventoryScreen inventoryScreen;
+    private PropertyChangeSupport myPcs;
 
     private MazeTraverser(){
         myMaze = Maze.getInstance();
         myPlayerCords = myMaze.getPlayerCords();
         myPlayer = null;
         myRoomDescription = null;
+        myPcs = new PropertyChangeSupport(this);
     }
 
     public static MazeTraverser getInstance(){
@@ -41,6 +45,16 @@ public class MazeTraverser {
     }
 
     public void setInventoryScreen(InventoryScreen theInventoryScreen){ inventoryScreen = theInventoryScreen; }
+
+    // Add a listener
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        myPcs.addPropertyChangeListener(listener);
+    }
+
+    // Remove a listener
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        myPcs.removePropertyChangeListener(listener);
+    }
 
     public void movePlayer(Directions theDir){
         if(theDir == Directions.NORTH){
@@ -95,6 +109,9 @@ public class MazeTraverser {
             Arena arena = new Arena(myPlayer, monster);
             new ArenaScreen(myPlayer, monster, arena);// Automatically sets up and shows the window
             //arena.combat();
+            if (monster instanceof Boss && ((Boss) monster).getType().equals("Dragon")) {
+                myPcs.firePropertyChange("final_boss_killed", null, null);
+            }
         }
 
         System.out.println("Items");

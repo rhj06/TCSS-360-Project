@@ -61,7 +61,7 @@ public class MainMenu extends AbstractScreen {
                 myButtonFactory.createButton("Load Game", () -> {
                     GameSaver.getInstance().loadGame();
                     AbstractDungeonCharacter player = ((AbstractDungeonCharacter) GameSaver.getInstance().getPlayer());
-                    theStage.setScene(new GameScreen(Maze.getInstance(), player).createScene(theStage));
+                    theStage.setScene(new GameScreen(Maze.getInstance(), player, theStage).createScene(theStage));
                 }),
                 myButtonFactory.createButton("Exit", theStage::close)
         );
