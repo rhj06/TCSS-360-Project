@@ -2,6 +2,8 @@ package dungeongame.src.model;
 
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -79,4 +81,5 @@ public class MapTile extends Rectangle implements Serializable {
     public void rotateCounterClockwise() {
         this.setRotate((this.getRotate() - DEGREE_OF_ROTATION + THREE_SIXTY) % THREE_SIXTY);
     }
+
 }

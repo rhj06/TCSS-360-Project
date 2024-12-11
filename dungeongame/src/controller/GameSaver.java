@@ -3,6 +3,8 @@ package dungeongame.src.controller;
 import dungeongame.src.model.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Saves and loads games states
@@ -60,12 +62,13 @@ public class GameSaver implements Serializable {
             out.writeObject(Maze.getInstance());
             out.writeObject(PlayerInventory.getInstance());
             out.writeObject(myPlayer);
-
             out.writeObject(MapTileList.getInstance());
+
+            System.out.println(MapTileList.getInstance().getList());
+//            out.writeObject(MapTileList.getInstance());
 //            for (Object tile: MapTileList.getInstance()) {
 //                out.writeObject(tile);
 //            }
-
 
 
             out.close();
@@ -91,7 +94,15 @@ public class GameSaver implements Serializable {
             Maze.getInstance().updateFrom((Maze)in.readObject());
             PlayerInventory.getInstance().updateFrom((PlayerInventory)in.readObject());
             Player thePlayer = (Player)in.readObject();
+
+            MapTileList list = (MapTileList)in.readObject();
+            System.out.println("List @ Load = " + list);
+
+            MapTileList.getInstance().setList(list.getList());
+
+
             String playerClass = thePlayer.getClass().getName();
+
 
             //System.out.println(playerClass);
 
@@ -106,7 +117,6 @@ public class GameSaver implements Serializable {
             ((AbstractDungeonCharacter)myPlayer).updateFrom((AbstractDungeonCharacter) thePlayer);
             //((AbstractDungeonCharacter)myPlayer).initializeTransientFields();
 
-            MapTileList.getInstance().updateFrom((MapTileList<MapTile>)in.readObject());
 //            for (Object tile: MapTileList.getInstance()) {
 //                MapTile temp = (MapTile) in.readObject();
 //                if (tile.getClass().getName().contains("Four_Way_Tile")) {

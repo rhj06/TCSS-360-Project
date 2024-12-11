@@ -10,12 +10,18 @@ import java.util.ArrayList;
  * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
  * @version 1.0
  */
-public final class MapTileList<MapTile> extends ArrayList<MapTile> implements Serializable {
+public final class MapTileList implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 534215432523L;
     /** MapTileList uniqueInstance */
     private static MapTileList uniqueInstance;
+
+    private ArrayList<MapTile> myList;
+
+    private MapTileList() {
+        myList = new ArrayList<>();
+    }
 
     /**
      * Get the unique instance of MapTileList
@@ -23,8 +29,10 @@ public final class MapTileList<MapTile> extends ArrayList<MapTile> implements Se
      */
     public static MapTileList getInstance() {
         if (uniqueInstance == null) {
-            uniqueInstance = new MapTileList<>();
+            uniqueInstance = new MapTileList();
+            System.out.println("New List Created for Unique Instance.");
         }
+        System.out.println("UniqueInstance = " + uniqueInstance.getList());
         return uniqueInstance;
     }
 
@@ -32,17 +40,17 @@ public final class MapTileList<MapTile> extends ArrayList<MapTile> implements Se
      * Update uniqueInstance to be the saved theOtherList
      * @param theOtherList the serialized MapTileList
      */
-    public void updateFrom(MapTileList<MapTile> theOtherList) {
-        uniqueInstance = theOtherList;
+    public void updateFrom(MapTileList theOtherList) {
+        myList = theOtherList.myList;
     }
 
-    @Serial
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject(); // Serialize the default fields// Serialize additional fields
+    public void setList(ArrayList<MapTile> theList) {
+        myList = theList;
     }
 
-    @Serial
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject(); // Deserialize the default fields
+    public ArrayList<MapTile> getList() {
+        System.out.println("List @ Get = " + myList);
+        return myList;
     }
+
 }
