@@ -5,28 +5,27 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArenaBorderPane extends BorderPane {
-    /**BorderPane Width and Height*/
-    private final double myWidth, myHeight;
-
-    private Arena myArena;
+    /** Instance of Arena Object */
+    private final Arena myArena;
 
     /**
      * MapBorderPane Constructor
-     * @param theWidth BorderPane Width
-     * @param theHeight BorderPane Height
+     * @param theArena the Arena instance
      */
-    public ArenaBorderPane(final double theWidth, final double theHeight, Arena theArena) {
+    public ArenaBorderPane(Arena theArena) {
         super();
-        myWidth = theWidth;
-        myHeight = theHeight;
         myArena = theArena;
         defaultLayout();
     }

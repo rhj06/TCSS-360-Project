@@ -21,11 +21,10 @@ public class MapTile extends Rectangle implements Serializable {
     /** Constant Degree of Rotation */
     private static final int DEGREE_OF_ROTATION = 90;
     /**X position*/
-    private int myPositionX;
+    private final int myPositionX;
     /**Y position*/
-    private int myPositionY;
-    /** Size of Square */
-    private int mySize;
+    private final int myPositionY;
+
 
     /**
      * MapTile Constructor
@@ -36,14 +35,9 @@ public class MapTile extends Rectangle implements Serializable {
         super(theXCoor, theYCoor, theWidth, theHeight);
         myPositionX = theXCoor;
         myPositionY = theYCoor;
-        mySize = theWidth;
+
     }
 
-//    public void updateFrom(final MapTile theOther) {
-//        myPositionX = theOther.myPositionX;
-//        myPositionY = theOther.myPositionY;
-//        mySize = theOther.mySize;
-//    }
     /**
      * Default file Name
      * @return Basic_Tile.png

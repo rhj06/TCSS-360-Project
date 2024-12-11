@@ -5,16 +5,16 @@ import javafx.scene.layout.BorderPane;
 /**
  * AbstractGrid to calculate grid rows and columns with getter methods
  */
-public abstract class AbstractGrid {
+public abstract class AbstractGrid implements Grid {
 
     /**My total grid tiles for a single row*/
     private final int myRowTiles;
+    /**My total tiles for a single column*/
+    private final int myColumnTiles;
     /**my total grid tiles*/
     private final int myTotalTiles;
     /**Size of a singe grid tile*/
     private final int mySingleTileSize;
-    /**My total tiles for a single column*/
-    private final int myColumnTiles;
     /**My instance of the current BorderPane*/
     private final BorderPane myBorderPane;
 
@@ -43,6 +43,14 @@ public abstract class AbstractGrid {
     }
 
     /**
+     * get tile column
+     * @return myColumnTiles
+     */
+    public int getMyColumnTiles() {
+        return myColumnTiles;
+    }
+
+    /**
      * get total tiles
      * @return myTotalTiles
      */
@@ -56,14 +64,6 @@ public abstract class AbstractGrid {
      */
     public int getMySingleTileSize() {
         return mySingleTileSize;
-    }
-
-    /**
-     * get tile column
-     * @return myColumnTiles
-     */
-    public int getMyColumnTiles() {
-        return myColumnTiles;
     }
 
     /**

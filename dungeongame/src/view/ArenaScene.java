@@ -18,6 +18,6 @@ public class ArenaScene extends Scene {
      * @param parent Scene Parent
      */
     public ArenaScene(Arena theArena) {
-        super(new ArenaBorderPane(WIDTH, HEIGHT, theArena), HEIGHT, WIDTH);
+        super(new ArenaBorderPane(theArena), HEIGHT, WIDTH);
     }
 }

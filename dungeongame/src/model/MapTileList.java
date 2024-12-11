@@ -4,9 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * MapTileList of type MapTile extends ArrayList of type MapTile
+ * MapTileList used to Serialize Objects in the ArrayList<MapTile>
  * Implements Serializable for save feature
- * @param <MapTile> List can only contain object MapTile
  * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
  * @version 1.0
  */

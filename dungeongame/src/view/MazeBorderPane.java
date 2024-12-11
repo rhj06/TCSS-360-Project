@@ -37,8 +37,6 @@ public class MazeBorderPane extends BorderPane {
     private final MapTile[][] myTiles;
     /** My instance of maze */
     private final Maze myMaze;
-    /** my Instance of PlayerInventory */
-    private final PlayerInventory myPlayerInventory;
     /** my neighboring rooms */
     private Room[] myRoom;
     /** BorderPane Width and Height */
@@ -46,7 +44,7 @@ public class MazeBorderPane extends BorderPane {
     /** String for the Main Character Sprite */
     private final String myPlayerSprite;
     /** Boolean Check for if the vision potion is used */
-    private boolean myVisionPostionCheck = false;
+    private boolean myVisionPotionCheck = false;
 
     /**
      * MazeBorderPane Constructor
@@ -62,29 +60,20 @@ public class MazeBorderPane extends BorderPane {
         myRoom = myMaze.getNeighborsClockwise(myMaze.getPlayerCords().y, myMaze.getPlayerCords().x);
         myTiles = new MapTile[SIZE_OF_THREE][SIZE_OF_THREE];
         myPlayerSprite = thePlayerSprite;
-        myPlayerInventory = PlayerInventory.getInstance();
+
+        PlayerInventory myPlayerInventory = PlayerInventory.getInstance();
         myMaze.addPropertyChangeListener(event -> {
             if("change in direction".equals(event.getPropertyName())) {
                 updateBorderPane();
-                myVisionPostionCheck = false;
+                myVisionPotionCheck = false;
             }
         });
         myPlayerInventory.addPropertyChangeListener(event -> {
             if("VisionPotionUsed".equals(event.getPropertyName())) {
-                myVisionPostionCheck = true;
+                myVisionPotionCheck = true;
                 updateBorderPane();
             }
         });
-        defaultLayout();
-    }
-
-    /**
-     * Default Layout of the MazeBorderPane
-     */
-    private void defaultLayout() {
-        GridHandler backgroundGridHandler = new GridHandler(myWidth, myHeight, GRID_SIZE, this);
-        backgroundGridHandler.createGrid();
-
         updateBorderPane();
     }
 
@@ -98,21 +87,19 @@ public class MazeBorderPane extends BorderPane {
             for (int j = 0; j < SIZE_OF_THREE; j++) {
                 if (i == 1 && j == 1) { //center of the 3x3 matrix
                     myTiles[i][j] = createTile(j, i, myMaze.getRooms()[myMaze.getPlayerCords().y][myMaze.getPlayerCords().x]);
-                    myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
-                    this.getChildren().add(myTiles[i][j]);
 
                 } else {
                     myTiles[i][j] = createTile(j, i, myRoom[count]);
                     count++;
-                    myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
-                    this.getChildren().add(myTiles[i][j]);
                 }
+                myTiles[i][j].setFill(new ImagePattern(new Image("file:maze_tile_images/" + myTiles[i][j].getImageFileName())));
+                this.getChildren().add(myTiles[i][j]);
             }
         }
         ImageView sprite = createCharacterSpriteImage();
 
         this.getChildren().add(sprite);
-        if (!myVisionPostionCheck) {
+        if (!myVisionPotionCheck) {
             this.getChildren().add(createVisionBorder());
         }
 
@@ -154,6 +141,7 @@ public class MazeBorderPane extends BorderPane {
         hole.setFill(new ImagePattern(new Image("file:.idea/resources/dungeon.jpg")));
         return hole;
     }
+
     private int typeOfTile(final Room theCurrentRoom) {
         int numOfDoors = 0;
         if (theCurrentRoom != null) {

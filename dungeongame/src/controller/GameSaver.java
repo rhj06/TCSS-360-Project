@@ -66,9 +66,9 @@ public class GameSaver implements Serializable {
 
             System.out.println(MapTileList.getInstance().getList());
 //            out.writeObject(MapTileList.getInstance());
-//            for (Object tile: MapTileList.getInstance()) {
-//                out.writeObject(tile);
-//            }
+            for (MapTile tile: MapTileList.getInstance().getList()) {
+                out.writeObject(tile);
+            }
 
 
             out.close();
@@ -117,12 +117,15 @@ public class GameSaver implements Serializable {
             ((AbstractDungeonCharacter)myPlayer).updateFrom((AbstractDungeonCharacter) thePlayer);
             //((AbstractDungeonCharacter)myPlayer).initializeTransientFields();
 
-//            for (Object tile: MapTileList.getInstance()) {
-//                MapTile temp = (MapTile) in.readObject();
-//                if (tile.getClass().getName().contains("Four_Way_Tile")) {
-//                    tile = new Four_Way_Tile(temp.getPositionX(), temp.getPositionY(), );
-//                }
-//            }
+            for (MapTile tile: MapTileList.getInstance().getList()) {
+                MapTile temp = (MapTile) in.readObject();
+                System.out.println("Tile @ Load = " + temp);
+                if (tile.getClass().getName().contains("Four_Way_Tile")) {
+                    tile = temp;
+//                     = new Four_Way_Tile(temp.getPositionX(), temp.getPositionY(), 50,50);
+                    System.out.println("Four_Way_Tile @ Load = " + tile);
+                }
+            }
 
 
             in.close();

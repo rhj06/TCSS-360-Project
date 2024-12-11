@@ -9,7 +9,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * MapBorderPane is a BorderPane
@@ -23,7 +22,7 @@ public class MapBorderPane extends BorderPane {
     /**The Difference of BorderPanes height and Grid height*/
     private static final int BORDERPANE_TO_GRID_DIFFERENCE = 150;
     /**Instance of a Draggable Grid*/
-    private DraggableGrid draggableGridBase;
+    private DraggableGrid myDraggableGridBase;
     /**List of MapTiles*/
     private final ArrayList<MapTile> myTiles;
     /**BorderPane Width and Height*/
@@ -52,7 +51,7 @@ public class MapBorderPane extends BorderPane {
         this.setStyle("-fx-background-color: black;"); //Set Background to black
 
         // create instance of draggable grid over the current borderpane
-        draggableGridBase = new DraggableGrid(myWidth, myHeight - BORDERPANE_TO_GRID_DIFFERENCE,
+        myDraggableGridBase = new DraggableGrid(myWidth, myHeight - BORDERPANE_TO_GRID_DIFFERENCE,
                 GRID_SIZE, this);
         GridHandler backgroundGridHandler = new GridHandler(myWidth, myHeight - BORDERPANE_TO_GRID_DIFFERENCE,
                 GRID_SIZE, this);
@@ -70,8 +69,7 @@ public class MapBorderPane extends BorderPane {
             for(MapTile tile : myTiles) {
                 this.getChildren().add(tile);
                 myLastDraggedTile.setMyTile(tile);
-                draggableGridBase.makeDraggable(tile, myLastDraggedTile);
-                System.out.println(tile.toString());
+                myDraggableGridBase.makeDraggable(tile, myLastDraggedTile);
             }
         }
     }
@@ -111,13 +109,13 @@ public class MapBorderPane extends BorderPane {
         Button button = new Button(theText);
         button.setMinWidth(150);
         button.setPadding(new Insets(10, 20, 10, 20));
-        button.setOnAction(e -> {
+        button.setOnAction(_ -> {
             MapTile tile = createTile(theText);
             tile.setFill(new ImagePattern(new Image("file:map_tile_images/" + tile.getImageFileName())));
             myTiles.add(tile);
             this.getChildren().add(tile);
             myLastDraggedTile.setMyTile(tile);
-            draggableGridBase.makeDraggable(tile, myLastDraggedTile);
+            myDraggableGridBase.makeDraggable(tile, myLastDraggedTile);
 
         });
         return button;
@@ -147,14 +145,14 @@ public class MapBorderPane extends BorderPane {
         Button button = new Button("Delete");
         button.setMinWidth(150);
         button.setPadding(new Insets(10, 20, 10, 20));
-        button.setOnAction(e -> {
+        button.setOnAction(_ -> {
             if (!myTiles.isEmpty() && myLastDraggedTile.getMyTile() != null) {
                 boolean tile = myTiles.remove(myLastDraggedTile.getMyTile());
                 if (tile) {
                     this.getChildren().remove(myLastDraggedTile.getMyTile());
                 }
                 if (!myTiles.isEmpty()) {
-                    myLastDraggedTile.setMyTile((MapTile) myTiles.getLast());
+                    myLastDraggedTile.setMyTile(myTiles.getLast());
                 } else {
                     myLastDraggedTile.setMyTile(null);
                 }
@@ -171,9 +169,9 @@ public class MapBorderPane extends BorderPane {
         Button button = new Button("Right Rotation");
         button.setMinWidth(150);
         button.setPadding(new Insets(10, 20, 10, 20));
-        button.setOnAction(e -> {
+        button.setOnAction(_ -> {
             if (myTiles.contains(myLastDraggedTile.getMyTile())) {
-                 MapTile tile = (MapTile) myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
+                 MapTile tile = myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
                  tile.rotateClockwise();
                  myLastDraggedTile.setMyTile(tile);
                  myTiles.set(myTiles.indexOf(myLastDraggedTile.getMyTile()), tile);
@@ -191,9 +189,9 @@ public class MapBorderPane extends BorderPane {
         Button button = new Button("Left Rotation");
         button.setMinWidth(150);
         button.setPadding(new Insets(10, 20, 10, 20));
-        button.setOnAction(e -> {
+        button.setOnAction(_ -> {
             if (myTiles.contains(myLastDraggedTile.getMyTile())) {
-                MapTile tile = (MapTile) myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
+                MapTile tile = myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
                 tile.rotateCounterClockwise();
                 myLastDraggedTile.setMyTile(tile);
                 myTiles.set(myTiles.indexOf(myLastDraggedTile.getMyTile()), tile);

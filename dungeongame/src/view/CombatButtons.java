@@ -46,6 +46,7 @@ public class CombatButtons {
 
         // Button for moving south
         Button moveBackward = new Button("Debug Attack");
+        moveBackward.setStyle("-fx-background-color: gold;");
         moveBackward.setOnAction(e -> myArena.setPlayerMove(3));
 
         // Arrange buttons in an HBox
