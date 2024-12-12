@@ -243,7 +243,7 @@ public class InventoryScreen extends AbstractScreen {
         String collectedPillars = inventory.keySet().stream()
                 .filter(item -> item instanceof Pillar)
                 .map(Item::getMyItemName)
-                .collect(Collectors.joining(", "));
+                .collect(Collectors.joining("\n"));
         myPillarStatusLabel.setText(collectedPillars.isEmpty()
                 ? "Pillars Collected:\nNone"
                 : "Pillars Collected:\n" + collectedPillars);

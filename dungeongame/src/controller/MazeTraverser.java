@@ -87,7 +87,9 @@ public class MazeTraverser {
         if(myMaze.roomHasItem(myPlayerCords.y, myPlayerCords.x)){
             Item item = myMaze.getRoomItem(myPlayerCords.y, myPlayerCords.x);
 
-            if (inventoryScreen != null) inventoryScreen.addPotion();
+            if (inventoryScreen != null) {
+                inventoryScreen.addPotion();
+            }
             PlayerInventory.getInstance().addItem(item);
             myRoomDescription.updateDescription((item.toString() + " has been added to the inventory"));
             System.out.println(item.toString() + " has been added to the inventory");

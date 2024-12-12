@@ -1,5 +1,7 @@
 package dungeongame.src.view;
 
+import dungeongame.src.controller.MazeTraverser;
+import dungeongame.src.model.PlayerInventory;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,7 +18,6 @@ import java.io.File;
  *
  *  @version 1.0
  *  @author Ryan Johnson, David Bessex, Kaleb Anagnostou
- *
  */
 public class GameOverScreen extends AbstractScreen {
 
@@ -46,7 +47,7 @@ public class GameOverScreen extends AbstractScreen {
 
         Button myTryAgainButton = new Button("Try Again?");
         myTryAgainButton.setStyle("-fx-font-size: 16px;");
-        myTryAgainButton.setOnAction(_ -> theStage.setScene(new CharacterSelectScreen().createScene(theStage)));
+        myTryAgainButton.setOnAction(_ -> resetGame(theStage)); // Call resetGame here.
 
         Button myExitGameButton = new Button("Exit Game");
         myExitGameButton.setStyle("-fx-font-size: 16px;");
@@ -55,5 +56,26 @@ public class GameOverScreen extends AbstractScreen {
         myLayout.getChildren().addAll(myGameOverLabel, myTryAgainButton, myExitGameButton);
 
         return new Scene(myLayout, 800, 600);
+    }
+
+    /**
+     * Resets the game state and transitions back to the CharacterSelectScreen.
+     *
+     * @param theStage the primary stage where the character select screen will be displayed
+     */
+    private void resetGame(Stage theStage) {
+        // Reset Player Inventory
+        PlayerInventory inventory = PlayerInventory.getInstance();
+        inventory.updateFrom(new PlayerInventory());
+
+        // Reset MazeTraverser
+        MazeTraverser traverser = MazeTraverser.getInstance();
+        traverser.setPlayer(null);
+        traverser.setRoomDescription(null);
+        traverser.setInventoryScreen(null);
+
+        // Transition to CharacterSelectScreen
+        CharacterSelectScreen characterSelectScreen = new CharacterSelectScreen();
+        theStage.setScene(characterSelectScreen.createScene(theStage));
     }
 }

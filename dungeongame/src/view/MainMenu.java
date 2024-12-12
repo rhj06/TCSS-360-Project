@@ -48,8 +48,7 @@ public class MainMenu extends AbstractScreen {
     /**
      * Constructs a new {@link MainMenu} instance and initializes the button factory.
      */
-    public MainMenu() {
-        myButtonFactory = new ButtonFactory(BUTTON_FONT_PATH, BUTTON_FONT_SIZE, BUTTON_WIDTH);
+    public MainMenu() {myButtonFactory = new ButtonFactory(BUTTON_FONT_PATH, BUTTON_FONT_SIZE, BUTTON_WIDTH);
     }
 
     /**
