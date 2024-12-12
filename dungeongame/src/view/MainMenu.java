@@ -14,6 +14,10 @@ import javafx.stage.Stage;
 /**
  * Represents the main menu screen of the Dungeon Adventure game.
  * Allows users to start a new game, load an existing game, or exit the application.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class MainMenu extends AbstractScreen {
 
@@ -60,12 +64,11 @@ public class MainMenu extends AbstractScreen {
                 myButtonFactory.createButton("New Game", () -> theStage.setScene(new CharacterSelectScreen().createScene(theStage))),
                 myButtonFactory.createButton("Load Game", () -> {
                     GameSaver.getInstance().loadGame();
-                    AbstractDungeonCharacter player = ((AbstractDungeonCharacter) GameSaver.getInstance().getPlayer());
+                    AbstractDungeonCharacter player = GameSaver.getInstance().getPlayer();
                     theStage.setScene(new GameScreen(Maze.getInstance(), player, theStage).createScene(theStage));
                 }),
                 myButtonFactory.createButton("Exit", theStage::close)
         );
-
         menu.setAlignment(Pos.CENTER);
         menu.setPadding(new Insets(50, 0, 100, 0));
 
@@ -86,6 +89,7 @@ public class MainMenu extends AbstractScreen {
                 "-fx-text-fill: rgba(186,8,8,0.99); -fx-font-weight: bold;"
         );
         titleLabel.setPadding(new Insets(30, 0, 50, 0));
+
         return titleLabel;
     }
 
@@ -94,6 +98,6 @@ public class MainMenu extends AbstractScreen {
      * Placeholder for the game loading logic.
      */
     private void loadGame() {
-        GameSaver.getInstance().loadGame(); // Placeholder for loading game logic
+        GameSaver.getInstance().loadGame();
     }
 }

@@ -16,6 +16,8 @@ import javafx.stage.Stage;
  * This screen includes the maze layout, player health display, menu bar, directional controls, and inventory/map views.
  * It manages the integration of game UI elements to provide a seamless gameplay experience.
  *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
 public class GameScreen extends AbstractScreen {
@@ -51,7 +53,6 @@ public class GameScreen extends AbstractScreen {
         MazeTraverser theTraverser = MazeTraverser.getInstance();
         theTraverser.setPlayer((Player) myCharacter);
         theTraverser.setInventoryScreen(myInventoryScreen);
-
         theTraverser.addPropertyChangeListener(evt -> {
             if ("final_boss_killed".equals(evt.getPropertyName())) {
                 System.out.println("Victory event received in GameScreen. Transitioning to VictoryScreen.");
@@ -94,10 +95,13 @@ public class GameScreen extends AbstractScreen {
 
         // Top: Menu bar
         MenuBar myMenuBar = new MenuBar(theStage, myCharacter);
-        myMainLayout.setTop(myMenuBar.createMenuBar());
+        VBox menuBarContainer = myMenuBar.createMenuBar();
+        menuBarContainer.prefWidthProperty().bind(myMainLayout.widthProperty());
+        myMainLayout.setTop(menuBarContainer);
+        myMainLayout.setTop(menuBarContainer);
 
         // Bottom: Map and inventory buttons + directional buttons
-        MapAndInventory myMapAndInventory = new MapAndInventory(myMaze, myCharacter, myInventoryScreen);
+        MapAndInventory myMapAndInventory = new MapAndInventory(myMaze, myInventoryScreen);
         VBox mapAndInventoryButtons = myMapAndInventory.createMapAndInventoryButtons();
 
         DirectionalButtons myDirectionalButtons = new DirectionalButtons(new RoomDescription(myMaze));
@@ -114,6 +118,13 @@ public class GameScreen extends AbstractScreen {
         return new Scene(myMainLayout, 800, 600);
     }
 
+    /**
+     * Transitions the game to the victory screen.
+     * This method is triggered when the "final_boss_killed" event is received. It replaces the current scene with the
+     * VictoryScreen scene.
+     *
+     * @param theStage the primary stage where the victory screen will be displayed
+     */
     private void transitionToVictoryScreen(Stage theStage) {
         System.out.println("Transitioning to VictoryScreen.");
         VictoryScreen victoryScreen = new VictoryScreen();
@@ -121,6 +132,13 @@ public class GameScreen extends AbstractScreen {
         theStage.setScene(victoryScene);
     }
 
+    /**
+     * Transitions the game to the game over screen.
+     * This method is triggered when the "player_dead" event is received. It replaces the current scene with the
+     * GameOverScreen scene.
+     *
+     * @param theStage the primary stage where the game over screen will be displayed
+     */
     private void transitionToGameOverScreen(Stage theStage) {
         System.out.println("Transitioning to GameOverScreen.");
         GameOverScreen gameOverScreen = new GameOverScreen();

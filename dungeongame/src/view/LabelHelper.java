@@ -6,6 +6,10 @@ import javafx.scene.text.Font;
 
 /**
  * Utility class for creating and customizing {@link Label} elements in a JavaFX application.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class LabelHelper {
 
@@ -23,6 +27,7 @@ public class LabelHelper {
         Label label = new Label(theText);
         label.setFont(font);
         label.setStyle(theStyle);
+
         return label;
     }
 
@@ -40,6 +45,7 @@ public class LabelHelper {
         Label label = createLabel(theText, theFontPath, theFontSize, theStyle);
         label.setWrapText(true);
         label.setAlignment(Pos.CENTER);
+
         return label;
     }
 
@@ -60,6 +66,7 @@ public class LabelHelper {
             return font;
         } catch (Exception e) {
             System.out.println("Failed to load font: " + theFontPath + ". Falling back to default.");
+
             return Font.font("Arial", theFontSize);
         }
     }

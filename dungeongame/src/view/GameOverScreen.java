@@ -13,12 +13,14 @@ import java.io.File;
 /**
  * Represents the "Game Over" screen displayed when the player dies.
  * This screen includes a "Game Over" label, a "Try Again?" button, and an "Exit Game" button.
+ *
+ *  @version 1.0
+ *  @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class GameOverScreen extends AbstractScreen {
 
-    /**
-     * The path to the custom font used in the game.
-     */
+    /** The path to the custom font used in the game. */
     private static final String MY_FONT_PATH = ".idea/resources/fonts/VIKING-N.TTF";
 
     @Override
@@ -29,7 +31,7 @@ public class GameOverScreen extends AbstractScreen {
 
         Font myVikingFont = null;
         try {
-            myVikingFont = Font.loadFont(new File(MY_FONT_PATH).toURI().toString(), 36);
+            myVikingFont = Font.loadFont(new File(MY_FONT_PATH).toURI().toString(), 50);
         } catch (Exception e) {
             System.err.println("Failed to load font: " + e.getMessage());
         }
@@ -44,15 +46,11 @@ public class GameOverScreen extends AbstractScreen {
 
         Button myTryAgainButton = new Button("Try Again?");
         myTryAgainButton.setStyle("-fx-font-size: 16px;");
-        myTryAgainButton.setOnAction(event -> {
-            theStage.setScene(new CharacterSelectScreen().createScene(theStage));
-        });
+        myTryAgainButton.setOnAction(_ -> theStage.setScene(new CharacterSelectScreen().createScene(theStage)));
 
         Button myExitGameButton = new Button("Exit Game");
         myExitGameButton.setStyle("-fx-font-size: 16px;");
-        myExitGameButton.setOnAction(event -> {
-            theStage.close();
-        });
+        myExitGameButton.setOnAction(_ -> theStage.close());
 
         myLayout.getChildren().addAll(myGameOverLabel, myTryAgainButton, myExitGameButton);
 

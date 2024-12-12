@@ -5,9 +5,17 @@ import javafx.scene.text.Font;
 
 /**
  * A factory class for creating styled buttons with custom fonts and dimensions.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class ButtonFactory {
+
+    /** The width of the button. */
     private final double myButtonWidth;
+
+    /** The font of the button text. */
     private final Font myFont;
 
     /**
@@ -56,9 +64,9 @@ public class ButtonFactory {
      */
     public Button createButton(String theText, Runnable theAction) {
         Button myButton = new Button(theText);
-        myButton.setFont(myFont); // Apply the preloaded font
-        myButton.setMinWidth(myButtonWidth); // Set minimum width
-        myButton.setOnAction(e -> theAction.run());
+        myButton.setFont(myFont);
+        myButton.setMinWidth(myButtonWidth);
+        myButton.setOnAction(_ -> theAction.run());
         return myButton;
     }
 }

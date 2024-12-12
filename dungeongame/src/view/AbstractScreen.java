@@ -12,6 +12,10 @@ import javafx.stage.Stage;
 /**
  * Abstract base class for all screens in the game.
  * Provides common functionality for scene creation and utilities.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public abstract class AbstractScreen {
 

@@ -1,68 +1,72 @@
 package dungeongame.src.view;
 
 import dungeongame.src.model.Maze;
-import dungeongame.src.model.PlayerInventory;
 import dungeongame.src.model.Room;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
 /**
  * Represents a description box for the current room in the dungeon game.
  * Displays information about the room, such as items, monsters, or its emptiness.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class RoomDescription {
 
+    /** The maze instance representing the game environment. */
     private final Maze myMaze;
-    private final PlayerInventory myInventory;
-    private final Label roomDescriptionLabel;
 
+    /** The label used to display the room's description. */
+    private final Label myRoomDescriptionLabel;
+
+    /**
+     * Constructs a {@code RoomDescription} instance.
+     * Initializes the label with the description of the current room and applies default styles.
+     *
+     * @param theMaze the maze instance representing the game environment
+     */
     public RoomDescription(Maze theMaze) {
         myMaze = theMaze;
-        myInventory = PlayerInventory.getInstance();
-        roomDescriptionLabel = new Label(getRoomDescription());
-        roomDescriptionLabel.setWrapText(true);
-        roomDescriptionLabel.setStyle("-fx-font-size: 16px; -fx-text-alignment: center;");
-    }
-
-    public VBox createDescriptionBox() {
-        VBox descriptionBox = new VBox(roomDescriptionLabel);
-        descriptionBox.setStyle("-fx-alignment: center; -fx-padding: 400 10 10 10;");
-        return descriptionBox;
-    }
-
-    public void updateDescription() {
-        roomDescriptionLabel.setText(getRoomDescription());
-    }
-
-    public void updateDescription(String newDescription) {
-        roomDescriptionLabel.setText(newDescription);
-    }
-
-    private String getRoomDescription() {
-        Room currentRoom = myMaze.getRooms()[myMaze.getPlayerCords().y][myMaze.getPlayerCords().x];
-        if (currentRoom.getItem() != null) {
-            return "You found an item: " + currentRoom.getItem().getMyItemName();
-        } else if (currentRoom.getMonster() != null) {
-            return "There is a monster here!";
-        } else {
-            return "The room is empty.";
-        }
+        myRoomDescriptionLabel = new Label(getRoomDescription());
+        myRoomDescriptionLabel.setWrapText(true);
+        myRoomDescriptionLabel.setStyle("-fx-font-size: 16px; -fx-text-alignment: center;");
     }
 
     /**
-     * Updates the description to show the player's progress in collecting pillars.
+     * Updates the description of the current room.
+     * Dynamically fetches the current room's details from the maze and updates the label text.
      */
-    public void updatePillarStatus() {
-        StringBuilder status = new StringBuilder("Pillars Collected:\n");
-        myInventory.getInventory().entrySet().stream()
-                .filter(entry -> entry.getKey() instanceof dungeongame.src.model.Pillar)
-                .forEach(entry -> status.append(entry.getKey().getMyItemName()).append(": Collected\n"));
+    public void updateDescription() {
+        myRoomDescriptionLabel.setText(getRoomDescription());
+    }
 
-        // If no pillars are collected, show a default message
-        if (status.length() <= "Pillars Collected:\n".length()) {
-            status.append("No Pillars Collected.");
+    /**
+     * Updates the room description with a custom message.
+     *
+     * @param theNewDescription the custom description to display in the label
+     */
+    public void updateDescription(String theNewDescription) {
+        myRoomDescriptionLabel.setText(theNewDescription);
+    }
+
+    /**
+     * Retrieves the description of the current room.
+     * The description is based on the room's contents, such as items or monsters, or indicates if the room is empty.
+     *
+     * @return the description of the current room
+     */
+    private String getRoomDescription() {
+        Room currentRoom = myMaze.getRooms()[myMaze.getPlayerCords().y][myMaze.getPlayerCords().x];
+        if (currentRoom.getItem() != null) {
+
+            return "You found an item: " + currentRoom.getItem().getMyItemName();
+        } else if (currentRoom.getMonster() != null) {
+
+            return "There is a monster here!";
+        } else {
+
+            return "The room is empty.";
         }
-
-        roomDescriptionLabel.setText(status.toString());
     }
 }

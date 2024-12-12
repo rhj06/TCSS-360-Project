@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 /**
  * Represents the Victory Screen displayed when the player wins the game.
  * It shows a congratulatory message to the player.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class VictoryScreen extends AbstractScreen {
 

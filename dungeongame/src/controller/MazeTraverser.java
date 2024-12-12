@@ -1,7 +1,6 @@
 package dungeongame.src.controller;
 
 import dungeongame.src.model.*;
-import dungeongame.src.view.ArenaScene;
 import dungeongame.src.view.ArenaScreen;
 import dungeongame.src.view.InventoryScreen;
 import dungeongame.src.view.RoomDescription;
@@ -88,9 +87,7 @@ public class MazeTraverser {
         if(myMaze.roomHasItem(myPlayerCords.y, myPlayerCords.x)){
             Item item = myMaze.getRoomItem(myPlayerCords.y, myPlayerCords.x);
 
-            if (inventoryScreen != null) {
-                inventoryScreen.addPotion(item);
-            }
+            if (inventoryScreen != null) inventoryScreen.addPotion();
             PlayerInventory.getInstance().addItem(item);
             myRoomDescription.updateDescription((item.toString() + " has been added to the inventory"));
             System.out.println(item.toString() + " has been added to the inventory");

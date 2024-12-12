@@ -1,31 +1,30 @@
 package dungeongame.src.view;
 
-import dungeongame.src.model.MapTile;
-import dungeongame.src.model.MapTileList;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
-import java.util.ArrayList;
 
 /**
  * MapScene is a Scene
  * Used to create an instance of MapBorderPane
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class MapScene extends Scene {
 
     /**Default Height*/
     private static final double HEIGHT = 600;
+
     /**Default Width*/
     private static final double WIDTH = 450;
 
     /**
      * MapScene Constructor
-     * @param parent Scene Parent
      */
-    public MapScene(Parent parent) {
+    public MapScene(Parent ignoredParent) {
         super(new MapBorderPane(WIDTH, HEIGHT), HEIGHT, WIDTH);
     }
-
-
 
 }

@@ -10,11 +10,20 @@ import javafx.scene.layout.VBox;
 /**
  * Represents a character selection panel containing an image and a button
  * for selecting a specific character.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class CharacterSelectPanel {
+
+    /** width of the character image */
     private static final double IMAGE_WIDTH = 225;
+
+    /** height of the character image */
     private static final double IMAGE_HEIGHT = 370;
 
+    /** Factory instance for creating buttons with a consistent style. */
     private final ButtonFactory myButtonFactory;
 
     /**
@@ -23,7 +32,7 @@ public class CharacterSelectPanel {
      * @param theButtonFactory the factory used to create buttons for the panel
      */
     public CharacterSelectPanel(ButtonFactory theButtonFactory) {
-        this.myButtonFactory = theButtonFactory;
+        myButtonFactory = theButtonFactory;
     }
 
     /**

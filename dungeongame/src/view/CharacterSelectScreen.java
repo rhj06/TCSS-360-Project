@@ -16,18 +16,36 @@ import javafx.stage.Stage;
 /**
  * Represents the character selection screen where the player selects their character
  * and game difficulty before starting the dungeon adventure.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class CharacterSelectScreen extends AbstractScreen {
+
+    /** Width of buttons in the character selection screen. */
     private static final double BUTTON_WIDTH = 150;
+
+    /** Font size for buttons in the character selection screen. */
     private static final double BUTTON_FONT_SIZE = 18;
+
+    /** Path to the font used for titles and labels. */
     private static final String FONT_PATH = "file:.idea/resources/fonts/OldeEnglish.ttf";
+
+    /** Path to the font used for buttons. */
     private static final String BUTTON_FONT_PATH = "file:.idea/resources/fonts/VIKING-N.TTF";
+
+    /** Path to the background image for the character selection screen. */
     private static final String BACKGROUND_IMAGE = "file:.idea/resources/characterselect.jpg";
 
+    /** Factory instance for creating buttons with a consistent style. */
     private final ButtonFactory myButtonFactory;
+
+    /** Helper for creating radio buttons for difficulty selection. */
     private final RadioButtonHelper myRadioButtonHelper;
-    private TextField playerNameField; // Text field for player name input
-    private Stage myStage;
+
+    /** Text field for entering the player's name. */
+    private TextField myPlayerNameField;
 
     /**
      * Constructs a new CharacterSelectScreen instance.
@@ -81,13 +99,12 @@ public class CharacterSelectScreen extends AbstractScreen {
         Label nameLabel = LabelHelper.createCenteredLabel("Enter Your Name:", FONT_PATH, 20,
                 "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
-        playerNameField = new TextField();
-        playerNameField.setPromptText("Enter your hero's name");
-        playerNameField.setMaxWidth(300);
-        playerNameField.setStyle("-fx-background-color: grey; " + "-fx-text-fill: black; ");
+        myPlayerNameField = new TextField();
+        myPlayerNameField.setPromptText("Enter your hero's name");
+        myPlayerNameField.setMaxWidth(300);
+        myPlayerNameField.setStyle("-fx-background-color: grey; " + "-fx-text-fill: black; ");
 
-        // Create an HBox to align the label and text field horizontally
-        HBox nameInputBox = new HBox(10, nameLabel, playerNameField);
+        HBox nameInputBox = new HBox(10, nameLabel, myPlayerNameField);
         nameInputBox.setAlignment(Pos.CENTER);
         nameInputBox.setPadding(new Insets(-5, 0, 20, 50));
 
@@ -119,15 +136,12 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @return the container for difficulty selection elements
      */
     private HBox createDifficultySection() {
-        // Create the label for the difficulty section
         Label myDifficultyLabel = LabelHelper.createCenteredLabel("Choose Your Difficulty:", FONT_PATH,
                 20, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
-        // Create the radio buttons using the existing helper
         HBox difficultyButtons = myRadioButtonHelper.createDifficultyButtons();
         difficultyButtons.setAlignment(Pos.CENTER_LEFT);
 
-        // Combine the label and radio buttons in an HBox
         HBox difficultyLayout = new HBox(20, myDifficultyLabel, difficultyButtons);
         difficultyLayout.setAlignment(Pos.CENTER);
         difficultyLayout.setPadding(new Insets(-20, 50, 20, 50));
@@ -157,9 +171,9 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @param theCharacterType the type of character selected by the player
      */
     private void handleCharacterSelection(Stage theStage, String theCharacterType) {
-        String playerName = playerNameField.getText().trim();
+        String playerName = myPlayerNameField.getText().trim();
         if (playerName.isEmpty()) {
-            playerName = "Unknown Hero"; // Default name if no name is entered
+            playerName = "Unknown Hero";
         }
         Maze myMaze = Maze.getInstance();
         int myMazeSize = myRadioButtonHelper.getSelectedMazeSize();

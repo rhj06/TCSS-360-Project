@@ -7,6 +7,10 @@ import javafx.scene.layout.HBox;
 
 /**
  * Helper class to create and manage difficulty selection radio buttons.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class RadioButtonHelper {
 
@@ -37,6 +41,7 @@ public class RadioButtonHelper {
     public HBox createDifficultyButtons() {
         HBox layout = new HBox(20, myEasyButton, myNormalButton, myHardButton);
         layout.setAlignment(Pos.CENTER);
+
         return layout;
     }
 
@@ -48,6 +53,7 @@ public class RadioButtonHelper {
     public int getSelectedMazeSize() {
         if (myEasyButton.isSelected()) return 5;
         if (myHardButton.isSelected()) return 7;
+
         return 6;
     }
 
@@ -60,6 +66,7 @@ public class RadioButtonHelper {
     private RadioButton createRadioButton(String theText) {
         RadioButton radioButton = new RadioButton(theText);
         radioButton.setStyle("-fx-text-fill: gray;");
+
         return radioButton;
     }
 }

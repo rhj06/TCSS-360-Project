@@ -1,6 +1,5 @@
 package dungeongame.src.view;
 
-import dungeongame.src.model.AbstractDungeonCharacter;
 import dungeongame.src.model.Maze;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,11 +10,12 @@ import javafx.stage.Stage;
 /**
  * Represents a view for the map and inventory in the dungeon game.
  * Provides buttons for displaying the map or inventory screen.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class MapAndInventory {
-
-    /** The maze representing the dungeon layout. */
-    private final Maze myMaze;
 
     /** The inventory screen for managing items. */
     private final InventoryScreen myInventoryScreen;
@@ -26,12 +26,9 @@ public class MapAndInventory {
     /**
      * Constructs a MapAndInventory instance.
      *
-     * @param theMaze the maze to display
-     * @param theCharacter the character associated with the inventory
      * @param theInventoryScreen the inventory screen for item management
      */
-    public MapAndInventory(Maze theMaze, AbstractDungeonCharacter theCharacter, InventoryScreen theInventoryScreen) {
-        myMaze = theMaze;
+    public MapAndInventory(Maze ignoredTheMaze, InventoryScreen theInventoryScreen) {
         myInventoryScreen = theInventoryScreen;
         myButtonFactory = new ButtonFactory(150);
     }

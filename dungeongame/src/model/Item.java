@@ -42,7 +42,7 @@ public interface Item {
     /**
      * Defines the behavior when the item is used by the player
      *
-     * @param
+     * @param theCharacter the character to use the item.
      */
     void useItem(final Character theCharacter);
 }

@@ -8,22 +8,30 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-import java.beans.PropertyChangeSupport;
-
 /**
  * Represents directional buttons for navigating the maze.
  * Provides buttons for moving in all cardinal directions.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class DirectionalButtons {
+
+    /** The MazeTraverser instance for handling player movements. */
     private final MazeTraverser myMazeTraverser;
+
+    /** The RoomDescription instance for updating the current room's description. */
     private final RoomDescription myRoomDescription;
+
+    /** The ButtonFactory instance for creating directional buttons. */
     private final ButtonFactory myButtonFactory;
 
     /**
      * Constructs a DirectionalButtons instance.
      *
-     * @param theRoomDescription the description of the room to be updated
-     *                           based on player's movement
+     * @param theRoomDescription the description of the room to be updated based on player's movement.
+     *
      */
     public DirectionalButtons(RoomDescription theRoomDescription) {
         myMazeTraverser = MazeTraverser.getInstance();

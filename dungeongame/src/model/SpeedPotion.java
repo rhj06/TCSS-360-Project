@@ -5,7 +5,9 @@ package dungeongame.src.model;
  * When used, this potion increases the player's attack speed.
  * It inherits common item properties from the AbstractItem class.
  *
+ * @version 1.0
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
+ *
  */
 public class SpeedPotion extends AbstractItem  {
 
@@ -33,7 +35,7 @@ public class SpeedPotion extends AbstractItem  {
     /**
      * Returns a string representation of the Speed Potion.
      *
-     * @return The name of the potion (e.g., "Speed Potion").
+     * @return The name of the potion.
      */
     @Override
     public String toString() {

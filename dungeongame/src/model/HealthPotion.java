@@ -5,6 +5,7 @@ package dungeongame.src.model;
  * When used, this potion restores a portion of the player's health.
  * It inherits common item properties from the AbstractItem class.
  *
+ * @version 1.0
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  */
 public class HealthPotion extends AbstractItem {
@@ -37,7 +38,7 @@ public class HealthPotion extends AbstractItem {
     /**
      * Returns a string representation of the Health Potion.
      *
-     * @return The name of the potion (e.g., "Health Potion").
+     * @return The name of the potion.
      */
     @Override
     public String toString() {

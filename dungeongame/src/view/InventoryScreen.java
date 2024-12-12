@@ -19,6 +19,10 @@ import java.util.stream.Collectors;
  * - View and use potions (Health, Speed, Vision).
  * - Track collected Pillars.
  * - See real-time updates when the inventory changes.
+ *
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ *
  */
 public class InventoryScreen extends AbstractScreen {
 
@@ -60,10 +64,8 @@ public class InventoryScreen extends AbstractScreen {
             myPotionButtons.put(potionName, createPotionButton(potionName));
             myPotionCountLabels.put(potionName, createPotionCountLabel());
         }
-
         myPillarStatusLabel = createPillarStatusLabel();
 
-        // Add a listener to update the inventory UI in real-time
         myInventory.addPropertyChangeListener(evt -> {
             if ("Item Added".equals(evt.getPropertyName()) || "Item Used".equals(evt.getPropertyName())) {
                 Platform.runLater(() -> {
@@ -250,9 +252,8 @@ public class InventoryScreen extends AbstractScreen {
     /**
      * Adds a potion to the inventory and updates the UI.
      *
-     * @param thePotion the potion to add
      */
-    public void addPotion(Item thePotion) {
+    public void addPotion() {
         updatePotionCounts();
         updateButtonStates();
         updatePillarStatus();

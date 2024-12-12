@@ -7,6 +7,7 @@ import java.awt.*;
  * When used, this potion reveals the surrounding area for the player.
  * It inherits common item properties from the AbstractItem class.
  *
+ * @version 1.0
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  */
 public class VisionPotion extends AbstractItem {
@@ -16,7 +17,6 @@ public class VisionPotion extends AbstractItem {
      * The Vision Potion has a single use and reveals the surrounding area when used.
      */
     public VisionPotion() {
-
         super("Vision Potion", "Reveals surrounding area", 5, 1);
     }
 
@@ -31,13 +31,11 @@ public class VisionPotion extends AbstractItem {
         int playerX = playerCoords.x;
         int playerY = playerCoords.y;
 
-        // Loop through all surrounding coordinates (including diagonals)
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 int newX = playerX + dx;
                 int newY = playerY + dy;
 
-                // Reveal room contents if the coordinates are within bounds
                 revealRoomContents(theMaze, newX, newY);
             }
         }
@@ -68,7 +66,7 @@ public class VisionPotion extends AbstractItem {
     /**
      * Returns a string representation of the Vision Potion.
      *
-     * @return The name of the potion (e.g., "Vision Potion").
+     * @return The name of the potion.
      */
     @Override
     public String toString() {

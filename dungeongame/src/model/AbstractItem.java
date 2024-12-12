@@ -10,8 +10,9 @@ import java.util.Objects;
  * shared behavior such as retrieving item information (name, description, value, count)
  * and checking whether the player possesses the item.
  *
- * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  * @version 1.0
+ * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
+ *
  */
 public abstract class AbstractItem implements Item, Serializable {
     @Serial
