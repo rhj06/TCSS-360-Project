@@ -11,15 +11,15 @@ import java.util.Map;
 /**
  * Class that represents the player inventory.
  *
- * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
- * @version 11/10/2024
+ * @version 1.0
+ * @author Kaleb Anagnostou, Ryan Johnson, David Bessex
  */
 final public class PlayerInventory implements java.io.Serializable {
     @Serial
     private static final long serialVersionUID = 87531815144L;
     private static PlayerInventory uniqueInstance;
 
-    private PropertyChangeSupport myPCS;
+    private final PropertyChangeSupport myPCS;
     private Map<Item, Integer> myInventory;
     private Player myPlayer;
 
@@ -28,7 +28,7 @@ final public class PlayerInventory implements java.io.Serializable {
      */
     public PlayerInventory() {
         myPCS = new PropertyChangeSupport(this);
-        myInventory = new HashMap<Item, Integer>();
+        myInventory = new HashMap<>();
         myPlayer = null;
     }
 

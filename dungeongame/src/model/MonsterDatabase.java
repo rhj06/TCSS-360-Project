@@ -8,6 +8,10 @@ import java.sql.Statement;
 /**
  * A class for managing a SQLite database containing monster data for the Dungeon Adventure game.
  * This class handles the creation of the database file and a monsters table, if they do not already exist.
+ *
+ * @version 1.0
+ * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
+ *
  */
 public class MonsterDatabase {
 
