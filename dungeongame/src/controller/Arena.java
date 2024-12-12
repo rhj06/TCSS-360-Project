@@ -5,6 +5,7 @@ import javafx.application.Platform;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -176,29 +177,21 @@ public class Arena {
             }
         }
 
-        if(myMonster.getHealth() == 0) {
+        if (myMonster.getHealth() == 0) {
             System.out.println(myMonster.toString() + " is dead");
             notifyMessage(myMonster.toString() + " is dead.");
+
             int playerI = Maze.getInstance().getPlayerCords().y;
             int playerJ = Maze.getInstance().getPlayerCords().x;
             Maze.getInstance().setRoomMonster(playerI, playerJ, null);
 
-            if(myMonster instanceof Boss) {
-                if(((Boss)myMonster).getType() == "Dragon") {
-                    Platform.runLater(() -> {
-                        myPCS.firePropertyChange("final_boss_killed", null, null);
-                    });
-                }
+            if (myMonster instanceof Boss && Objects.equals(((Boss) myMonster).getType(), "Dragon")) {
+                Platform.runLater(() -> myPCS.firePropertyChange("final_boss_killed", false, true));
             }
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
             monsterIsDead(true);
 
-            if(Math.random() < myMonster.getItemDropRate()){
+            if (Math.random() < myMonster.getItemDropRate()) {
                 System.out.println(myMonster.toString() + " dropped an item.");
                 notifyMessage(myMonster.toString() + " dropped an item.");
                 Item item = myMonster.getRandomItem();

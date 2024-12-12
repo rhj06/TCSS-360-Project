@@ -24,20 +24,17 @@ public class Main extends Application {
      * Starts the JavaFX application.
      * This method sets up the primary stage with the main menu scene and initializes the monster database asynchronously.
      *
-     * @param primaryStage the primary stage for this application
+     * @param thePrimaryStage the primary stage for this application
      */
     @Override
-    public void start(Stage primaryStage) {
-        // Initialize the main menu screen
+    public void start(Stage thePrimaryStage) {
         MainMenu mainMenu = new MainMenu();
-        Scene mainMenuScene = mainMenu.createScene(primaryStage);
+        Scene mainMenuScene = mainMenu.createScene(thePrimaryStage);
 
-        // Set up the stage
-        primaryStage.setScene(mainMenuScene);
-        primaryStage.setTitle("Dungeon Adventure");
-        primaryStage.show();
+        thePrimaryStage.setScene(mainMenuScene);
+        thePrimaryStage.setTitle("Dungeon Adventure");
+        thePrimaryStage.show();
 
-        // Initialize the monster database in a background thread
         new Thread(() -> {
             myMonsterDatabase = new MonsterDatabase();
             myMonsterDatabase.initializeDatabase();
@@ -53,6 +50,5 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-        System.out.println("Dungeon Adventure started");
     }
 }

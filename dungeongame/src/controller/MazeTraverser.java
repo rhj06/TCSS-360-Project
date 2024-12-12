@@ -100,11 +100,13 @@ public class MazeTraverser {
             AbstractMonster monster = myMaze.getRoomMonster(myPlayerCords.y, myPlayerCords.x);
             myRoomDescription.updateDescription("You have encountered a monster: " + monster);
             Arena arena = new Arena(myPlayer, monster);
-            new ArenaScreen(myPlayer, monster, arena);// Automatically sets up and shows the window
-            //arena.combat();
-            if (monster instanceof Boss && ((Boss) monster).getType().equals("Dragon")) {
-                myPcs.firePropertyChange("final_boss_killed", null, null);
-            }
+            new ArenaScreen(myPlayer, monster, arena);
+
+            arena.addPropertyChangeListener(evt -> {
+                if ("final_boss_killed".equals(evt.getPropertyName())) {
+                    myPcs.firePropertyChange("final_boss_killed", false, true);
+                }
+            });
 
             if (((AbstractDungeonCharacter) myPlayer).getHealth() <= 0) {
                 firePlayerDeadEvent();
@@ -117,12 +119,9 @@ public class MazeTraverser {
         myMaze.printPlayerCordMaze();
         System.out.println("Monsters");
         myMaze.printMonsterMaze();
-
-
     }
 
     public void firePlayerDeadEvent() {
         myPcs.firePropertyChange("player_dead", false, true);
     }
-
 }

@@ -124,7 +124,6 @@ public class GameScreen extends AbstractScreen {
      * @param theStage the primary stage where the victory screen will be displayed
      */
     private void transitionToVictoryScreen(Stage theStage) {
-        System.out.println("Transitioning to VictoryScreen.");
         VictoryScreen victoryScreen = new VictoryScreen();
         Scene victoryScene = victoryScreen.createScene(theStage);
         theStage.setScene(victoryScene);
