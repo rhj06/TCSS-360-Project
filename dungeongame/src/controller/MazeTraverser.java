@@ -123,7 +123,6 @@ public class MazeTraverser {
 
     public void firePlayerDeadEvent() {
         myPcs.firePropertyChange("player_dead", false, true);
-        System.out.println("Player dead event fired from MazeTraverser.");
     }
 
 }

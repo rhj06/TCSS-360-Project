@@ -55,10 +55,8 @@ public class GameScreen extends AbstractScreen {
         theTraverser.setInventoryScreen(myInventoryScreen);
         theTraverser.addPropertyChangeListener(evt -> {
             if ("final_boss_killed".equals(evt.getPropertyName())) {
-                System.out.println("Victory event received in GameScreen. Transitioning to VictoryScreen.");
                 Platform.runLater(() -> transitionToVictoryScreen(theStage));
             } else if ("player_dead".equals(evt.getPropertyName())) {
-                System.out.println("Player dead event received in GameScreen. Transitioning to GameOverScreen.");
                 Platform.runLater(() -> transitionToGameOverScreen(theStage));
             }
         });
@@ -140,7 +138,6 @@ public class GameScreen extends AbstractScreen {
      * @param theStage the primary stage where the game over screen will be displayed
      */
     private void transitionToGameOverScreen(Stage theStage) {
-        System.out.println("Transitioning to GameOverScreen.");
         GameOverScreen gameOverScreen = new GameOverScreen();
         Scene gameOverScene = gameOverScreen.createScene(theStage);
         theStage.setScene(gameOverScene);

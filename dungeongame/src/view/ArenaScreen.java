@@ -83,7 +83,7 @@ public class ArenaScreen extends AbstractScreen{
         myArena.addPropertyChangeListener(event -> {
             if ("monsterIsDead".equals(event.getPropertyName())) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -94,7 +94,7 @@ public class ArenaScreen extends AbstractScreen{
         myArena.addPropertyChangeListener(event -> {
             if ("playerIsDead".equals(event.getPropertyName())) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

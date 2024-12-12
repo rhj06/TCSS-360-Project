@@ -50,15 +50,12 @@ public class Arena {
 
     public void playerIsDead(boolean thePlayerState) {
         Platform.runLater(() -> {
-            myPCS.firePropertyChange("player_dead", false, thePlayerState); // Notify Arena listeners
+            myPCS.firePropertyChange("playerIsDead", false, thePlayerState);
         });
-
-        // Notify MazeTraverser
         MazeTraverser.getInstance().firePlayerDeadEvent();
     }
 
     public void notifyMessage(String theMessage) {
-        //Platform.runLater(() -> addMessage(message));
         Platform.runLater(() -> {
             myPCS.firePropertyChange("message", null, theMessage);
         });
@@ -72,7 +69,6 @@ public class Arena {
      * A combat loop that will continue until one of the entities is dead.
      */
     public void combat(){
-        //Random rand = new Random();
         boolean playerTurn = ((AbstractDungeonCharacter)myPlayer).getSpeed() > myMonster.getSpeed();
 
         while((((AbstractDungeonCharacter)myPlayer).getHealth() > 0) && (myMonster.getHealth() > 0)) {
@@ -177,14 +173,6 @@ public class Arena {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-
-               // Platform.runLater(() -> {
-//                    if (((AbstractDungeonCharacter)myPlayer).getHealth() <= 0) {
-//                        System.out.println("Game Over");
-//                        notifyMessage(myPlayer.toString() + " is dead. Game over.");
-//                        playerIsDead(true);
-//                    }
-                //});
             }
         }
 
