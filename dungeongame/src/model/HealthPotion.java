@@ -8,7 +8,7 @@ package dungeongame.src.model;
  * @version 1.0
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  */
-public class HealthPotion extends AbstractItem {
+public final class HealthPotion extends AbstractItem {
 
     /**
      * Constructs a Health Potion with a predefined name, description, and value.
