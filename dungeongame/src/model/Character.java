@@ -13,75 +13,73 @@ public interface Character {
 
     /**
      * Property Change Support
-     * @return
+     * @return myPCS
      */
     PropertyChangeSupport getMyPCS();
 
     /**
      * Get health of character
-     * @return
+     * @return health
      */
     int getHealth();
 
     /**
      * get CurrentHealth Property
-     * @return
+     * @return CurrentHealthProperty
      */
     IntegerProperty getCurHealthProperty();
 
     /**
      * get Max Health
-     * @return
+     * @return myMaxHealth
      */
     int getMaxHealth();
 
     /**
      * set health of character to theHealth
-     * @param theHealth
-     * @return
+     * @param theHealth health
      */
     void setHealth(final int theHealth);
 
     /**
      * Change health of Character by incrementing by theHealthChange
-     * @param theHealthChange
+     * @param theHealthChange change in healtha
      */
     void changeHealth(final int theHealthChange);
 
     /**
      * get attack of character
-     * @return
+     * @return myAttack
      */
     int getAttack();
 
     /**
      * get defence of character
-     * @return
+     * @return myDefense
      */
     int getDefense();
 
     /**
      * get speed of character
-     * @return
+     * @return mySpeed
      */
     int getSpeed();
 
     /**
      * set speed of character
-     * @param theSpeed
-     * @return
+     * @param theSpeed the change in speed
      */
     void setSpeed(final int theSpeed);
 
     /**
      * is character attacking?
-     * @return
+     * @return true if mySpeed is faster then theOtherSpeed
      */
     boolean canAttack(final int theOtherSpeed);
 
     /**
      * Get image file name of dungeon character
-     * @return
+     * @return get image file name
      */
     String getImageFileName();
 
@@ -92,7 +90,7 @@ public interface Character {
 
     /**
      * is character dead?
-     * @return
+     * @return true if Character health == 0
      */
     boolean isDead();
 

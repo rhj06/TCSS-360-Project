@@ -106,7 +106,7 @@ class PlayerInventoryTest {
         myInventory.addItem(inheritancePillar);
         myInventory.addItem(polymorphismPillar);
         myInventory.addItem(abstractionPillar);
-        myInventory.checkforPillars();
+        myInventory.checkForPillars();
         System.out.println("Test passed: Exit spawned successfully.");
     }
 

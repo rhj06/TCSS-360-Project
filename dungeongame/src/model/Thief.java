@@ -1,6 +1,5 @@
 package dungeongame.src.model;
 
-import java.io.Serializable;
 
 /**
  * Represents a Thief character in the dungeon game.

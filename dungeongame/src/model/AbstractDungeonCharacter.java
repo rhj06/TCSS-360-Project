@@ -76,7 +76,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     /**
      * Takes an instance of AbstractDungeonCharacter and modifies the fields of the called instance to match.
      *
-     * @param theOther
+     * @param theOther Other AbstractDungeonCharacter
      */
     public void updateFrom(AbstractDungeonCharacter theOther) {
         myPCS = new PropertyChangeSupport(this);
@@ -117,11 +117,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     }
 
     public void setHealth(final int theHealth) {
-        if (theHealth > myMaxHealth) {
-            myCurrHealth = myMaxHealth;
-        } else {
-            myCurrHealth = theHealth;
-        }
+        myCurrHealth = Math.min(theHealth, myMaxHealth);
         myPCS.firePropertyChange("Health Changed", null, myCurrHealth);
     }
 
@@ -166,11 +162,8 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
     }
 
     public String getImageFileName() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName().toLowerCase(Locale.ENGLISH));
-        sb.append(".png");
 
-        return sb.toString();
+        return getClass().getSimpleName().toLowerCase(Locale.ENGLISH) + ".png";
     }
     public void useSpecialAttack() {}
 

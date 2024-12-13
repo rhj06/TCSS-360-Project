@@ -35,14 +35,6 @@ public final class MapTileList implements Serializable {
         return uniqueInstance;
     }
 
-    /**
-     * Update uniqueInstance to be the saved theOtherList
-     * @param theOtherList the serialized MapTileList
-     */
-    public void updateFrom(MapTileList theOtherList) {
-        myList = theOtherList.myList;
-    }
-
     public void setList(ArrayList<MapTile> theList) {
         myList = theList;
     }

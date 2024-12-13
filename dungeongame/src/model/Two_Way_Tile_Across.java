@@ -1,5 +1,10 @@
 package dungeongame.src.model;
 
+/**
+ * Two Way Across MapTile
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
+ */
 public final class Two_Way_Tile_Across extends MapTile {
 
     /**

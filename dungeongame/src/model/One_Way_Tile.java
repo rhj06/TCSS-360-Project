@@ -1,5 +1,10 @@
 package dungeongame.src.model;
 
+/**
+ * One Way MapTile
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ * @version 1.0
+ */
 public final class One_Way_Tile extends MapTile {
 
     /**

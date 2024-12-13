@@ -2,8 +2,6 @@ package dungeongame.src.model;
 
 import javafx.scene.shape.Rectangle;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -28,8 +26,8 @@ public class MapTile extends Rectangle implements Serializable {
 
     /**
      * MapTile Constructor
-     * @param theXCoor
-     * @param theYCoor
+     * @param theXCoor the X coordinates
+     * @param theYCoor the Y coordinates
      */
     public MapTile(final int theXCoor, final int theYCoor, final int theWidth, final int theHeight) {
         super(theXCoor, theYCoor, theWidth, theHeight);

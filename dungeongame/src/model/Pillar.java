@@ -7,14 +7,14 @@ package dungeongame.src.model;
  * @author Kaleb Anagnostou, David Bessex, Ryan Johnson
  *
  */
-public class Pillar extends AbstractItem{
+public final class Pillar extends AbstractItem{
 
     /**
      * Constructs a pillar with the specified name.
      *
      * @param theName the name of the pillar.
      */
-    public Pillar(String theName){
+    public Pillar(final String theName){
         super(theName, null, 0, 1);
     }
 }

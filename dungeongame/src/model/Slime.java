@@ -39,8 +39,10 @@ public final class Slime extends AbstractMonster{
      */
     @Override
     public Item getRandomItem() {
-        final double randomNumber = Math.random() * 10;
-        Item item = null;
+        final double randomNumber;
+        randomNumber = Math.random() * 10;
+        Item item;
+        item = null;
         if (randomNumber > 1.99) {
             if (randomNumber < 4.01) {
                 item = new SpeedPotion();

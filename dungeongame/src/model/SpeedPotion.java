@@ -9,7 +9,7 @@ package dungeongame.src.model;
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  *
  */
-public class SpeedPotion extends AbstractItem  {
+public final class SpeedPotion extends AbstractItem  {
 
     /**
      * Constructs a Speed Potion with a predefined name, description, and value.
@@ -27,7 +27,7 @@ public class SpeedPotion extends AbstractItem  {
      * @param theCharacter who will receive the speed boost.
      */
     @Override
-    public void useItem(Character theCharacter) {
+    public void useItem(final Character theCharacter) {
         int newSpeed = theCharacter.getSpeed() + getMyItemValue();
         theCharacter.setSpeed(newSpeed);
     }

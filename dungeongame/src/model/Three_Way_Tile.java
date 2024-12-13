@@ -1,5 +1,10 @@
 package dungeongame.src.model;
 
+/**
+ * Three Way MapTile
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
+ */
 public final class Three_Way_Tile extends MapTile {
 
     /**
