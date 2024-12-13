@@ -14,7 +14,13 @@ import javafx.stage.Stage;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class VictoryScreen extends AbstractScreen {
+public final class VictoryScreen extends AbstractScreen {
+
+    /** Constant of 600 */
+    private static final int SIX_HUNDRED = 600;
+
+    /** Constant of 800 */
+    private static final int EIGHT_HUNDRED = 800;
 
     /**
      * Creates the Victory Screen's scene with a simple congratulatory message.
@@ -23,7 +29,7 @@ public class VictoryScreen extends AbstractScreen {
      * @return the constructed Scene for the Victory Screen
      */
     @Override
-    public Scene createScene(Stage theStage) {
+    public Scene createScene(final Stage theStage) {
         StackPane layout = new StackPane();
         layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: black;");
@@ -33,6 +39,6 @@ public class VictoryScreen extends AbstractScreen {
 
         layout.getChildren().add(victoryLabel);
 
-        return new Scene(layout, 800, 600);
+        return new Scene(layout, EIGHT_HUNDRED, SIX_HUNDRED);
     }
 }

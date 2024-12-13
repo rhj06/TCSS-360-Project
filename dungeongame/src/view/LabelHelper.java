@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class LabelHelper {
+public final class LabelHelper {
 
     /**
      * Creates a {@link Label} with the specified text, font, size, and style.
@@ -22,7 +22,7 @@ public class LabelHelper {
      * @param theStyle    The CSS style to apply to the label.
      * @return A {@link Label} configured with the specified properties.
      */
-    public static Label createLabel(String theText, String theFontPath, int theFontSize, String theStyle) {
+    public static Label createLabel(final String theText, final String theFontPath, final int theFontSize, final String theStyle) {
         Font font = loadFont(theFontPath, theFontSize);
         Label label = new Label(theText);
         label.setFont(font);
@@ -41,7 +41,7 @@ public class LabelHelper {
      * @param theStyle    The CSS style to apply to the label.
      * @return A centered {@link Label} configured with the specified properties.
      */
-    public static Label createCenteredLabel(String theText, String theFontPath, int theFontSize, String theStyle) {
+    public static Label createCenteredLabel(final String theText, final String theFontPath, final int theFontSize, final String theStyle) {
         Label label = createLabel(theText, theFontPath, theFontSize, theStyle);
         label.setWrapText(true);
         label.setAlignment(Pos.CENTER);
@@ -57,7 +57,7 @@ public class LabelHelper {
      * @param theFontSize The size of the font.
      * @return A {@link Font} loaded from the specified file or the default font if loading fails.
      */
-    private static Font loadFont(String theFontPath, int theFontSize) {
+    private static Font loadFont(final String theFontPath, final int theFontSize) {
         try {
             Font font = Font.loadFont(theFontPath, theFontSize);
             if (font == null) {

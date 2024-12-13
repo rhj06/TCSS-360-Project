@@ -24,7 +24,22 @@ import java.util.stream.Collectors;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class InventoryScreen extends AbstractScreen {
+public final class InventoryScreen extends AbstractScreen {
+
+    /** Constant of 10 */
+    private static final int TEN = 10;
+
+    /** Constant of 20 */
+    private static final int TWENTY = 20;
+
+    /** Constant of 100 */
+    private static final int ONE_HUNDRED = 100;
+
+    /** Constant of 150 */
+    private static final int ONE_HUNDRED_FIFTY = 150;
+
+    /** Constant of 400 */
+    private static final int FOUR_HUNDRED = 400;
 
     /** The character whose inventory is displayed. */
     private final AbstractDungeonCharacter myCharacter;
@@ -52,11 +67,11 @@ public class InventoryScreen extends AbstractScreen {
      *
      * @param theCharacter the character whose inventory will be displayed
      */
-    public InventoryScreen(AbstractDungeonCharacter theCharacter) {
+    public InventoryScreen(final AbstractDungeonCharacter theCharacter) {
         myCharacter = theCharacter;
         myInventory = PlayerInventory.getInstance();
         myInventory.setPlayer(((Player)myCharacter));
-        myButtonFactory = new ButtonFactory(150);
+        myButtonFactory = new ButtonFactory(ONE_HUNDRED_FIFTY);
 
         myPotionButtons = new HashMap<>();
         myPotionCountLabels = new HashMap<>();
@@ -100,14 +115,14 @@ public class InventoryScreen extends AbstractScreen {
      * @return the created Scene instance
      */
     @Override
-    public Scene createScene(Stage theStage) {
+    public Scene createScene(final Stage theStage) {
         VBox layout = createLayout();
         for (String potionName : MY_POTION_NAMES) {
             layout.getChildren().add(createButtonWithCount(myPotionButtons.get(potionName),
                     myPotionCountLabels.get(potionName)));
         }
         layout.getChildren().add(myPillarStatusLabel);
-        return new Scene(layout, 400, 400);
+        return new Scene(layout, FOUR_HUNDRED, FOUR_HUNDRED);
     }
 
     /**
@@ -116,7 +131,7 @@ public class InventoryScreen extends AbstractScreen {
      * @return a VBox containing all UI elements
      */
     private VBox createLayout() {
-        VBox layout = new VBox(20);
+        VBox layout = new VBox(TWENTY);
         layout.setStyle("-fx-padding: 20; -fx-alignment: center;");
         Image backgroundImage = new Image("file:.idea/resources/fonts/inventory.jpg");
         BackgroundImage bgImage = new BackgroundImage(
@@ -124,7 +139,7 @@ public class InventoryScreen extends AbstractScreen {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
-                new BackgroundSize(100, 100, true, true, false, true)
+                new BackgroundSize(ONE_HUNDRED, ONE_HUNDRED, true, true, false, true)
         );
         layout.setBackground(new Background(bgImage));
         return layout;
@@ -136,7 +151,7 @@ public class InventoryScreen extends AbstractScreen {
      * @param thePotionName the name of the potion
      * @return a Button configured for the specified potion
      */
-    private Button createPotionButton(String thePotionName) {
+    private Button createPotionButton(final String thePotionName) {
         return myButtonFactory.createButton(thePotionName, () -> usePotion(thePotionName));
     }
 
@@ -169,8 +184,8 @@ public class InventoryScreen extends AbstractScreen {
      * @param theCountLabel the label displaying the potion count
      * @return an HBox containing the button and label
      */
-    private HBox createButtonWithCount(Button theButton, Label theCountLabel) {
-        HBox hbox = new HBox(10);
+    private HBox createButtonWithCount(final Button theButton, final Label theCountLabel) {
+        HBox hbox = new HBox(TEN);
         hbox.setStyle("-fx-alignment: center;");
         hbox.getChildren().addAll(theButton, theCountLabel);
         return hbox;
@@ -207,7 +222,7 @@ public class InventoryScreen extends AbstractScreen {
      * @param thePotionName the name of the potion
      * @return the count of the potion in the inventory
      */
-    private int getPotionCount(String thePotionName) {
+    private int getPotionCount(final String thePotionName) {
         HashMap<Item, Integer> inventory = myInventory.getInventory();
         return inventory.entrySet().stream()
                 .filter(entry -> entry.getKey().getMyItemName().equalsIgnoreCase(thePotionName))
@@ -221,7 +236,7 @@ public class InventoryScreen extends AbstractScreen {
      *
      * @param thePotionName the name of the potion to use
      */
-    private void usePotion(String thePotionName) {
+    private void usePotion(final String thePotionName) {
         myInventory.getInventory().entrySet().stream()
                 .filter(entry -> entry.getKey().getMyItemName().equalsIgnoreCase(thePotionName))
                 .findFirst()

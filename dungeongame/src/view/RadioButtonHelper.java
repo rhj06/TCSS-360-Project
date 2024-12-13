@@ -12,10 +12,24 @@ import javafx.scene.layout.HBox;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class RadioButtonHelper {
+public final class RadioButtonHelper {
+    /** Constant of 5 */
+    private static final int FIVE = 5;
 
+    /** Constant of 6 */
+    private static final int SIX = 6;
+
+    /** Constant of 7 */
+    private static final int SEVEN = 7;
+
+    /** Constant of 20 */
+    private static final int TWENTY = 20;
+
+    /** Easy Button */
     private final RadioButton myEasyButton;
+    /** Medium Button */
     private final RadioButton myNormalButton;
+    /** Hard Button */
     private final RadioButton myHardButton;
 
     /**
@@ -39,7 +53,7 @@ public class RadioButtonHelper {
      * @return HBox with Easy, Normal, Hard buttons in that order.
      */
     public HBox createDifficultyButtons() {
-        HBox layout = new HBox(20, myEasyButton, myNormalButton, myHardButton);
+        HBox layout = new HBox(TWENTY, myEasyButton, myNormalButton, myHardButton);
         layout.setAlignment(Pos.CENTER);
 
         return layout;
@@ -51,10 +65,10 @@ public class RadioButtonHelper {
      * @return 5 for Easy, 7 for Hard, and 6 for Normal.
      */
     public int getSelectedMazeSize() {
-        if (myEasyButton.isSelected()) return 5;
-        if (myHardButton.isSelected()) return 7;
+        if (myEasyButton.isSelected()) return FIVE;
+        if (myHardButton.isSelected()) return SEVEN;
 
-        return 6;
+        return SIX;
     }
 
     /**
@@ -63,7 +77,7 @@ public class RadioButtonHelper {
      * @param theText The label of the RadioButton.
      * @return A styled RadioButton.
      */
-    private RadioButton createRadioButton(String theText) {
+    private RadioButton createRadioButton(final String theText) {
         RadioButton radioButton = new RadioButton(theText);
         radioButton.setStyle("-fx-text-fill: gray;");
 

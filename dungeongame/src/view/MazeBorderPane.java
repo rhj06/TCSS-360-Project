@@ -11,8 +11,14 @@ import javafx.scene.shape.Shape;
 /**
  * MazeBorderPane, Child of BorderPane, Creates a Visual representation of the current Players coordinates in the Maze
  */
-public class MazeBorderPane extends BorderPane {
+public final class MazeBorderPane extends BorderPane {
 
+    /** Constant of 2 */
+    private static final int TWO = 2;
+    /** Constant of 3 */
+    private static final int THREE = 3;
+    /** Constant of 4 */
+    private static final int FOUR = 4;
     /** Grid size constant */
     private static final int GRID_SIZE = 150;
     /** Warrior sprite offset for center placement */
@@ -176,7 +182,7 @@ public class MazeBorderPane extends BorderPane {
                     theI * GRID_SIZE,
                     GRID_SIZE,
                     GRID_SIZE));
-        } else if (typeOfTile(theCurrentRoom) == 2) {
+        } else if (typeOfTile(theCurrentRoom) == TWO) {
             if ((theCurrentRoom.isNorthDoor() && theCurrentRoom.isSouthDoor()) || (theCurrentRoom.isEastDoor() && theCurrentRoom.isWestDoor())) {
                 tile = rotateTwoWayAcrossTile(theCurrentRoom, new Two_Way_Tile_Across(
                         theJ * GRID_SIZE,
@@ -190,13 +196,13 @@ public class MazeBorderPane extends BorderPane {
                         GRID_SIZE,
                         GRID_SIZE));
             }
-        } else if (typeOfTile(theCurrentRoom) == 3) {
+        } else if (typeOfTile(theCurrentRoom) == THREE) {
             tile = rotateThreeWayTile(theCurrentRoom, new Three_Way_Tile(
                     theJ * GRID_SIZE,
                     theI * GRID_SIZE,
                     GRID_SIZE,
                     GRID_SIZE));
-        } else if (typeOfTile(theCurrentRoom) == 4) {
+        } else if (typeOfTile(theCurrentRoom) == FOUR) {
             tile = new Four_Way_Tile(
                     theJ * GRID_SIZE,
                     theI * GRID_SIZE,

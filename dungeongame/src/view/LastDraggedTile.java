@@ -4,6 +4,8 @@ import dungeongame.src.model.MapTile;
 
 /**
  * Object that contains an instance of the Tile last used in a Drag event
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  */
 public final class LastDraggedTile {
 

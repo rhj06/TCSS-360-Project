@@ -15,7 +15,16 @@ import java.util.ArrayList;
  * Creates a grid base Map where tiles can be inserted and dragged around to create map of the players maze
  * Can also be used to make silly shapes :)
  */
-public class MapBorderPane extends BorderPane {
+public final class MapBorderPane extends BorderPane {
+
+    /** Constant of 10 */
+    private static final int TEN = 10;
+
+    /** Constant of 20 */
+    private static final int TWENTY = 20;
+
+    /** Constant of 150 */
+    private static final int ONE_HUNDRED_FIFTY = 150;
 
     /**Grid size constant*/
     private static final int GRID_SIZE = 50;
@@ -107,8 +116,8 @@ public class MapBorderPane extends BorderPane {
      */
     private Button createTileButton(final String theText) {
         Button button = new Button(theText);
-        button.setMinWidth(150);
-        button.setPadding(new Insets(10, 20, 10, 20));
+        button.setMinWidth(ONE_HUNDRED_FIFTY);
+        button.setPadding(new Insets(TEN, TWENTY, TEN, TWENTY));
         button.setOnAction(_ -> {
             MapTile tile = createTile(theText);
             tile.setFill(new ImagePattern(new Image("file:map_tile_images/" + tile.getImageFileName())));
@@ -143,8 +152,8 @@ public class MapBorderPane extends BorderPane {
      */
     private Button deleteButton() {
         Button button = new Button("Delete");
-        button.setMinWidth(150);
-        button.setPadding(new Insets(10, 20, 10, 20));
+        button.setMinWidth(ONE_HUNDRED_FIFTY);
+        button.setPadding(new Insets(TEN, TWENTY, TEN, TWENTY));
         button.setOnAction(_ -> {
             if (!myTiles.isEmpty() && myLastDraggedTile.getMyTile() != null) {
                 boolean tile = myTiles.remove(myLastDraggedTile.getMyTile());
@@ -167,8 +176,8 @@ public class MapBorderPane extends BorderPane {
      */
     private Button rightRotationButton() {
         Button button = new Button("Right Rotation");
-        button.setMinWidth(150);
-        button.setPadding(new Insets(10, 20, 10, 20));
+        button.setMinWidth(ONE_HUNDRED_FIFTY);
+        button.setPadding(new Insets(TEN, TWENTY, TEN, TWENTY));
         button.setOnAction(_ -> {
             if (myTiles.contains(myLastDraggedTile.getMyTile())) {
                  MapTile tile = myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));
@@ -187,8 +196,8 @@ public class MapBorderPane extends BorderPane {
      */
     private Button leftRotationButton() {
         Button button = new Button("Left Rotation");
-        button.setMinWidth(150);
-        button.setPadding(new Insets(10, 20, 10, 20));
+        button.setMinWidth(ONE_HUNDRED_FIFTY);
+        button.setPadding(new Insets(TEN, TWENTY, TEN, TWENTY));
         button.setOnAction(_ -> {
             if (myTiles.contains(myLastDraggedTile.getMyTile())) {
                 MapTile tile = myTiles.get(myTiles.indexOf(myLastDraggedTile.getMyTile()));

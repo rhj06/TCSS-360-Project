@@ -12,7 +12,7 @@ import javafx.scene.Scene;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class MapScene extends Scene {
+public final class MapScene extends Scene {
 
     /**Default Height*/
     private static final double HEIGHT = 600;

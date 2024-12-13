@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  * @version 1.0
  * Author: Ryan Johnson, David Bessex, Kaleb Anagnostou
  */
-public class MenuBar {
+public final class MenuBar {
 
     /**
      * The primary stage of the application.
@@ -38,7 +38,7 @@ public class MenuBar {
      * @param theStage     the primary stage of the application
      * @param theCharacter the player-controlled character
      */
-    public MenuBar(Stage theStage, AbstractDungeonCharacter theCharacter) {
+    public MenuBar(final Stage theStage, final AbstractDungeonCharacter theCharacter) {
         myStage = theStage;
         myCharacter = theCharacter;
     }

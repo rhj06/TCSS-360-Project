@@ -15,7 +15,13 @@ import javafx.stage.Stage;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class MapAndInventory {
+public final class MapAndInventory {
+
+    /** Constant of 5 */
+    private static final int FIVE = 5;
+
+    /** Constant of 150 */
+    private static final int ONE_HUNDRED_FIFTY = 150;
 
     /** The inventory screen for managing items. */
     private final InventoryScreen myInventoryScreen;
@@ -28,9 +34,9 @@ public class MapAndInventory {
      *
      * @param theInventoryScreen the inventory screen for item management
      */
-    public MapAndInventory(Maze ignoredTheMaze, InventoryScreen theInventoryScreen) {
+    public MapAndInventory(final Maze ignoredTheMaze, final InventoryScreen theInventoryScreen) {
         myInventoryScreen = theInventoryScreen;
-        myButtonFactory = new ButtonFactory(150);
+        myButtonFactory = new ButtonFactory(ONE_HUNDRED_FIFTY);
     }
 
     /**
@@ -41,7 +47,7 @@ public class MapAndInventory {
      */
     public VBox createMapAndInventoryButtons() {
         VBox myLeftButtons = new VBox(0);
-        myLeftButtons.setPadding(new Insets(5));
+        myLeftButtons.setPadding(new Insets(FIVE));
         myLeftButtons.setAlignment(Pos.BOTTOM_LEFT);
         myLeftButtons.getChildren().addAll(
                 myButtonFactory.createButton("Map", this::displayMap),

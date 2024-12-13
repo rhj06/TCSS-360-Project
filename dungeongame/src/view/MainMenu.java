@@ -19,7 +19,25 @@ import javafx.stage.Stage;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class MainMenu extends AbstractScreen {
+public final class MainMenu extends AbstractScreen {
+
+    /** Constant of 20 */
+    private static final int TWENTY = 20;
+
+    /** Constant of 30 */
+    private static final int THIRTY = 30;
+
+    /** Constant of 50 */
+    private static final int FIFTY = 50;
+
+    /** Constant of 100 */
+    private static final int ONE_HUNDRED = 100;
+
+    /** Constant of 600 */
+    private static final int SIX_HUNDRED = 600;
+
+    /** Constant of 800 */
+    private static final int EIGHT_HUNDRED = 800;
 
     /** The background image for the main menu. */
     private static final String BACKGROUND_IMAGE = "file:.idea/resources/dungeonadventure1.jpg";
@@ -58,8 +76,8 @@ public class MainMenu extends AbstractScreen {
      * @return A {@link Scene} representing the main menu.
      */
     @Override
-    public Scene createScene(Stage theStage) {
-        VBox menu = new VBox(20, createTitleLabel(),
+    public Scene createScene(final Stage theStage) {
+        VBox menu = new VBox(TWENTY, createTitleLabel(),
                 myButtonFactory.createButton("New Game", () -> theStage.setScene(new CharacterSelectScreen().createScene(theStage))),
                 myButtonFactory.createButton("Load Game", () -> {
                     GameSaver.getInstance().loadGame();
@@ -69,12 +87,12 @@ public class MainMenu extends AbstractScreen {
                 myButtonFactory.createButton("Exit", theStage::close)
         );
         menu.setAlignment(Pos.CENTER);
-        menu.setPadding(new Insets(50, 0, 100, 0));
+        menu.setPadding(new Insets(FIFTY, 0, ONE_HUNDRED, 0));
 
         BorderPane mainLayout = new BorderPane(menu);
         mainLayout.setBackground(createBackground(BACKGROUND_IMAGE));
 
-        return new Scene(mainLayout, 800, 600);
+        return new Scene(mainLayout, EIGHT_HUNDRED, SIX_HUNDRED);
     }
 
     /**
@@ -87,16 +105,9 @@ public class MainMenu extends AbstractScreen {
                 TITLE_TEXT, FONT_PATH, TITLE_FONT_SIZE,
                 "-fx-text-fill: rgba(186,8,8,0.99); -fx-font-weight: bold;"
         );
-        titleLabel.setPadding(new Insets(30, 0, 50, 0));
+        titleLabel.setPadding(new Insets(THIRTY, 0, FIFTY, 0));
 
         return titleLabel;
     }
 
-    /**
-     * Handles the "Load Game" button action.
-     * Placeholder for the game loading logic.
-     */
-    private void loadGame() {
-        GameSaver.getInstance().loadGame();
-    }
 }

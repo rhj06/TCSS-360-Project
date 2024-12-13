@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class RoomDescription {
+public final class RoomDescription {
 
     /** The maze instance representing the game environment. */
     private final Maze myMaze;
@@ -26,7 +26,7 @@ public class RoomDescription {
      *
      * @param theMaze the maze instance representing the game environment
      */
-    public RoomDescription(Maze theMaze) {
+    public RoomDescription(final Maze theMaze) {
         myMaze = theMaze;
         myRoomDescriptionLabel = new Label(getRoomDescription());
         myRoomDescriptionLabel.setWrapText(true);
@@ -46,7 +46,7 @@ public class RoomDescription {
      *
      * @param theNewDescription the custom description to display in the label
      */
-    public void updateDescription(String theNewDescription) {
+    public void updateDescription(final String theNewDescription) {
         myRoomDescriptionLabel.setText(theNewDescription);
     }
 
