@@ -13,7 +13,6 @@ import javafx.stage.Stage;
  * Represents a menu bar displayed in the game interface.
  * This menu bar contains options for saving the game, showing help,
  * and quitting the application.
- *
  * Usage:
  *     MenuBar menuBar = new MenuBar(stage, character);
  *     VBox menuBarBox = menuBar.createMenuBar();
@@ -83,13 +82,19 @@ public class MenuBar {
         alert.setTitle("Help - The Four Pillars Quest");
         alert.setHeaderText(null);
         alert.setContentText(
-                "The goal of the game is to collect the four pillars of OO (Abstraction, Encapsulation, " +
-                        "Inheritance, and Polymorphism) by defeating the Lich mini-bosses that hold them.\n\n" +
-                        "As you explore the maze, each room has a chance to drop useful items. " +
-                        "You can save your health potions for the arena or use them as needed. " +
-                        "Speed potions permanently increase your speed. If your speed is faster than the monster's, " +
-                        "you'll get the first turn in combat, which can make all the difference.\n\n" +
-                        "Once you’ve gathered all four OO pillars, seek out the final boss and find your path to victory!"
+                """
+                        The goal of the game is to collect the four pillars of OO (Abstraction, Encapsulation, \
+                        Inheritance, and Polymorphism) by defeating the Lich mini-bosses that hold them.
+                        
+                        As you explore \
+                        the maze, each room has a chance to drop useful items. \
+                        You can save your health potions for the arena or use them as needed. \
+                        Speed potions permanently increase your speed. If your speed is faster than the monster's, \
+                        you'll get the first turn in combat, which can make all the difference.
+                        
+                        you can also \
+                        build your own map as you make new discoveries. Once you’ve gathered all four OO pillars, seek \
+                        out the final boss and find your path to victory!"""
         );
 
         //Removes the 'i' icon in the right corner
