@@ -22,7 +22,7 @@ class PotionFactoryTest {
         assertInstanceOf(HealthPotion.class, potion);
         assertEquals("Health Potion", potion.getMyItemName());
         assertEquals("Restores health", potion.getMyItemDescription());
-        assertEquals(20, potion.getMyItemValue());
+        assertEquals(50, potion.getMyItemValue());
         assertEquals(1, potion.getMyItemQuantity());
     }
 
@@ -38,7 +38,7 @@ class PotionFactoryTest {
         assertInstanceOf(SpeedPotion.class, potion);
         assertEquals("Speed Potion", potion.getMyItemName());
         assertEquals("Increases attack speed", potion.getMyItemDescription());
-        assertEquals(5, potion.getMyItemValue());
+        assertEquals(1, potion.getMyItemValue());
         assertEquals(1, potion.getMyItemQuantity());
     }
 
