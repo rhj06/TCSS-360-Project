@@ -27,10 +27,8 @@ class PlayerInventoryTest {
     private Wizard myPlayer;
 
 //    @BeforeAll
-//    static void setupJavaFX() {
-//        if (!Platform.isFxApplicationThread()) {
-//            Platform.startup(() -> {}); // Initialize JavaFX toolkit
-//        }
+//    public static void initToolkit() {
+//        new Thread(() -> Platform.startup(() -> {})).start();
 //    }
 
     /**

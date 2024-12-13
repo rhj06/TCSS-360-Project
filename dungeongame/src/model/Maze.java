@@ -3,8 +3,7 @@ package dungeongame.src.model;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -89,6 +88,9 @@ final public class Maze implements Serializable {
      * @param theMazeSize Size of Matrix
      */
     public void setMazeSize(final int theMazeSize){
+        if (theMazeSize <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0.");
+        }
         mySize = theMazeSize;
         myRooms = new Room[theMazeSize][theMazeSize];
     }
@@ -104,7 +106,18 @@ final public class Maze implements Serializable {
      * Returns 2D array that stores the rooms that make up the maze.
      */
     public Room[][] getRooms() {
-        return myRooms;
+        try{
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(myRooms);
+            objectOutputStream.flush();
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            return (Room[][]) objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Deep Copy of Maze array failed", e);
+        }
+        //return myRooms;
     }
 
     /**
@@ -406,49 +419,49 @@ final public class Maze implements Serializable {
 
     /**
      * Traverse through Room[][]
-     * @param curr Current Room
-     * @param visited Visited Room
+     * @param theCurr Current Room
+     * @param theVisited Visited Room
      */
-    private void travers(final Room curr, final Set<Room> visited){
-        visited.add(curr);
+    private void travers(final Room theCurr, final Set<Room> theVisited){
+        theVisited.add(theCurr);
 
         List<Room> validNeighbors = new ArrayList<>();
 
-        if (curr.getNorthNeighbor() != null && !visited.contains(curr.getNorthNeighbor())) {
-            validNeighbors.add(curr.getNorthNeighbor());
+        if (theCurr.getNorthNeighbor() != null && !theVisited.contains(theCurr.getNorthNeighbor())) {
+            validNeighbors.add(theCurr.getNorthNeighbor());
         }
-        if (curr.getSouthNeighbor() != null && !visited.contains(curr.getSouthNeighbor())) {
-            validNeighbors.add(curr.getSouthNeighbor());
+        if (theCurr.getSouthNeighbor() != null && !theVisited.contains(theCurr.getSouthNeighbor())) {
+            validNeighbors.add(theCurr.getSouthNeighbor());
         }
-        if (curr.getWestNeighbor() != null && !visited.contains(curr.getWestNeighbor())) {
-            validNeighbors.add(curr.getWestNeighbor());
+        if (theCurr.getWestNeighbor() != null && !theVisited.contains(theCurr.getWestNeighbor())) {
+            validNeighbors.add(theCurr.getWestNeighbor());
         }
-        if (curr.getEastNeighbor() != null && !visited.contains(curr.getEastNeighbor())) {
-            validNeighbors.add(curr.getEastNeighbor());
+        if (theCurr.getEastNeighbor() != null && !theVisited.contains(theCurr.getEastNeighbor())) {
+            validNeighbors.add(theCurr.getEastNeighbor());
         }
 
         Collections.shuffle(validNeighbors);
 
         for (Room neighbor : validNeighbors) {
-            if (!visited.contains(neighbor)) {
-                if (neighbor == curr.getNorthNeighbor()) {
-                    curr.setNorthDoor(true);
+            if (!theVisited.contains(neighbor)) {
+                if (neighbor == theCurr.getNorthNeighbor()) {
+                    theCurr.setNorthDoor(true);
                     neighbor.setSouthDoor(true);
 
-                } else if (neighbor == curr.getSouthNeighbor()) {
-                    curr.setSouthDoor(true);
+                } else if (neighbor == theCurr.getSouthNeighbor()) {
+                    theCurr.setSouthDoor(true);
                     neighbor.setNorthDoor(true);
 
-                } else if (neighbor == curr.getWestNeighbor()) {
-                    curr.setWestDoor(true);
+                } else if (neighbor == theCurr.getWestNeighbor()) {
+                    theCurr.setWestDoor(true);
                     neighbor.setEastDoor(true);
 
-                } else if (neighbor == curr.getEastNeighbor()) {
-                    curr.setEastDoor(true);
+                } else if (neighbor == theCurr.getEastNeighbor()) {
+                    theCurr.setEastDoor(true);
                     neighbor.setWestDoor(true);
                 }
 
-                travers(neighbor, visited);
+                travers(neighbor, theVisited);
             }
         }
     }
@@ -657,9 +670,7 @@ final public class Maze implements Serializable {
                 j = 0;
             }
 
-            if(!(myRooms[i][j].getItem() instanceof Pillar)){
-                roomSpawnable = true;
-            }
+            roomSpawnable = !(myRooms[i][j].getItem() instanceof Pillar);
         }
 
         myPlayerCords.x = j;
