@@ -268,4 +268,5 @@ public class Arena {
         notifyAll();
         System.out.println("Player Combat move set to " + theMove);
     }
+
 }

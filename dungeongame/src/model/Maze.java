@@ -854,4 +854,5 @@ final public class Maze implements Serializable {
             System.out.println();
         }
     }
+
 }

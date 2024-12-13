@@ -244,4 +244,5 @@ public class Room implements Serializable {
     public int hashCode() {
         return Objects.hash(myCords);
     }
+
 }

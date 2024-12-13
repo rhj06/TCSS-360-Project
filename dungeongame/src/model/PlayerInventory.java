@@ -146,5 +146,4 @@ final public class PlayerInventory implements java.io.Serializable {
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myPCS.addPropertyChangeListener(theListener);
     }
-
 }

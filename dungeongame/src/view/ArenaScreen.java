@@ -28,6 +28,7 @@ public class ArenaScreen extends AbstractScreen{
     /** The path to the custom font used in the game. */
     private static final int IMAGE_SIZE = 150;
 
+
     /** The arena object representing the battle layout and player state. */
     private final Arena myArena;
 

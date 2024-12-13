@@ -177,4 +177,5 @@ public class MazeTraverser {
     public void firePlayerDeadEvent() {
         myPcs.firePropertyChange("player_dead", false, true);
     }
+
 }
