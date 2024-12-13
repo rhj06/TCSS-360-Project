@@ -15,7 +15,7 @@ import dungeongame.src.view.MainMenu;
  * @version 1.0
  * author Ryan Johnson, David Bessex, Kaleb Anagnostou
  */
-public class Main extends Application {
+public final class Main extends Application {
 
     /** The database containing monster information for the game. */
     private MonsterDatabase myMonsterDatabase;
@@ -27,7 +27,7 @@ public class Main extends Application {
      * @param thePrimaryStage the primary stage for this application
      */
     @Override
-    public void start(Stage thePrimaryStage) {
+    public void start(final Stage thePrimaryStage) {
         MainMenu mainMenu = new MainMenu();
         Scene mainMenuScene = mainMenu.createScene(thePrimaryStage);
 
@@ -46,9 +46,9 @@ public class Main extends Application {
      * This method is the entry point of the Java application. It invokes the JavaFX {@code launch} method to start
      * the application.
      *
-     * @param args the command-line arguments passed to the application
+     * @param theArgs the command-line arguments passed to the application
      */
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(final String[] theArgs) {
+        launch(theArgs);
     }
 }

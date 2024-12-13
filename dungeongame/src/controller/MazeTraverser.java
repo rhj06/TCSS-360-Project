@@ -15,7 +15,7 @@ import java.beans.PropertyChangeSupport;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 12/12/2024
  */
-public class MazeTraverser {
+public final class MazeTraverser {
     /** The singleton instance of the MazeTraverser class. */
     private static MazeTraverser uniqueInstance;
 
@@ -63,7 +63,7 @@ public class MazeTraverser {
      *
      * @param thePlayer thePlayer that is traversing the Maze.
      */
-    public void setPlayer(Player thePlayer){
+    public void setPlayer(final Player thePlayer){
         myPlayer = thePlayer;
     }
 
@@ -72,7 +72,7 @@ public class MazeTraverser {
      *
      * @param theRoomDescription theRoomDescription of the room the player is in.
      */
-    public void setRoomDescription(RoomDescription theRoomDescription){
+    public void setRoomDescription(final RoomDescription theRoomDescription){
         myRoomDescription = theRoomDescription;
     }
 
@@ -81,7 +81,7 @@ public class MazeTraverser {
      *
      * @param theInventoryScreen the InventoryScreen to be displayed when called.
      */
-    public void setInventoryScreen(InventoryScreen theInventoryScreen){
+    public void setInventoryScreen(final InventoryScreen theInventoryScreen){
         inventoryScreen = theInventoryScreen;
     }
 
@@ -90,7 +90,7 @@ public class MazeTraverser {
      *
      * @param theListener the listener to be added.
      */
-    public void addPropertyChangeListener(PropertyChangeListener theListener) {
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myPcs.addPropertyChangeListener(theListener);
     }
 
@@ -99,7 +99,7 @@ public class MazeTraverser {
      *
      * @param theDir the direction the player has chosen to go.
      */
-    public void movePlayer(Directions theDir){
+    public void movePlayer(final Directions theDir){
         if(theDir == Directions.NORTH){
             if(myMaze.canGoNorth()) {
                 myMaze.goNorth();
@@ -142,7 +142,7 @@ public class MazeTraverser {
             }
             PlayerInventory.getInstance().addItem(item);
             myRoomDescription.updateDescription((item.toString() + " has been added to the inventory"));
-            System.out.println(item.toString() + " has been added to the inventory");
+            System.out.println(item + " has been added to the inventory");
             myMaze.setRoomItem(myPlayerCords.y, myPlayerCords.x, null);
         }
 

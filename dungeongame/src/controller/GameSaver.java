@@ -3,8 +3,6 @@ package dungeongame.src.controller;
 import dungeongame.src.model.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Saves and loads games states
@@ -12,7 +10,7 @@ import java.util.Map;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 11/16/2024
  */
-public class GameSaver implements Serializable {
+public final class GameSaver implements Serializable {
     @Serial
     private static final long serialVersionUID = 35681618646L;
 
@@ -44,7 +42,7 @@ public class GameSaver implements Serializable {
      *
      * @param thePlayer the player character to be saved.
      */
-    public void setPlayer(Player thePlayer) {
+    public void setPlayer(final Player thePlayer) {
         if (thePlayer == null) {
             throw new IllegalArgumentException("Player cannot be null.");
         }

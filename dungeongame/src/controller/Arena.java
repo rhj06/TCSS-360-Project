@@ -12,7 +12,25 @@ import java.util.Objects;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 11/10/2024
  */
-public class Arena {
+public final class Arena {
+    /** Constant of -1 */
+    private static final int NEGATIVE_ONE = -1;
+
+    /** Constant of 2 */
+    private static final int TWO = 2;
+
+    /** Constant of 3 */
+    private static final int THREE = 3;
+
+    /** Constant of 10 */
+    private static final int TEN = 10;
+
+    /** Constant of 500 */
+    private static final int FIVE_HUNDRED = 500;
+
+    /** Constant of 1000 */
+    private static final int ONE_THOUSAND = 1000;
+
     /** Property change support to fire property change events. */
     private final PropertyChangeSupport myPCS;
 
@@ -62,26 +80,12 @@ public class Arena {
     }
 
     /**
-     * Removes a property change listener from the arena.
-     *
-     * @param theListener the listener to be removed.
-     */
-    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        if (theListener == null) {
-            throw new IllegalArgumentException("Listener cannot be null.");
-        }
-        myPCS.removePropertyChangeListener(theListener);
-    }
-
-    /**
      * Fires a property change event, notifying listeners the monsters state has been changed.
      *
      * @param theMonsterState the true false value of the monster's isDead state.
      */
-    public void monsterIsDead(boolean theMonsterState){
-        Platform.runLater(() -> {
-            myPCS.firePropertyChange("monsterIsDead", false, theMonsterState);
-        });
+    public void monsterIsDead(final boolean theMonsterState){
+        Platform.runLater(() -> myPCS.firePropertyChange("monsterIsDead", false, theMonsterState));
     }
 
     /**
@@ -89,10 +93,8 @@ public class Arena {
      *
      * @param thePlayerState the true false value of the player's isDead state.
      */
-    public void playerIsDead(boolean thePlayerState) {
-        Platform.runLater(() -> {
-            myPCS.firePropertyChange("playerIsDead", false, thePlayerState);
-        });
+    public void playerIsDead(final boolean thePlayerState) {
+        Platform.runLater(() -> myPCS.firePropertyChange("playerIsDead", false, thePlayerState));
         MazeTraverser.getInstance().firePlayerDeadEvent();
     }
 
@@ -101,10 +103,8 @@ public class Arena {
      *
      * @param theMessage message sent by the arena.
      */
-    public void notifyMessage(String theMessage) {
-        Platform.runLater(() -> {
-            myPCS.firePropertyChange("message", null, theMessage);
-        });
+    public void notifyMessage(final String theMessage) {
+        Platform.runLater(() -> myPCS.firePropertyChange("message", null, theMessage));
     }
 
     /**
@@ -122,7 +122,7 @@ public class Arena {
 
         while((((AbstractDungeonCharacter)myPlayer).getHealth() > 0) && (myMonster.getHealth() > 0)) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(FIVE_HUNDRED);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -135,7 +135,7 @@ public class Arena {
             );
 
             if(playerTurn && ((AbstractDungeonCharacter) myPlayer).getHealth() != 0){
-                while (myPlayerMove == -1) {
+                while (myPlayerMove == NEGATIVE_ONE) {
                     try {
                         synchronized (this){
                             System.out.println("Waiting for playerMove.");
@@ -153,68 +153,68 @@ public class Arena {
                     int damage = Math.max(attack - myMonster.getDefense(), 0);
                     myMonster.changeHealth(-damage);
                     System.out.println("Player Attacked");
-                    notifyMessage(myPlayer.toString() + " use a basic attacked for " + damage + " damage.");
-                    myPlayerMove = -1;
+                    notifyMessage(myPlayer + " use a basic attacked for " + damage + " damage.");
+                    myPlayerMove = NEGATIVE_ONE;
                     playerTurn = false;
 
                 } else if(myPlayerMove == 1) {
                     if(!myInventory.containsItem(new HealthPotion())){
                         notifyMessage("Inventory does not contain a health potion.");
-                        myPlayerMove = -1;
+                        myPlayerMove = NEGATIVE_ONE;
                     } else {
                         myInventory.useItem(new HealthPotion());
                         System.out.println("Player used a health potion.");
-                        notifyMessage(myPlayer.toString() + " used a health potion.");
-                        myPlayerMove = -1;
+                        notifyMessage(myPlayer + " used a health potion.");
+                        myPlayerMove = NEGATIVE_ONE;
                         playerTurn = false;
                     }
 
-                } else if(myPlayerMove == 2){
+                } else if(myPlayerMove == TWO){
                     if(myPlayer instanceof TargetedSpecial) {
                         ((TargetedSpecial)myPlayer).useTargetedSpecialAttack(myMonster);
                     } else {
                         ((AbstractDungeonCharacter)myPlayer).useSpecialAttack();
                     }
                     System.out.println("Player Used Special");
-                    notifyMessage(myPlayer.toString() + " used a special ability.");
-                    myPlayerMove = -1;
+                    notifyMessage(myPlayer + " used a special ability.");
+                    myPlayerMove = NEGATIVE_ONE;
                     playerTurn = false;
 
-                } else if(myPlayerMove == 3){
+                } else if(myPlayerMove == THREE){
                     myMonster.changeHealth(-myMonster.getHealth());
                     System.out.println("Player used debug command");
-                    notifyMessage(myPlayer.toString() + " used debug command attack.");
-                    myPlayerMove = -1;
+                    notifyMessage(myPlayer + " used debug command attack.");
+                    myPlayerMove = NEGATIVE_ONE;
                     playerTurn = false;
                 }
 
             }
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(FIVE_HUNDRED);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
             if (!playerTurn && myMonster.getHealth() != 0){
                 if(myMonster.canHeal()){
-                    myMonster.changeHealth(myMonster.getMaxHealth()/10);
-                    System.out.println("Monster healed " + myMonster.getMaxHealth()/10 + " health.");
-                    notifyMessage(myMonster.toString() + " healed " + myMonster.getMaxHealth()/10 + " health.");
+                    myMonster.changeHealth(myMonster.getMaxHealth()/TEN);
+                    System.out.println("Monster healed " + myMonster.getMaxHealth()/TEN + " health.");
+                    notifyMessage(myMonster + " healed " + myMonster.getMaxHealth()/TEN + " health.");
                 }
 
                 int attack = myMonster.getAttack();
                 int damage = Math.max(attack - ((AbstractDungeonCharacter)myPlayer).getDefense(), 0);
                 ((AbstractDungeonCharacter)myPlayer).changeHealth(-damage);
                 System.out.println("Monster Attacked");
-                notifyMessage(myMonster.toString() + " attacked dealing " + damage + " damage.");
+                notifyMessage(myMonster + " attacked dealing " + damage + " damage.");
 
                 if(((AbstractDungeonCharacter)myPlayer).getHealth() > 0) {
                     playerTurn = true;
                 }
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(FIVE_HUNDRED);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -222,8 +222,8 @@ public class Arena {
         }
 
         if (myMonster.getHealth() == 0) {
-            System.out.println(myMonster.toString() + " is dead");
-            notifyMessage(myMonster.toString() + " is dead.");
+            System.out.println(myMonster + " is dead");
+            notifyMessage(myMonster + " is dead.");
 
             int playerI = Maze.getInstance().getPlayerCords().y;
             int playerJ = Maze.getInstance().getPlayerCords().x;
@@ -236,21 +236,19 @@ public class Arena {
             monsterIsDead(true);
 
             if (Math.random() < myMonster.getItemDropRate()) {
-                System.out.println(myMonster.toString() + " dropped an item.");
-                notifyMessage(myMonster.toString() + " dropped an item.");
+                System.out.println(myMonster + " dropped an item.");
+                notifyMessage(myMonster + " dropped an item.");
                 Item item = myMonster.getRandomItem();
                 myInventory.addItem(item);
             }
         }
         else {
             System.out.println("Game Over");
-            notifyMessage(myPlayer.toString() + " is dead. Game over.");
+            notifyMessage(myPlayer + " is dead. Game over.");
 
-            Platform.runLater(() -> {
-                playerIsDead(true);
-            });
+            Platform.runLater(() -> playerIsDead(true));
             try {
-                Thread.sleep(1000);
+                Thread.sleep(ONE_THOUSAND);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -263,7 +261,7 @@ public class Arena {
      *
      * @param theMove the player's chosen move.
      */
-    public synchronized void setPlayerMove(int theMove) {
+    public synchronized void setPlayerMove(final int theMove) {
         myPlayerMove = theMove;
         notifyAll();
         System.out.println("Player Combat move set to " + theMove);
