@@ -10,8 +10,10 @@ import javafx.scene.text.Font;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class ButtonFactory {
+public final class ButtonFactory {
 
+    /** constant of 16 */
+    private static final int SIXTEEN = 16;
     /** The width of the button. */
     private final double myButtonWidth;
 
@@ -25,7 +27,7 @@ public class ButtonFactory {
      * @param theFontSize    the size of the font
      * @param theButtonWidth the minimum width for the button
      */
-    public ButtonFactory(String theFontPath, double theFontSize, double theButtonWidth) {
+    public ButtonFactory(final String theFontPath, final double theFontSize, final double theButtonWidth) {
         Font font = Font.loadFont(theFontPath, theFontSize);
         if (font == null) {
             System.err.println("Font loading failed for: " + theFontPath + ". Using default font.");
@@ -40,8 +42,8 @@ public class ButtonFactory {
      *
      * @param theButtonWidth the minimum width for the button
      */
-    public ButtonFactory(double theButtonWidth) {
-        this(Font.font("Arial", 16), theButtonWidth);
+    public ButtonFactory(final double theButtonWidth) {
+        this(Font.font("Arial", SIXTEEN), theButtonWidth);
     }
 
     /**
@@ -50,7 +52,7 @@ public class ButtonFactory {
      * @param theFont        the Font to be used for buttons
      * @param theButtonWidth the minimum width for the button
      */
-    private ButtonFactory(Font theFont, double theButtonWidth) {
+    private ButtonFactory(final Font theFont, final double theButtonWidth) {
         myFont = theFont;
         myButtonWidth = theButtonWidth;
     }
@@ -62,7 +64,7 @@ public class ButtonFactory {
      * @param theAction the action to perform when the button is clicked
      * @return a Button styled with the factory's properties
      */
-    public Button createButton(String theText, Runnable theAction) {
+    public Button createButton(final String theText, final Runnable theAction) {
         Button myButton = new Button(theText);
         myButton.setFont(myFont);
         myButton.setMinWidth(myButtonWidth);

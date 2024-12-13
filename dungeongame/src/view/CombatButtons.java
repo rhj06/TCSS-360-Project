@@ -4,7 +4,18 @@ import dungeongame.src.controller.Arena;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
-public class CombatButtons {
+/**
+ * Combat Buttons used in the Arena
+ * @author David Bessex, Kaleb Anagnostou, Ryan Johnson
+ * @version 1.0
+ */
+public final class CombatButtons {
+
+    /** Constant of 2 */
+    private static final int TWO = 2;
+
+    /** Constant of 3 */
+    private static final int THREE = 3;
 
     /** The maze object containing the rooms and player state. */
     private final Arena myArena;
@@ -14,7 +25,7 @@ public class CombatButtons {
      *
      *
      */
-    public CombatButtons(Arena theArena) {
+    public CombatButtons(final Arena theArena) {
         myArena = theArena;
     }
 
@@ -26,17 +37,17 @@ public class CombatButtons {
      */
     public HBox createCombatButtons() {
         Button attack = new Button("Basic Attack");
-        attack.setOnAction(e -> myArena.setPlayerMove(0));
+        attack.setOnAction(_ -> myArena.setPlayerMove(0));
 
         Button heal = new Button("Use Health Potion");
-        heal.setOnAction(e -> myArena.setPlayerMove(1));
+        heal.setOnAction(_ -> myArena.setPlayerMove(1));
 
         Button special = new Button("Use Special Ability");
-        special.setOnAction(e -> myArena.setPlayerMove(2));
+        special.setOnAction(_ -> myArena.setPlayerMove(TWO));
 
         Button murder = new Button("Murder Button");
         murder.setStyle("-fx-background-color: gold;");
-        murder.setOnAction(e -> myArena.setPlayerMove(3));
+        murder.setOnAction(_ -> myArena.setPlayerMove(THREE));
 
         HBox movementButtons = new HBox(20, attack, heal, special, murder);
         movementButtons.setStyle("-fx-alignment: center; -fx-padding: 10;");

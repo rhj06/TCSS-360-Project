@@ -24,11 +24,21 @@ import java.util.Deque;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 12/12/24
  */
-public class ArenaScreen extends AbstractScreen{
+public final class ArenaScreen extends AbstractScreen{
     /** The path to the custom font used in the game. */
     private static final int IMAGE_SIZE = 150;
-
-
+    /** 1000 milliseconds */
+    private static final int TIMER = 1000;
+    /** constant of 5 */
+    private static final int FIVE = 5;
+    /** constant of 10 */
+    private static final int TEN = 10;
+    /** constant of 20 */
+    private static final int TWENTY = 20;
+    /** constant of 500 */
+    private static final int FIVE_HUNDRED = 500;
+    /** constant of 750 */
+    private static final int SEVEN_HUNDRED_FIFTY = 750;
     /** The arena object representing the battle layout and player state. */
     private final Arena myArena;
 
@@ -54,7 +64,7 @@ public class ArenaScreen extends AbstractScreen{
      * @param theMonster The monster the player is fighting.
      * @param theArena The arena object to use for this screen.
      */
-    public ArenaScreen(Player thePlayer, AbstractMonster theMonster, Arena theArena) {
+    public ArenaScreen(final Player thePlayer, final AbstractMonster theMonster, final Arena theArena) {
         if (thePlayer == null) {
             throw new IllegalArgumentException("Player cannot be null.");
         }
@@ -69,7 +79,7 @@ public class ArenaScreen extends AbstractScreen{
         myArena = theArena;
         myPlayer = thePlayer;
         myMonster = theMonster;
-        myRecentMessages = new ArrayDeque<>(5);
+        myRecentMessages = new ArrayDeque<>(FIVE);
 
         myStage.initModality(Modality.APPLICATION_MODAL);
 
@@ -93,7 +103,7 @@ public class ArenaScreen extends AbstractScreen{
         myArena.addPropertyChangeListener(event -> {
             if ("monsterIsDead".equals(event.getPropertyName())) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(TIMER);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -104,7 +114,7 @@ public class ArenaScreen extends AbstractScreen{
         myArena.addPropertyChangeListener(event -> {
             if ("playerIsDead".equals(event.getPropertyName())) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(TIMER);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -119,8 +129,8 @@ public class ArenaScreen extends AbstractScreen{
      *
      * @param theMessage The message to be added to the message queue.
      */
-    public void addMessage(String theMessage) {
-        if (myRecentMessages.size() == 5) {
+    public void addMessage(final String theMessage) {
+        if (myRecentMessages.size() == FIVE) {
             myRecentMessages.pollFirst();
         }
 
@@ -156,9 +166,9 @@ public class ArenaScreen extends AbstractScreen{
         HBox combatDisplay = createCombatDisplay();
 
         // Main layout
-        VBox mainLayout = new VBox(10);
+        VBox mainLayout = new VBox(TEN);
         mainLayout.setAlignment(Pos.CENTER);
-        mainLayout.setPadding(new Insets(10));
+        mainLayout.setPadding(new Insets(TEN));
 
         Label titleLabel = new Label("Arena Battle");
         titleLabel.setStyle("-fx-font-family: Arial;-fx-background-color: rgba(28, 28, 28, 0.8); -fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
@@ -172,7 +182,7 @@ public class ArenaScreen extends AbstractScreen{
         }
         BorderPane background = new BorderPane(mainLayout);
         background.setBackground(createBackground(temp));
-        return new Scene(background, 750, 500);
+        return new Scene(background, SEVEN_HUNDRED_FIFTY, FIVE_HUNDRED);
     }
 
     /**
@@ -196,7 +206,7 @@ public class ArenaScreen extends AbstractScreen{
         );
 
         // Arrange both displays horizontally
-        HBox combatDisplay = new HBox(20, playerDisplay, monsterDisplay);
+        HBox combatDisplay = new HBox(TWENTY, playerDisplay, monsterDisplay);
         combatDisplay.setAlignment(Pos.CENTER);
         combatDisplay.setStyle("-fx-padding: 20;");
         return combatDisplay;
@@ -211,8 +221,8 @@ public class ArenaScreen extends AbstractScreen{
      * @param theName the name of the player character.
      * @return A VBox containing the image and health label.
      */
-    private VBox createCharacterDisplay(String theImagePath, IntegerProperty theCurrentHealthProperty,
-                                        int theMaxHealth, String theName) {
+    private VBox createCharacterDisplay(final String theImagePath, final IntegerProperty theCurrentHealthProperty,
+                                        final int theMaxHealth, final String theName) {
         Label nameLabel = new Label(theName);
         nameLabel.setStyle("-fx-font-size: 16; -fx-background-color: rgba(28, 28, 28, 0.8); -fx-font-weight: bold; -fx-text-fill: white;");
 
@@ -222,7 +232,7 @@ public class ArenaScreen extends AbstractScreen{
         healthLabel.textProperty().bind(theCurrentHealthProperty.asString("Health: %d / " + theMaxHealth));
         healthLabel.setStyle("-fx-font-size: 14;  -fx-background-color: rgba(28, 28, 28, 0.8);-fx-text-fill: white;"); // Styling for visibility
 
-        VBox characterDisplay = new VBox(10, nameLabel, imageView, healthLabel);
+        VBox characterDisplay = new VBox(TEN, nameLabel, imageView, healthLabel);
         characterDisplay.setAlignment(Pos.CENTER);
         return characterDisplay;
     }
@@ -269,7 +279,7 @@ public class ArenaScreen extends AbstractScreen{
      * @param theImagePath Path to the image file.
      * @return me ImageView instance.
      */
-    private ImageView createImageView(String theImagePath) {
+    private ImageView createImageView(final String theImagePath) {
         Image image = new Image(theImagePath);
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(IMAGE_SIZE);
@@ -279,7 +289,7 @@ public class ArenaScreen extends AbstractScreen{
     }
 
     @Override
-    public Scene createScene(Stage theStage) {
+    public Scene createScene(final Stage theStage) {
         return null;
     }
 }

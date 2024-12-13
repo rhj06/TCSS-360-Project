@@ -4,6 +4,8 @@ import javafx.scene.layout.BorderPane;
 
 /**
  * AbstractGrid to calculate grid rows and columns with getter methods
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  */
 public abstract class AbstractGrid implements Grid {
 

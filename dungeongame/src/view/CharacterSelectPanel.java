@@ -15,7 +15,10 @@ import javafx.scene.layout.VBox;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class CharacterSelectPanel {
+public final class CharacterSelectPanel {
+
+    /** constant of 10 */
+    private static final int TEN = 10;
 
     /** width of the character image */
     private static final double IMAGE_WIDTH = 225;
@@ -31,7 +34,7 @@ public class CharacterSelectPanel {
      *
      * @param theButtonFactory the factory used to create buttons for the panel
      */
-    public CharacterSelectPanel(ButtonFactory theButtonFactory) {
+    public CharacterSelectPanel(final ButtonFactory theButtonFactory) {
         myButtonFactory = theButtonFactory;
     }
 
@@ -43,7 +46,7 @@ public class CharacterSelectPanel {
      * @param theAction the action to perform when the button is clicked
      * @return a VBox containing the image and the button
      */
-    public VBox createCharacterPanel(String theImagePath, String theButtonText, Runnable theAction) {
+    public VBox createCharacterPanel(final String theImagePath, final String theButtonText, final Runnable theAction) {
         ImageView myImageView = new ImageView(new Image(theImagePath));
         myImageView.setFitWidth(IMAGE_WIDTH);
         myImageView.setFitHeight(IMAGE_HEIGHT);
@@ -51,9 +54,9 @@ public class CharacterSelectPanel {
         Button mySelectButton = myButtonFactory.createButton(theButtonText, theAction);
         mySelectButton.prefWidthProperty().bind(myImageView.fitWidthProperty());
 
-        VBox myPanel = new VBox(10, myImageView, mySelectButton);
+        VBox myPanel = new VBox(TEN, myImageView, mySelectButton);
         myPanel.setAlignment(Pos.CENTER);
-        myPanel.setPadding(new Insets(10));
+        myPanel.setPadding(new Insets(TEN));
         myPanel.setStyle("-fx-background-color: rgb(96, 96, 96); -fx-border-color: black; -fx-border-width: 2;");
 
         return myPanel;

@@ -21,7 +21,64 @@ import javafx.stage.Stage;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class CharacterSelectScreen extends AbstractScreen {
+public final class CharacterSelectScreen extends AbstractScreen {
+
+    /** Constant of -20 */
+    private static final int NEGATIVE_TWENTY = -20;
+
+    /** Constant of -5 */
+    private static final int NEGATIVE_FIVE = -5;
+
+    /** Constant of 3 */
+    private static final int THREE = 3;
+
+    /** Constant of 5 */
+    private static final int FIVE = 5;
+
+    /** Constant of 7 */
+    private static final int SEVEN = 7;
+
+    /** Constant of 8 */
+    private static final int EIGHT = 8;
+
+    /** Constant of 10 */
+    private static final int TEN = 10;
+
+    /** Constant of 12 */
+    private static final int TWELVE = 12;
+
+    /** Constant of 15 */
+    private static final int FIFTEEN = 15;
+
+    /** Constant of 18 */
+    private static final int EIGHTEEN = 18;
+
+    /** Constant of 20 */
+    private static final int TWENTY = 20;
+
+    /** Constant of 35 */
+    private static final int THIRTY_FIVE = 35;
+
+    /** Constant of 50 */
+    private static final int FIFTY = 50;
+
+    /** Constant of 90 */
+    private static final int NINETY = 90;
+
+    /** Constant of 100 */
+    private static final int ONE_HUNDRED = 100;
+
+    /** Constant of 120 */
+    private static final int ONE_HUNDRED_TWENTY = 120;
+
+    /** Constant of 300 */
+    private static final int THREE_HUNDRED = 300;
+
+    /** Constant of 600 */
+    private static final int SIX_HUNDRED = 600;
+
+    /** Constant of 800 */
+    private static final int EIGHT_HUNDRED = 800;
 
     /** Width of buttons in the character selection screen. */
     private static final double BUTTON_WIDTH = 150;
@@ -63,21 +120,21 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @return the constructed Scene for the character selection screen
      */
     @Override
-    public Scene createScene(Stage theStage) {
-        VBox myMainLayout = new VBox(10,
+    public Scene createScene(final Stage theStage) {
+        VBox myMainLayout = new VBox(TEN,
                 createTitleLabel(),
                 createPlayerNameInput(),
                 createCharacterPanels(theStage),
                 createDifficultySection()
         );
         myMainLayout.setAlignment(Pos.CENTER);
-        myMainLayout.setPadding(new Insets(0, 20, 20, 20));
+        myMainLayout.setPadding(new Insets(0, TWENTY, TWENTY, TWENTY));
         myMainLayout.setStyle("-fx-background-color: rgb(44,37,37);");
 
         BorderPane myRootLayout = new BorderPane(myMainLayout);
         myRootLayout.setBackground(createBackground(BACKGROUND_IMAGE));
 
-        return new Scene(myRootLayout, 800, 600);
+        return new Scene(myRootLayout, EIGHT_HUNDRED, SIX_HUNDRED);
     }
 
     /**
@@ -86,7 +143,7 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @return the title label styled with a specific font and color
      */
     private Label createTitleLabel() {
-        return LabelHelper.createCenteredLabel("Select Your Character", FONT_PATH, 50,
+        return LabelHelper.createCenteredLabel("Select Your Character", FONT_PATH, FIFTY,
                 "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
     }
 
@@ -96,17 +153,17 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @return the VBox containing the label and text field
      */
     private HBox createPlayerNameInput() {
-        Label nameLabel = LabelHelper.createCenteredLabel("Enter Your Name:", FONT_PATH, 20,
+        Label nameLabel = LabelHelper.createCenteredLabel("Enter Your Name:", FONT_PATH, TWENTY,
                 "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
         myPlayerNameField = new TextField();
         myPlayerNameField.setPromptText("Enter your hero's name");
-        myPlayerNameField.setMaxWidth(300);
+        myPlayerNameField.setMaxWidth(THREE_HUNDRED);
         myPlayerNameField.setStyle("-fx-background-color: grey; " + "-fx-text-fill: black; ");
 
-        HBox nameInputBox = new HBox(10, nameLabel, myPlayerNameField);
+        HBox nameInputBox = new HBox(TEN, nameLabel, myPlayerNameField);
         nameInputBox.setAlignment(Pos.CENTER);
-        nameInputBox.setPadding(new Insets(-5, 0, 20, 50));
+        nameInputBox.setPadding(new Insets(NEGATIVE_FIVE, 0, TWENTY, FIFTY));
 
         return nameInputBox;
     }
@@ -117,15 +174,15 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @param theStage the primary stage used for transitioning to the next screen
      * @return the container for character selection panels
      */
-    private HBox createCharacterPanels(Stage theStage) {
+    private HBox createCharacterPanels(final Stage theStage) {
         CharacterSelectPanel myPanelCreator = new CharacterSelectPanel(myButtonFactory);
 
-        HBox myCharacterPanels = new HBox(10,
+        HBox myCharacterPanels = new HBox(TEN,
                 createCharacterPanel(myPanelCreator, "file:ThiefSelectTile.jpg", "Thief", theStage),
                 createCharacterPanel(myPanelCreator, "file:WarriorSelectTile.jpeg", "Warrior", theStage),
                 createCharacterPanel(myPanelCreator, "file:WizardSelectTile.jpg", "Wizard", theStage)
         );
-        myCharacterPanels.setTranslateY(-20);
+        myCharacterPanels.setTranslateY(NEGATIVE_TWENTY);
         myCharacterPanels.setAlignment(Pos.CENTER);
         return myCharacterPanels;
     }
@@ -137,14 +194,14 @@ public class CharacterSelectScreen extends AbstractScreen {
      */
     private HBox createDifficultySection() {
         Label myDifficultyLabel = LabelHelper.createCenteredLabel("Choose Your Difficulty:", FONT_PATH,
-                20, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
+                TWENTY, "-fx-text-fill: rgb(120,18,4); -fx-font-weight: bold;");
 
         HBox difficultyButtons = myRadioButtonHelper.createDifficultyButtons();
         difficultyButtons.setAlignment(Pos.CENTER_LEFT);
 
-        HBox difficultyLayout = new HBox(20, myDifficultyLabel, difficultyButtons);
+        HBox difficultyLayout = new HBox(TWENTY, myDifficultyLabel, difficultyButtons);
         difficultyLayout.setAlignment(Pos.CENTER);
-        difficultyLayout.setPadding(new Insets(-20, 50, 20, 50));
+        difficultyLayout.setPadding(new Insets(NEGATIVE_TWENTY, FIFTY, TWENTY, FIFTY));
 
         return difficultyLayout;
     }
@@ -158,8 +215,8 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @param theStage        the primary stage used for transitioning to the next screen
      * @return the character selection panel
      */
-    private VBox createCharacterPanel(CharacterSelectPanel thePanelCreator, String theImagePath,
-                                      String theCharacterType, Stage theStage) {
+    private VBox createCharacterPanel(final CharacterSelectPanel thePanelCreator, final String theImagePath,
+                                      final String theCharacterType, final Stage theStage) {
         return thePanelCreator.createCharacterPanel(theImagePath, theCharacterType, () ->
                 handleCharacterSelection(theStage, theCharacterType));
     }
@@ -170,7 +227,7 @@ public class CharacterSelectScreen extends AbstractScreen {
      * @param theStage        the primary stage where the game screen will be displayed
      * @param theCharacterType the type of character selected by the player
      */
-    private void handleCharacterSelection(Stage theStage, String theCharacterType) {
+    private void handleCharacterSelection(final Stage theStage, final String theCharacterType) {
         String playerName = myPlayerNameField.getText().trim();
         if (playerName.isEmpty()) {
             playerName = "Unknown Hero";
@@ -181,9 +238,9 @@ public class CharacterSelectScreen extends AbstractScreen {
         myMaze.generateMaze();
 
         AbstractDungeonCharacter mySelectedHero = switch (theCharacterType.toLowerCase()) {
-            case "wizard" -> HeroFactory.createHero("wizard", 100, 10, 20, 5, 10, 7, playerName);
-            case "thief" -> HeroFactory.createHero("thief", 90, 15, 35, 10, 20, 5, playerName);
-            case "warrior" -> HeroFactory.createHero("warrior", 120, 12, 18, 3, 8, 10, playerName);
+            case "wizard" -> HeroFactory.createHero("wizard", ONE_HUNDRED, TEN, TWENTY, FIVE, TEN, SEVEN, playerName);
+            case "thief" -> HeroFactory.createHero("thief", NINETY, FIFTEEN, THIRTY_FIVE, TEN, TWENTY, FIVE, playerName);
+            case "warrior" -> HeroFactory.createHero("warrior", ONE_HUNDRED_TWENTY, TWELVE, EIGHTEEN, THREE, EIGHTEEN, TEN, playerName);
             default -> throw new IllegalArgumentException("Invalid character type: " + theCharacterType);
         };
         GameScreen myGameScreen = new GameScreen(myMaze, mySelectedHero, theStage);

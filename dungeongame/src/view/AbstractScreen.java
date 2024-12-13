@@ -19,13 +19,15 @@ import javafx.stage.Stage;
  */
 public abstract class AbstractScreen {
 
+    private final static int HUNDRED = 100;
+
     /**
      * Creates the scene for the screen.
      *
      * @param theStage The primary stage where the scene will be displayed.
      * @return The created Scene.
      */
-    public abstract Scene createScene(Stage theStage);
+    public abstract Scene createScene(final Stage theStage);
 
     /**
      * Creates a background with the specified image path.
@@ -33,9 +35,9 @@ public abstract class AbstractScreen {
      * @param theImagePath Path to the background image.
      * @return The Background object.
      */
-    protected Background createBackground(String theImagePath) {
+    protected Background createBackground(final String theImagePath) {
         return new Background(new BackgroundImage(new Image(theImagePath),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER, new BackgroundSize(100, 100, true, true, true, true)));
+                BackgroundPosition.CENTER, new BackgroundSize(HUNDRED, HUNDRED, true, true, true, true)));
     }
 }

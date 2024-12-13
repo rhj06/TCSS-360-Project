@@ -19,14 +19,23 @@ import java.io.File;
  *  @version 1.0
  *  @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  */
-public class GameOverScreen extends AbstractScreen {
+public final class GameOverScreen extends AbstractScreen {
+
+    /** Constant of 20 */
+    private static final int TWENTY = 20;
+
+    /** Constant of 600 */
+    private static final int SIX_HUNDRED = 600;
+
+    /** Constant of 800 */
+    private static final int EIGHT_HUNDRED = 800;
 
     /** The path to the custom font used in the game. */
     private static final String MY_FONT_PATH = ".idea/resources/fonts/VIKING-N.TTF";
 
     @Override
-    public Scene createScene(Stage theStage) {
-        VBox myLayout = new VBox(20);
+    public Scene createScene(final Stage theStage) {
+        VBox myLayout = new VBox(TWENTY);
         myLayout.setAlignment(Pos.CENTER);
         myLayout.setStyle("-fx-background-color: black;");
 
@@ -55,7 +64,7 @@ public class GameOverScreen extends AbstractScreen {
 
         myLayout.getChildren().addAll(myGameOverLabel, myTryAgainButton, myExitGameButton);
 
-        return new Scene(myLayout, 800, 600);
+        return new Scene(myLayout, EIGHT_HUNDRED, SIX_HUNDRED);
     }
 
     /**
@@ -63,7 +72,7 @@ public class GameOverScreen extends AbstractScreen {
      *
      * @param theStage the primary stage where the character select screen will be displayed
      */
-    private void resetGame(Stage theStage) {
+    private void resetGame(final Stage theStage) {
         // Reset Player Inventory
         PlayerInventory inventory = PlayerInventory.getInstance();
         inventory.clear();

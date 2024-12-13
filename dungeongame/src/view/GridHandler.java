@@ -5,6 +5,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public final class GridHandler extends AbstractGrid {
+    /** Constant of 2 */
+    private static final int TWO = 2;
     /**Constant Color of White*/
     private static final Color BACKGROUND_COLOR_WHITE = Color.WHITE;
     /**Constant Color of Gray*/
@@ -12,10 +14,10 @@ public final class GridHandler extends AbstractGrid {
 
     /**
      * Constructor for the GridHandler
-     * @param theGridWidth
-     * @param theGridHeight
-     * @param theSingleTileSize
-     * @param theBorderPane
+     * @param theGridWidth Grid Width
+     * @param theGridHeight Grid Height
+     * @param theSingleTileSize Size of a single tile
+     * @param theBorderPane the borderpane
      */
     public GridHandler(final double theGridWidth, final double theGridHeight,
                        final int theSingleTileSize, final BorderPane theBorderPane) {
@@ -32,7 +34,7 @@ public final class GridHandler extends AbstractGrid {
 
             Rectangle rectangle = new Rectangle(x * getMySingleTileSize(),y * getMySingleTileSize(), getMySingleTileSize(), getMySingleTileSize());
 
-            if((x + y) % 2 == 0){
+            if((x + y) % TWO == 0){
                 rectangle.setFill(BACKGROUND_COLOR_WHITE);
             } else {
                 rectangle.setFill(BACKGROUND_COLOR_GRAY);

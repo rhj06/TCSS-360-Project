@@ -5,6 +5,8 @@ import javafx.scene.layout.BorderPane;
 
 /**
  * GridBase that handle drag events for Tiles
+ * @version 1.0
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  */
 public final class DraggableGrid extends AbstractGrid {
 

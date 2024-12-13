@@ -16,7 +16,25 @@ import javafx.scene.layout.GridPane;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  *
  */
-public class DirectionalButtons {
+public final class DirectionalButtons {
+
+    /** Constant of -90 */
+    private static final int NEGATIVE_NINETY = -90;
+
+    /** Constant of -52 */
+    private static final int NEGATIVE_FIFTY_TWO = -52;
+
+    /** Constant of -5 */
+    private static final int NEGATIVE_FIVE = -5;
+
+    /** Constant of 2 */
+    private static final int TWO = 2;
+
+    /** Constant of 3 */
+    private static final int THREE = 3;
+
+    /** Constant of 80 */
+    private static final int EIGHTY = 80;
 
     /** The MazeTraverser instance for handling player movements. */
     private final MazeTraverser myMazeTraverser;
@@ -33,11 +51,11 @@ public class DirectionalButtons {
      * @param theRoomDescription the description of the room to be updated based on player's movement.
      *
      */
-    public DirectionalButtons(RoomDescription theRoomDescription) {
+    public DirectionalButtons(final RoomDescription theRoomDescription) {
         myMazeTraverser = MazeTraverser.getInstance();
         myRoomDescription = theRoomDescription;
         myMazeTraverser.setRoomDescription(myRoomDescription);
-        myButtonFactory = new ButtonFactory(80);
+        myButtonFactory = new ButtonFactory(EIGHTY);
     }
 
     /**
@@ -50,16 +68,16 @@ public class DirectionalButtons {
         int[][] gridPositions = {
                 {1, 0}, // North
                 {0, 1}, // West
-                {2, 1}, // East
-                {1, 2}  // South
+                {TWO, 1}, // East
+                {1, TWO}  // South
         };
 
         GridPane directionalButtonsGrid = new GridPane();
-        directionalButtonsGrid.setHgap(-52);
-        directionalButtonsGrid.setVgap(3);
+        directionalButtonsGrid.setHgap(NEGATIVE_FIFTY_TWO);
+        directionalButtonsGrid.setVgap(THREE);
         directionalButtonsGrid.setAlignment(Pos.CENTER);
-        directionalButtonsGrid.setTranslateX(-90);
-        directionalButtonsGrid.setTranslateY(-5);
+        directionalButtonsGrid.setTranslateX(NEGATIVE_NINETY);
+        directionalButtonsGrid.setTranslateY(NEGATIVE_FIVE);
 
         for (int i = 0; i < directions.length; i++) {
             String direction = directions[i];
@@ -76,7 +94,7 @@ public class DirectionalButtons {
      *
      * @param theDirection the direction to move the player (e.g., "west", "east", "north", "south")
      */
-    private void movePlayer(String theDirection) {
+    private void movePlayer(final String theDirection) {
         switch (theDirection) {
             case "west" -> myMazeTraverser.movePlayer(Directions.WEST);
             case "east" -> myMazeTraverser.movePlayer(Directions.EAST);
