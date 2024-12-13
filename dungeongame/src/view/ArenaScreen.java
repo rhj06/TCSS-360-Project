@@ -73,7 +73,7 @@ public class ArenaScreen extends AbstractScreen{
         myStage.initModality(Modality.APPLICATION_MODAL);
 
         myMessageLabel = new Label("Fight begins!");
-        myMessageLabel.setStyle("-fx-font-size: 14;-fx-background-color: rgba(28, 28, 28, 0.8); -fx-text-fill: white; -fx-padding: 5px;");
+        myMessageLabel.setStyle("-fx-font-size: 14; -fx-background-color: rgba(28, 28, 28, 0.8);-fx-text-fill: white;-fx-padding: 5px;");
 
         Scene scene = createGameScene();
         myStage.setScene(scene);
@@ -160,7 +160,7 @@ public class ArenaScreen extends AbstractScreen{
         mainLayout.setPadding(new Insets(10));
 
         Label titleLabel = new Label("Arena Battle");
-        titleLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
+        titleLabel.setStyle("-fx-font-family: Arial;-fx-background-color: rgba(28, 28, 28, 0.8); -fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
 
         mainLayout.getChildren().addAll(titleLabel,combatDisplay, buttonLayout, myMessageLabel);
         String temp = "file:AnyMonsterFight.jpg";
@@ -194,6 +194,7 @@ public class ArenaScreen extends AbstractScreen{
                 myMonster.toString()
         );
 
+        // Arrange both displays horizontally
         HBox combatDisplay = new HBox(20, playerDisplay, monsterDisplay);
         combatDisplay.setAlignment(Pos.CENTER);
         combatDisplay.setStyle("-fx-padding: 20;");
@@ -212,13 +213,13 @@ public class ArenaScreen extends AbstractScreen{
     private VBox createCharacterDisplay(String theImagePath, IntegerProperty theCurrentHealthProperty,
                                         int theMaxHealth, String theName) {
         Label nameLabel = new Label(theName);
-        nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
+        nameLabel.setStyle("-fx-font-size: 16; -fx-background-color: rgba(28, 28, 28, 0.8); -fx-font-weight: bold; -fx-text-fill: white;");
 
         ImageView imageView = createImageView(theImagePath);
 
         Label healthLabel = new Label();
         healthLabel.textProperty().bind(theCurrentHealthProperty.asString("Health: %d / " + theMaxHealth));
-        healthLabel.setStyle("-fx-font-size: 17; -fx-text-fill: white; -fx-font-weight: bold;");
+        healthLabel.setStyle("-fx-font-size: 14;  -fx-background-color: rgba(28, 28, 28, 0.8);-fx-text-fill: white;"); // Styling for visibility
 
         VBox characterDisplay = new VBox(10, nameLabel, imageView, healthLabel);
         characterDisplay.setAlignment(Pos.CENTER);

@@ -123,7 +123,7 @@ public class CharacterSelectScreen extends AbstractScreen {
         HBox myCharacterPanels = new HBox(10,
                 createCharacterPanel(myPanelCreator, "file:ThiefSelectTile.jpg", "Thief", theStage),
                 createCharacterPanel(myPanelCreator, "file:WarriorSelectTile.jpeg", "Warrior", theStage),
-                createCharacterPanel(myPanelCreator, "file:WizardSelect.png", "Wizard", theStage)
+                createCharacterPanel(myPanelCreator, "file:WizardSelectTile.jpg", "Wizard", theStage)
         );
         myCharacterPanels.setTranslateY(-20);
         myCharacterPanels.setAlignment(Pos.CENTER);

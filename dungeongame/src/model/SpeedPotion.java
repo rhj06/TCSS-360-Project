@@ -17,7 +17,7 @@ public class SpeedPotion extends AbstractItem  {
      */
     public SpeedPotion() {
 
-        super("Speed Potion", "Increases attack speed", 5, 1);
+        super("Speed Potion", "Increases attack speed", 1, 1);
     }
 
     /**
