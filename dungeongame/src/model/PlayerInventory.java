@@ -26,7 +26,7 @@ final public class PlayerInventory implements java.io.Serializable {
     /**
      * Constructs an empty inventory that tracks the items the player has picked up and used.
      */
-    public PlayerInventory() {
+    private PlayerInventory() {
         myPCS = new PropertyChangeSupport(this);
         myInventory = new HashMap<>();
         myPlayer = null;
@@ -45,6 +45,10 @@ final public class PlayerInventory implements java.io.Serializable {
 
     public void setPlayer(Player thePlayer) {
         myPlayer = thePlayer;
+    }
+
+    public void clear(){
+        myInventory.clear();
     }
 
     /**

@@ -16,25 +16,22 @@ public class GameSaver implements Serializable {
     @Serial
     private static final long serialVersionUID = 35681618646L;
 
+    /** The singleton instance of the GameSaver class. */
     private static GameSaver uniqueInstance;
 
-    //private Maze myMaze;
-    //private PlayerInventory myPlayerInventory;
+    /** The player character. */
     private Player myPlayer;
 
     /**
-     * Constructor for the GamesSaver.
-     *
-     * //@param theMaze the dungeon game maze.
-     * //@param thePlayerInventory the player's inventory.
-     * @param thePlayer the game player.
+     * Private constructor for the GamesSaver.
      */
     private GameSaver() {
-        //myMaze = theMaze;
-        //myPlayerInventory = thePlayerInventory;
         myPlayer = null;
     }
 
+    /**
+     * Getter for the singleton uniqueInstance.
+     */
     public static GameSaver getInstance() {
         if (uniqueInstance == null) {
             uniqueInstance = new GameSaver();
@@ -42,22 +39,33 @@ public class GameSaver implements Serializable {
         return uniqueInstance;
     }
 
+    /**
+     * Sets the player character to be saved by the game saver.
+     *
+     * @param thePlayer the player character to be saved.
+     */
     public void setPlayer(Player thePlayer) {
+        if (thePlayer == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
         myPlayer = thePlayer;
     }
 
+    /**
+     * Getter for the player object.
+     */
     public AbstractDungeonCharacter getPlayer() {
         return ((AbstractDungeonCharacter)myPlayer);
     }
 
+    /**
+     * Saves the serializable objects Maze, Inventory, and Player.
+     */
     public void saveGame(){
         String filename = "DungeonAdventureSave.da";
         try{
             FileOutputStream file = new FileOutputStream(filename);
             ObjectOutputStream out = new ObjectOutputStream(file);
-
-            //out.writeObject(myMaze);
-            //out.writeObject(myPlayerInventory);
 
             out.writeObject(Maze.getInstance());
             out.writeObject(PlayerInventory.getInstance());
@@ -83,28 +91,26 @@ public class GameSaver implements Serializable {
         }
     }
 
+    /**
+     * Loads the serializable objects Maze, Inventory, and Player.
+     */
     public void loadGame(){
         String filename = "DungeonAdventureSave.da";
         try {
             FileInputStream file = new FileInputStream(filename);
             ObjectInputStream in = new ObjectInputStream(file);
 
-            //myMaze = (Maze)in.readObject();
-            //myPlayerInventory = (PlayerInventory)in.readObject();
+
             Maze.getInstance().updateFrom((Maze)in.readObject());
             PlayerInventory.getInstance().updateFrom((PlayerInventory)in.readObject());
             Player thePlayer = (Player)in.readObject();
 
             MapTileList list = (MapTileList)in.readObject();
-            System.out.println("List @ Load = " + list);
+            //System.out.println("List @ Load = " + list);
 
             MapTileList.getInstance().setList(list.getList());
 
-
             String playerClass = thePlayer.getClass().getName();
-
-
-            //System.out.println(playerClass);
 
             if(playerClass.contains("Wizard")) {
                 myPlayer = new Wizard(0, 0, 0, 0, 0,0, null);
@@ -142,33 +148,4 @@ public class GameSaver implements Serializable {
             e.printStackTrace();
         }
     }
-
-////    //test main
-//    public static void main(String[] args){
-//        Maze maze = Maze.getInstance();
-//        maze.setMazeSize(5);
-//        PlayerInventory playerInventory = PlayerInventory.getInstance();
-//        Wizard wizard = new Wizard(10,10,10,10,10, 10, "10");
-//        maze.generateMaze();
-//        maze.printMaze();
-//        System.out.println();
-//
-//        GameSaver gameSaver = GameSaver.getInstance();
-//        gameSaver.saveGame();
-//
-//        AbstractDungeonCharacter character = new Warrior(1,1,1,1,1,1,"10");
-//        System.out.println(character);
-//
-//        Maze.getInstance().setMazeSize(4);
-//        maze.generateMaze();
-//        maze.printMaze();
-//        character = gameSaver.getPlayer();
-//        System.out.println(character);
-//
-//
-//        gameSaver.loadGame();
-//
-//        Maze.getInstance().printMaze();
-//
-//    }
 }

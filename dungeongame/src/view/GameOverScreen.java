@@ -66,7 +66,7 @@ public class GameOverScreen extends AbstractScreen {
     private void resetGame(Stage theStage) {
         // Reset Player Inventory
         PlayerInventory inventory = PlayerInventory.getInstance();
-        inventory.updateFrom(new PlayerInventory());
+        inventory.clear();
 
         // Reset MazeTraverser
         MazeTraverser traverser = MazeTraverser.getInstance();

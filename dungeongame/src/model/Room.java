@@ -15,16 +15,37 @@ public class Room implements Serializable {
     @Serial
     private static final long serialVersionUID = 65432135L;
 
+    /** The coordinates of the room in the maze. */
     private Point myCords;
+
+    /** The room to the north of this room. */
     private Room myNorthNeighbor;
+
+    /** The room to the east of this room. */
     private Room myEastNeighbor;
+
+    /** The room to the south of this room. */
     private Room mySouthNeighbor;
+
+    /** The room to the west of this room. */
     private Room myWestNeighbor;
+
+    /** Whether the room has a north door. */
     private boolean myNorthDoor;
+
+    /** Whether the room has an east door. */
     private boolean myEastDoor;
+
+    /** Whether the room has a south door. */
     private boolean mySouthDoor;
+
+    /** Whether the room has a west door. */
     private boolean myWestDoor;
+
+    /** The monster in the room. */
     private AbstractMonster myMonster;
+
+    /** The item in the room. */
     private Item myItem;
 
     /**
@@ -86,6 +107,9 @@ public class Room implements Serializable {
      * @param theY The row value of the room.
      */
     public void setCords(int theX, int theY) {
+        if (theX <= 0 || theY <= 0) {
+            throw new IllegalArgumentException("Coordinates must be greater than 0.");
+        }
         myCords = new Point(theX, theY);
     }
 
@@ -158,7 +182,6 @@ public class Room implements Serializable {
      */
     public void setNorthDoor(boolean theNorthConnect) {
         myNorthDoor = theNorthConnect;
-        //myNorthNeighbor.setSouthDoor(theNorthConnect);
     }
 
     /**
@@ -166,8 +189,6 @@ public class Room implements Serializable {
      */
     public void setEastDoor(boolean theEastConnect) {
         myEastDoor = theEastConnect;
-        //myEastNeighbor.setWestDoor(theEastConnect);
-
     }
 
     /**
@@ -175,7 +196,6 @@ public class Room implements Serializable {
      */
     public void setSouthDoor(boolean theSouthConnect) {
         mySouthDoor = theSouthConnect;
-        //mySouthNeighbor.setNorthDoor(theSouthConnect);
     }
 
     /**
@@ -183,7 +203,6 @@ public class Room implements Serializable {
      */
     public void setWestDoor(boolean theWestConnect) {
         myWestDoor = theWestConnect;
-        //myWestNeighbor.setEastDoor(theWestConnect);
     }
 
     /**

@@ -15,28 +15,42 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * Displays an arena and provides for player input.
+ *
+ * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
+ * @version 12/12/24
+ */
 public class ArenaScreen extends AbstractScreen{
+    /** The path to the custom font used in the game. */
+    private static final int IMAGE_SIZE = 150;
+
     /** The arena object representing the battle layout and player state. */
     private final Arena myArena;
 
     /** The primary stage of the application where the battle screen will be displayed. */
     private final Stage myStage;
 
+    /** The player that will be fighting in the arena. */
     private final Player myPlayer;
 
+    /** The monster that the player will be fighting. */
     private final AbstractMonster myMonster;
 
+    /** The label that will be displayed at the top of the screen. */
     private final Label myMessageLabel;
 
+    /** The queue of recent messages to be displayed. */
     private final Deque<String> myRecentMessages;
 
     /**
      * Constructs a new ArenaScreen with the specified arena.
      *
+     * @param thePlayer The player character.
+     * @param theMonster The monster the player is fighting.
      * @param theArena The arena object to use for this screen.
      */
     public ArenaScreen(Player thePlayer, AbstractMonster theMonster, Arena theArena) {
@@ -56,14 +70,11 @@ public class ArenaScreen extends AbstractScreen{
         myMonster = theMonster;
         myRecentMessages = new ArrayDeque<>(5);
 
-
         myStage.initModality(Modality.APPLICATION_MODAL);
-        //yStage.initOwner(primaryStage);
 
         myMessageLabel = new Label("Fight begins!");
-        myMessageLabel.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
+        myMessageLabel.setStyle("-fx-font-size: 14;-fx-background-color: rgba(28, 28, 28, 0.8); -fx-text-fill: white; -fx-padding: 5px;");
 
-        // Set up the scene
         Scene scene = createGameScene();
         myStage.setScene(scene);
         myStage.setTitle("Arena Battle");
@@ -72,11 +83,9 @@ public class ArenaScreen extends AbstractScreen{
             if ("message".equals(event.getPropertyName())) {
                 addMessage((String) event.getNewValue());
                 updateMessageDisplay();
-                //myMessageLabel.setText((String) event.getNewValue());
             }
         });
 
-        // Show the stage
         myStage.show();
         myArena.startCombatLoop();
 
@@ -103,16 +112,25 @@ public class ArenaScreen extends AbstractScreen{
         });
     }
 
-    public void addMessage(String message) {
+    /**
+     * Adds a message to the recent messages queue. Deletes the oldest message if the size is larger than 5. Updates
+     * the message display.
+     *
+     * @param theMessage The message to be added to the message queue.
+     */
+    public void addMessage(String theMessage) {
         if (myRecentMessages.size() == 5) {
             myRecentMessages.pollFirst();
         }
 
-        myRecentMessages.addLast(message);
+        myRecentMessages.addLast(theMessage);
 
         Platform.runLater(this::updateMessageDisplay);
     }
 
+    /**
+     * Updates the message label to display the most messages current in myRecentMessages queue.
+     */
     private void updateMessageDisplay() {
         StringBuilder displayText = new StringBuilder();
         for (String message : myRecentMessages) {
@@ -123,7 +141,7 @@ public class ArenaScreen extends AbstractScreen{
     }
 
     /**
-     * Creates and returns the main game scene.
+     * Creates and returns the arena scene.
      *
      * @return The game scene ready to be displayed on the primary stage.
      */
@@ -162,27 +180,20 @@ public class ArenaScreen extends AbstractScreen{
      * @return An HBox containing the player and monster displays.
      */
     private HBox createCombatDisplay() {
-        // Player display
         VBox playerDisplay = createCharacterDisplay(
                 getPlayerImagePath(),
-                150,
-                150,
                 ((AbstractDungeonCharacter) myPlayer).getCurHealthProperty(),
                 ((AbstractDungeonCharacter) myPlayer).getMaxHealth(),
                 myPlayer.toString()
         );
 
-        // Monster display
         VBox monsterDisplay = createCharacterDisplay(
                 getMonsterImagePath(),
-                150,
-                150,
                 myMonster.getCurHealthProperty(),
                 myMonster.getMaxHealth(),
                 myMonster.toString()
         );
 
-        // Arrange both displays horizontally
         HBox combatDisplay = new HBox(20, playerDisplay, monsterDisplay);
         combatDisplay.setAlignment(Pos.CENTER);
         combatDisplay.setStyle("-fx-padding: 20;");
@@ -192,28 +203,23 @@ public class ArenaScreen extends AbstractScreen{
     /**
      * Creates a VBox for a character with an image and health display.
      *
-     * @param imagePath    Path to the character's image.
-     * @param width        Width of the image.
-     * @param height       Height of the image.
-     * @param currentHealth Current health of the character.
-     * @param maxHealth     Maximum health of the character.
-     * @param mirror       Whether to mirror the image horizontally.
+     * @param theImagePath the path to the character's image.
+     * @param theCurrentHealthProperty the current health of the character.
+     * @param theMaxHealth the maximum health of the character.
+     * @param theName the name of the player character.
      * @return A VBox containing the image and health label.
      */
-    private VBox createCharacterDisplay(String theImagePath, int theWidth, int theHeight, IntegerProperty theCurrentHealthProperty, int theMaxHealth, String theName) {
-        // Create the name label
+    private VBox createCharacterDisplay(String theImagePath, IntegerProperty theCurrentHealthProperty,
+                                        int theMaxHealth, String theName) {
         Label nameLabel = new Label(theName);
         nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        // Create the image view
-        ImageView imageView = createImageView(theImagePath, theWidth, theHeight);
+        ImageView imageView = createImageView(theImagePath);
 
-        // Create the health label
         Label healthLabel = new Label();
         healthLabel.textProperty().bind(theCurrentHealthProperty.asString("Health: %d / " + theMaxHealth));
-        healthLabel.setStyle("-fx-font-size: 17; -fx-text-fill: white; -fx-font-weight: bold;"); // Styling for visibility
+        healthLabel.setStyle("-fx-font-size: 17; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        // Arrange the image and label vertically
         VBox characterDisplay = new VBox(10, nameLabel, imageView, healthLabel);
         characterDisplay.setAlignment(Pos.CENTER);
         return characterDisplay;
@@ -222,7 +228,7 @@ public class ArenaScreen extends AbstractScreen{
     /**
      * Determines the player's image path based on their type.
      *
-     * @return Path to the player's image.
+     * @return Path to the player's image as a string.
      */
     private String getPlayerImagePath() {
         if (myPlayer instanceof Thief) {
@@ -237,7 +243,7 @@ public class ArenaScreen extends AbstractScreen{
     /**
      * Determines the monster's image path based on their type.
      *
-     * @return Path to the monster's image.
+     * @return Path to the monster's image as a string.
      */
     private String getMonsterImagePath() {
         if (myMonster instanceof Goblin) {
@@ -258,16 +264,14 @@ public class ArenaScreen extends AbstractScreen{
     /**
      * Creates an ImageView with the specified properties.
      *
-     * @param imagePath Path to the image file.
-     * @param width     Width of the image view.
-     * @param height    Height of the image view.
-     * @return Configured ImageView instance.
+     * @param theImagePath Path to the image file.
+     * @return me ImageView instance.
      */
-    private ImageView createImageView(String theImagePath, int theWidth, int theHeight) {
+    private ImageView createImageView(String theImagePath) {
         Image image = new Image(theImagePath);
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(theWidth);
-        imageView.setFitHeight(theHeight);
+        imageView.setFitWidth(IMAGE_SIZE);
+        imageView.setFitHeight(IMAGE_SIZE);
         imageView.setPreserveRatio(true);
         return imageView;
     }

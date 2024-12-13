@@ -3,8 +3,7 @@ package dungeongame.src.model;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -19,6 +18,7 @@ final public class Maze implements Serializable {
     private static final long serialVersionUID = 3545354534L;
     /** unique instance of Maze */
     private static Maze uniqueInstance;
+
     /** Item generation percent */
     private static final int ITEM_GEN_PERCENT = 30;
     /** Monster spawn rate */
@@ -39,6 +39,7 @@ final public class Maze implements Serializable {
     private static final int EIGHT = 8;
     /** Constant of 100 */
     private static final int HUNDRED = 100;
+
     /** Property change support */
     private final PropertyChangeSupport myPCS;
     /** Matrix containing each room*/
@@ -52,7 +53,7 @@ final public class Maze implements Serializable {
 
 
     /**
-     * Maze Constructor
+     * Private Maze Constructor
      */
     private Maze(){
         myPCS = new PropertyChangeSupport(this);
@@ -63,8 +64,8 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * get the instance of the maze
-     * creates instance if maze does not exist
+     * Gets the singleton instance of the maze class. Creates instance if maze does not exist
+     *
      * @return uniqueInstance of Maze
      */
     public static Maze getInstance() {
@@ -75,7 +76,8 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * update Maze object from other Maze
+     * Update Maze object from other Maze
+     *
      * @param theOtherMaze Other Maze Object
      */
     public void updateFrom(final Maze theOtherMaze) {
@@ -85,10 +87,14 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Set the size of Room[][] matrix
-     * @param theMazeSize Size of Matrix
+     * Set the width and height of Room[][] matrix to be size.
+     *
+     * @param theMazeSize the width and height of maze.
      */
     public void setMazeSize(final int theMazeSize){
+        if (theMazeSize <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0.");
+        }
         mySize = theMazeSize;
         myRooms = new Room[theMazeSize][theMazeSize];
     }
@@ -101,14 +107,26 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Returns 2D array that stores the rooms that make up the maze.
+     * Returns a deep copy of the 2D array that stores the rooms that make up the maze.
      */
     public Room[][] getRooms() {
-        return myRooms;
+        try{
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+            objectOutputStream.writeObject(myRooms);
+            objectOutputStream.flush();
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            return (Room[][]) objectInputStream.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException("Deep Copy of Maze array failed", e);
+        }
     }
 
     /**
-     * does exit exist?
+     * Returns true if the maze has an exit
+     *
      * @return true if exit exists
      */
     public boolean hasExit() {
@@ -124,6 +142,7 @@ final public class Maze implements Serializable {
 
     /**
      * Get monster contained in Room
+     *
      * @param theI Y Coordinate of Room
      * @param theJ X Coordinate of Room
      * @return Monster contained in Room[theI][theJ]
@@ -134,6 +153,7 @@ final public class Maze implements Serializable {
 
     /**
      * Set a monster in a given room
+     *
      * @param theI Y coordinate of Room
      * @param theJ X coordinate of Room
      * @param theMonster Monster Object
@@ -151,6 +171,7 @@ final public class Maze implements Serializable {
 
     /**
      * Get item contained in room
+     *
      * @param theI Y coordinate of Room
      * @param theJ X coordinate of Room
      * @return item in Room[theI][theJ]
@@ -161,6 +182,7 @@ final public class Maze implements Serializable {
 
     /**
      * Set an Item in a given room
+     *
      * @param theI Y coordinate of Room
      * @param theJ X coordinate of Room
      * @param theItem Item Object
@@ -178,6 +200,7 @@ final public class Maze implements Serializable {
 
     /**
      * Add property change listener
+     *
      * @param theListener Property Change Listener
      */
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
@@ -185,7 +208,8 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * remove property change listener
+     * Remove property change listener
+     *
      * @param theListener Property Change Listener
      */
     public void removePropertyChangeListener(final PropertyChangeListener theListener) {
@@ -194,6 +218,7 @@ final public class Maze implements Serializable {
 
     /**
      * Fire Property Change Listener with given message
+     *
      * @param theMessage theMessage to send
      */
     public void notifyMessage(String theMessage) {
@@ -202,6 +227,7 @@ final public class Maze implements Serializable {
 
     /**
      * Can Player travel North
+     *
      * @return true if player can move
      */
     public boolean canGoNorth(){
@@ -215,6 +241,7 @@ final public class Maze implements Serializable {
 
     /**
      * Can Player travel East
+     *
      * @return true if player can move
      */
     public boolean canGoEast(){
@@ -228,6 +255,7 @@ final public class Maze implements Serializable {
 
     /**
      * Can Player travel South
+     *
      * @return true if player can move
      */
     public boolean canGoSouth(){
@@ -241,6 +269,7 @@ final public class Maze implements Serializable {
 
     /**
      * Can Player travel West
+     *
      * @return true if player can move
      */
     public boolean canGoWest(){
@@ -309,6 +338,7 @@ final public class Maze implements Serializable {
      * [1][2][3]
      * [4][P][5]
      * [6][7][8]
+     *
      * @param theI Y Coordinate of player
      * @param theJ X Coordinate of player
      * @return Room[8] of neighboring rooms of player
@@ -356,7 +386,6 @@ final public class Maze implements Serializable {
      * Generates the maze, creating connections between the rooms and setting up doors and walls.
      */
     public void generateMaze() {
-        //initialize rooms
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
                 myRooms[i][j] = new Room();
@@ -364,7 +393,6 @@ final public class Maze implements Serializable {
             }
         }
 
-        //setup neighbor connections
         for (int i = 0; i < mySize; i++) {
             for (int j = 0; j < mySize; j++) {
                 if (i > 0) {
@@ -405,7 +433,8 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Traverse through Room[][]
+     * Private recursive helper method to make the maze traversable.
+     *
      * @param curr Current Room
      * @param visited Visited Room
      */
@@ -454,7 +483,7 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Add random doors to Room
+     * Add random doors to the maze.
      */
     private void addRandomDoors(){
         //add additional random doors to make less hallways
@@ -508,7 +537,7 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Generate random item for Room
+     * Generate items in the maze.
      */
     private void generateItems() {
         Random random = new Random();
@@ -534,7 +563,7 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Generate Pillar in Room containing Mini_Boss
+     * Generates Pillar in the Maze. Adds a mini boss to each room with a pillar.
      */
     private void generatePillars(){
         Pillar EncapsulationPillar = new Pillar("Encapsulation Pillar");
@@ -567,7 +596,7 @@ final public class Maze implements Serializable {
     }
 
     /**
-     * Generate Random Monster in Room
+     * Generate Random Monsters in the Maze.
      */
     private void generateMonsters(){
         ArrayList<String> monsterTypes = new ArrayList<>();
@@ -786,7 +815,6 @@ final public class Maze implements Serializable {
 
     /**
      * Print Room[][] only containing Players location
-     * Testing player movement functions
      */
     public void printPlayerCordMaze() {
         for (int i = 0; i < mySize; i++) {

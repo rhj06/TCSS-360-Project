@@ -25,7 +25,7 @@ class PlayerInventoryTest {
     @BeforeEach
     void setUp() {
         myInventory = PlayerInventory.getInstance();
-        myInventory.updateFrom(new PlayerInventory());
+        myInventory.clear();
     }
 
     /**

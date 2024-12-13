@@ -2,11 +2,9 @@ package dungeongame.src.controller;
 
 import dungeongame.src.model.*;
 import javafx.application.Platform;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * Manages a fight between a player and a monster.
@@ -15,10 +13,19 @@ import java.util.Random;
  * @version 11/10/2024
  */
 public class Arena {
+    /** Property change support to fire property change events. */
     private final PropertyChangeSupport myPCS;
-    private Player myPlayer;
-    private AbstractMonster myMonster;
-    private PlayerInventory myInventory;
+
+    /** The player character. */
+    private final Player myPlayer;
+
+    /** The monster the player is fighting. */
+    private final AbstractMonster myMonster;
+
+    /** The inventory the player has. */
+    private final PlayerInventory myInventory;
+
+    /** An int representing the player's move choice. */
     private int myPlayerMove;
 
     /**
@@ -28,6 +35,13 @@ public class Arena {
      * @param theMonster the monster that will be fighting.
      */
     public Arena(final Player thePlayer, final AbstractMonster theMonster) {
+        if (thePlayer == null) {
+            throw new IllegalArgumentException("Player cannot be null.");
+        }
+        if (theMonster == null) {
+            throw new IllegalArgumentException("Monster cannot be null.");
+        }
+
         myPCS = new PropertyChangeSupport(this);
         myPlayer = thePlayer;
         myMonster = theMonster;
@@ -35,20 +49,46 @@ public class Arena {
         myPlayerMove = -1;
     }
 
+    /**
+     * Adds a property change listener to the arena.
+     *
+     * @param theListener the listener to be added.
+     */
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        if (theListener == null) {
+            throw new IllegalArgumentException("Listener cannot be null.");
+        }
         myPCS.addPropertyChangeListener(theListener);
     }
 
+    /**
+     * Removes a property change listener from the arena.
+     *
+     * @param theListener the listener to be removed.
+     */
     public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        if (theListener == null) {
+            throw new IllegalArgumentException("Listener cannot be null.");
+        }
         myPCS.removePropertyChangeListener(theListener);
     }
 
+    /**
+     * Fires a property change event, notifying listeners the monsters state has been changed.
+     *
+     * @param theMonsterState the true false value of the monster's isDead state.
+     */
     public void monsterIsDead(boolean theMonsterState){
         Platform.runLater(() -> {
             myPCS.firePropertyChange("monsterIsDead", false, theMonsterState);
         });
     }
 
+    /**
+     * Fires a property change event, notifying listeners the player's isDead state has been changed.
+     *
+     * @param thePlayerState the true false value of the player's isDead state.
+     */
     public void playerIsDead(boolean thePlayerState) {
         Platform.runLater(() -> {
             myPCS.firePropertyChange("playerIsDead", false, thePlayerState);
@@ -56,12 +96,20 @@ public class Arena {
         MazeTraverser.getInstance().firePlayerDeadEvent();
     }
 
+    /**
+     * Fires a property change event, notifying listeners that a message has been sent.
+     *
+     * @param theMessage message sent by the arena.
+     */
     public void notifyMessage(String theMessage) {
         Platform.runLater(() -> {
             myPCS.firePropertyChange("message", null, theMessage);
         });
     }
 
+    /**
+     * Creates a new thread a begins the combat loop.
+     */
     public void startCombatLoop(){
         new Thread(this::combat).start();
     }
@@ -87,14 +135,11 @@ public class Arena {
             );
 
             if(playerTurn && ((AbstractDungeonCharacter) myPlayer).getHealth() != 0){
-                //needs a listener to set playerMove
-                // Wait for player input via PropertyChangeListener
                 while (myPlayerMove == -1) {
                     try {
                         synchronized (this){
                             System.out.println("Waiting for playerMove.");
-                            wait(); // Wait until playerMove is updated.
-                            //System.out.println("Resumed after wait.");
+                            wait();
                         }
 
                     } catch (InterruptedException e) {
@@ -117,7 +162,6 @@ public class Arena {
                         notifyMessage("Inventory does not contain a health potion.");
                         myPlayerMove = -1;
                     } else {
-                        //Player inventory contains potions increase health
                         myInventory.useItem(new HealthPotion());
                         System.out.println("Player used a health potion.");
                         notifyMessage(myPlayer.toString() + " used a health potion.");
