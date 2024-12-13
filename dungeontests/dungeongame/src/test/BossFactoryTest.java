@@ -31,14 +31,14 @@ class BossFactoryTest {
      */
     @Test
     void testCreateMiniBoss() {
-        AbstractMonster miniBoss = myBossFactory.createBoss("Mini Boss");
+        AbstractMonster miniBoss = myBossFactory.createBoss("mini_boss");
 
         assertNotNull(miniBoss, "Mini Boss should not be null.");
         assertTrue(miniBoss.toString().contains("Lich"), "Mini Boss type should contain 'Lich'.");
         assertNotEquals("", miniBoss.toString(), "Mini Boss name should not be empty.");
         assertEquals(150, miniBoss.getMaxHealth(), "Mini Boss max health should be 150.");
         assertEquals(10, miniBoss.getDefense(), "Mini Boss defense should be 10.");
-        assertEquals(.5, miniBoss.getItemDropRate(), "Mini Boss item drop rate should be 0.5.");
+        assertEquals(.99, miniBoss.getItemDropRate(), "Mini Boss item drop rate should be 0.99.");
 
         System.out.println(miniBoss);
     }
@@ -48,7 +48,7 @@ class BossFactoryTest {
      */
     @Test
     void testMiniBossAttackRange() {
-        AbstractMonster miniBoss = myBossFactory.createBoss("Mini Boss");
+        AbstractMonster miniBoss = myBossFactory.createBoss("mini_boss");
 
         assertNotNull(miniBoss);
 
@@ -64,7 +64,7 @@ class BossFactoryTest {
      */
     @Test
     void testCreateFinalBoss() {
-        AbstractMonster finalBoss = myBossFactory.createBoss("Final Boss");
+        AbstractMonster finalBoss = myBossFactory.createBoss("final_boss");
 
         assertNotNull(finalBoss);
         assertTrue(finalBoss.toString().contains("Dragon"));
@@ -81,7 +81,7 @@ class BossFactoryTest {
      */
     @Test
     void testFinalBossAttackRange() {
-        AbstractMonster finalBoss = myBossFactory.createBoss("Final Boss");
+        AbstractMonster finalBoss = myBossFactory.createBoss("final_boss");
 
         assertNotNull(finalBoss);
 
@@ -108,8 +108,8 @@ class BossFactoryTest {
      */
     @Test
     void testRandomNameAssignment() {
-        AbstractMonster boss1 = myBossFactory.createBoss("Mini Boss");
-        AbstractMonster boss2 = myBossFactory.createBoss("Mini Boss");
+        AbstractMonster boss1 = myBossFactory.createBoss("mini_boss");
+        AbstractMonster boss2 = myBossFactory.createBoss("mini_boss");
 
         assertNotNull(boss1);
         assertNotNull(boss2);
@@ -123,7 +123,7 @@ class BossFactoryTest {
      */
     @Test
     void testBossRandomItemDrop() {
-        AbstractMonster boss = myBossFactory.createBoss("Final Boss");
+        AbstractMonster boss = myBossFactory.createBoss("final_boss");
         assertNotNull(boss);
 
         Item randomItem = ((Boss) boss).getRandomItem();

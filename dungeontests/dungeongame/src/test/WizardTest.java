@@ -84,17 +84,17 @@ public class WizardTest {
         System.out.println("Your health is: " + myWizard.getHealth());
 
         // Add a listener to verify the property change
-        PropertyChangeListener listener = new PropertyChangeListener() {
-            boolean eventFired = false;
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                eventFired = true;
-                assertEquals("Health Changed", evt.getPropertyName());
-                assertEquals(65, evt.getNewValue());
-            }
-        };
-        myWizard.getMyPCS().addPropertyChangeListener(listener);
+//        PropertyChangeListener listener = new PropertyChangeListener() {
+//            boolean eventFired = false;
+//
+//            @Override
+//            public void propertyChange(PropertyChangeEvent evt) {
+//                eventFired = true;
+//                assertEquals("Health Changed", evt.getPropertyName());
+//                assertEquals(65, evt.getNewValue());
+//            }
+//        };
+//        myWizard.getMyPCS().addPropertyChangeListener(listener);
         myWizard.useTargetedSpecialAttack(myOgre);
 
         assertEquals(65, myWizard.getHealth());

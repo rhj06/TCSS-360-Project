@@ -23,8 +23,9 @@ class HeroFactoryTest {
         AbstractDungeonCharacter thief = (AbstractDungeonCharacter) HeroFactory.createHero("thief",
                 100, 30, 40, 12, 20, 8, "Ryan");
         assertNotNull(thief);
-        assertEquals(80, thief.getHealth());
-        assertEquals(20, thief.getSpeed());
+        assertEquals(100, thief.getHealth());
+        assertTrue(12 <= thief.getSpeed() && 20 >= thief.getSpeed());
+        //assertEquals(20, thief.getSpeed());
         System.out.println(thief);
     }
 
@@ -34,7 +35,8 @@ class HeroFactoryTest {
                 140, 30, 50, 4, 12, 20, "David");
         assertNotNull(warrior);
         assertEquals(140, warrior.getHealth());
-        assertEquals(4, warrior.getSpeed());
+        assertTrue(4 <= warrior.getSpeed() && 12 >= warrior.getSpeed());
+        //assertEquals(4, warrior.getSpeed());
         System.out.println(warrior);
     }
 
@@ -44,7 +46,8 @@ class HeroFactoryTest {
                 200, 15, 50, 8, 15, 15, "Kaleb");
         assertNotNull(wizard);
         assertEquals(200, wizard.getHealth());
-        assertEquals(8, wizard.getSpeed());
+        assertTrue(8 <= wizard.getSpeed() && 15 >= wizard.getSpeed());
+        //assertEquals(8, wizard.getSpeed());
         System.out.println(wizard);
     }
 

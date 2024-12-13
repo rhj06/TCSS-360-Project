@@ -28,8 +28,8 @@ public final class SpeedPotion extends AbstractItem  {
      */
     @Override
     public void useItem(final Character theCharacter) {
-        int newSpeed = theCharacter.getSpeed() + getMyItemValue();
-        theCharacter.setSpeed(newSpeed);
+        //int newSpeed = theCharacter.getSpeed() + getMyItemValue();
+        theCharacter.setSpeed(getMyItemValue());
     }
 
     /**

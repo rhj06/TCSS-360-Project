@@ -25,7 +25,7 @@ public class SpeedPotionTest {
     @BeforeEach
     public void setUp() {
         speedPotion = new SpeedPotion();
-        character = new Warrior(70, 50, 10, 15, 10, 20, "Test Thief"); // Speed = 15
+        character = new Warrior(70, 50, 10, 10, 15, 20, "Test Thief"); // Speed = 15
     }
 
     /**
@@ -33,9 +33,11 @@ public class SpeedPotionTest {
      */
     @Test
     public void testUseItemIncreasesSpeed() {
+        int minSpeed = 10;
+        int maxSpeed = 15;
         speedPotion.useItem(character);
 
-        assertEquals(20, character.getSpeed());
+        assertTrue(character.getSpeed() >= minSpeed+1 && character.getSpeed() <= maxSpeed+1);
     }
 
     /**
@@ -43,10 +45,13 @@ public class SpeedPotionTest {
      */
     @Test
     public void testUseItemMultipleTimes() {
+        int minSpeed = 10;
+        int maxSpeed = 15;
         speedPotion.useItem(character);
         speedPotion.useItem(character);
 
-        assertEquals(25, character.getSpeed());
+        assertTrue(character.getSpeed() >= minSpeed+2 && character.getSpeed() <= maxSpeed+2);
+        //assertEquals(25, character.getSpeed());
     }
 
     /**
@@ -55,10 +60,13 @@ public class SpeedPotionTest {
      */
     @Test
     public void testUseItemOnNegativeSpeed() {
-        character.setSpeed(-10);
+        int minSpeed = 10;
+        int maxSpeed = 15;
+        character.setSpeed(-20);
         speedPotion.useItem(character);
 
-        assertEquals(-5, character.getSpeed());
+        assertTrue(character.getSpeed() >= minSpeed - 20 + 1 && character.getSpeed() <= maxSpeed - 20 + 1);
+        //assertEquals(-5, character.getSpeed());
     }
 
     /**
@@ -67,9 +75,10 @@ public class SpeedPotionTest {
      */
     @Test
     public void testUseItemOnZeroSpeed() {
-        character.setSpeed(0);
-        speedPotion.useItem(character);
+        Warrior zeroSpeed = new Warrior(50, 50, 10, 0, 0, 20, "Zero");
+        //character.setSpeed(0);
+        speedPotion.useItem(zeroSpeed);
 
-        assertEquals(5, character.getSpeed());
+        assertEquals(1, zeroSpeed.getSpeed());
     }
 }

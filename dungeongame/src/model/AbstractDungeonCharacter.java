@@ -118,6 +118,7 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
 
     public void setHealth(final int theHealth) {
         myCurrHealth = Math.min(theHealth, myMaxHealth);
+        myCurHealthProperty.set(theHealth);
         myPCS.firePropertyChange("Health Changed", null, myCurrHealth);
     }
 

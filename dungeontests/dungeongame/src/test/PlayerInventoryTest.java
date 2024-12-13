@@ -1,6 +1,8 @@
 package dungeongame.src.test;
 
 import dungeongame.src.model.*;
+import javafx.application.Platform;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +22,27 @@ class PlayerInventoryTest {
     private PlayerInventory myInventory;
 
     /**
+     * The instance of {@link Player} used for testing.
+     */
+    private Wizard myPlayer;
+
+//    @BeforeAll
+//    static void setupJavaFX() {
+//        if (!Platform.isFxApplicationThread()) {
+//            Platform.startup(() -> {}); // Initialize JavaFX toolkit
+//        }
+//    }
+
+    /**
      * Sets up the test environment by clearing the inventory before each test.
      */
     @BeforeEach
     void setUp() {
+        //Platform.startup(() -> {});
         myInventory = PlayerInventory.getInstance();
         myInventory.clear();
+        myPlayer = new Wizard(1,1,1,
+                1,1,1,"Name");
     }
 
     /**
@@ -69,13 +86,14 @@ class PlayerInventoryTest {
      */
     @Test
     void testUseItemWithMultipleQuantities() {
-        Item healthPotion = new HealthPotion();
+        HealthPotion healthPotion = new HealthPotion();
         myInventory.addItem(healthPotion);
         myInventory.addItem(healthPotion);
+        myInventory.setPlayer(myPlayer);
         myInventory.useItem(healthPotion);
 
-        assertTrue(myInventory.containsItem(healthPotion));
-        assertEquals(1, myInventory.getInventory().get(healthPotion));
+        assertTrue(myInventory.containsItem(new HealthPotion()));
+        assertEquals(1, myInventory.getInventory().get(new HealthPotion()));
     }
 
     /**
@@ -106,7 +124,7 @@ class PlayerInventoryTest {
         myInventory.addItem(inheritancePillar);
         myInventory.addItem(polymorphismPillar);
         myInventory.addItem(abstractionPillar);
-      //  myInventory.checkForPillars();
+        myInventory.checkforPillars();
         System.out.println("Test passed: Exit spawned successfully.");
     }
 

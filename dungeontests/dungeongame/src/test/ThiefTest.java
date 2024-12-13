@@ -1,5 +1,6 @@
 package dungeongame.src.test;
 
+import dungeongame.src.model.Ogre;
 import dungeongame.src.model.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +20,19 @@ public class ThiefTest {
     private Thief myThief;
 
     /**
+     * The Ogre instance used as a target for the theif's special attack.
+     */
+    Ogre myOgre;
+
+    /**
      * Sets up a new Thief instance before each test.
      */
     @BeforeEach
     public void setup() {
         myThief = new Thief(95, 15, 35, 8, 20, 20,
                 "Robin Hood");
+        myOgre = new Ogre(50, 5, 10, 3, 8, 2,
+                "Gary");
     }
 
     /**
@@ -71,13 +79,13 @@ public class ThiefTest {
      */
     @Test
     void testUseSpecialAttackIncreasesSpeed() {
-        int initialSpeed = myThief.getSpeed();
-        System.out.println("Initial speed is: " + initialSpeed);
-        myThief.useSpecialAttack();
+        int minSpeed = 8;
+        //System.out.println("Initial speed is: " + initialSpeed);
+        myThief.useTargetedSpecialAttack(myOgre);
         int theBuffedSpeed = myThief.getSpeed();
         System.out.println("Buffed speed is: " + theBuffedSpeed);
 
-        assertTrue(theBuffedSpeed >= initialSpeed + SPEED_BONUS);
+        assertTrue(theBuffedSpeed >= minSpeed + SPEED_BONUS);
     }
 
     /**

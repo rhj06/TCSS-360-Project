@@ -122,25 +122,8 @@ final public class PlayerInventory implements java.io.Serializable {
      * @param theItem the item to be deducted from the inventory.
      */
     public void useItem(final Item theItem) {
-        if (myInventory.containsKey(theItem) && !(theItem instanceof Pillar)) {
-            if (myInventory.get(theItem) > 1) {
-                myInventory.put(theItem, myInventory.get(theItem) - 1);
-            } else if (myInventory.get(theItem) == 1) {
-                myInventory.remove(theItem);
-            }
-
-            if (!(theItem instanceof VisionPotion)) {
-                theItem.useItem(((AbstractDungeonCharacter)myPlayer));
-            }
-
-            if (theItem instanceof VisionPotion) {
-                myPCS.firePropertyChange("VisionPotionUsed", null, theItem);
-            }
-
-            myPCS.firePropertyChange("Item Used", null, myInventory);
-        } else {
-            throw new IllegalArgumentException("No item found / Cannot use item");
-        }
+        theItem.useItem((Character) myPlayer);
+        myInventory.put(theItem, myInventory.getOrDefault(theItem, 0) - 1);
     }
 
     /**
@@ -169,5 +152,8 @@ final public class PlayerInventory implements java.io.Serializable {
      */
     public void addPropertyChangeListener(final PropertyChangeListener theListener) {
         myPCS.addPropertyChangeListener(theListener);
+    }
+
+    public void checkForPillars() {
     }
 }
