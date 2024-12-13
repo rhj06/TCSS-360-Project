@@ -15,7 +15,7 @@ public class ArenaScene extends Scene {
 
     /**
      * MapScene Constructor
-     * @param parent Scene Parent
+     * @param theArena Scene Parent
      */
     public ArenaScene(Arena theArena) {
         super(new ArenaBorderPane(theArena), HEIGHT, WIDTH);

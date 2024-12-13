@@ -61,7 +61,7 @@ public class ArenaScreen extends AbstractScreen{
         //yStage.initOwner(primaryStage);
 
         myMessageLabel = new Label("Fight begins!");
-        myMessageLabel.setStyle("-fx-font-size: 14; -fx-text-fill: white;");
+        myMessageLabel.setStyle("-fx-font-size: 14; -fx-background-color: rgba(28, 28, 28, 0.8);-fx-text-fill: white;-fx-padding: 5px;");
 
         // Set up the scene
         Scene scene = createGameScene();
@@ -142,7 +142,7 @@ public class ArenaScreen extends AbstractScreen{
         mainLayout.setPadding(new Insets(10));
 
         Label titleLabel = new Label("Arena Battle");
-        titleLabel.setStyle("-fx-font-family: Arial; -fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
+        titleLabel.setStyle("-fx-font-family: Arial;-fx-background-color: rgba(28, 28, 28, 0.8); -fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
 
         mainLayout.getChildren().addAll(titleLabel,combatDisplay, buttonLayout, myMessageLabel);
         String temp = "file:AnyMonsterFight.jpg";
@@ -192,18 +192,18 @@ public class ArenaScreen extends AbstractScreen{
     /**
      * Creates a VBox for a character with an image and health display.
      *
-     * @param imagePath    Path to the character's image.
-     * @param width        Width of the image.
-     * @param height       Height of the image.
-     * @param currentHealth Current health of the character.
-     * @param maxHealth     Maximum health of the character.
-     * @param mirror       Whether to mirror the image horizontally.
+     * @param theImagePath    Path to the character's image.
+     * @param theWidth        Width of the image.
+     * @param theHeight       Height of the image.
+     * @param theCurrentHealthProperty Current health of the character.
+     * @param theMaxHealth     Maximum health of the character.
+     * @param theName       Whether to mirror the image horizontally.
      * @return A VBox containing the image and health label.
      */
     private VBox createCharacterDisplay(String theImagePath, int theWidth, int theHeight, IntegerProperty theCurrentHealthProperty, int theMaxHealth, String theName) {
         // Create the name label
         Label nameLabel = new Label(theName);
-        nameLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
+        nameLabel.setStyle("-fx-font-size: 16; -fx-background-color: rgba(28, 28, 28, 0.8); -fx-font-weight: bold; -fx-text-fill: white;");
 
         // Create the image view
         ImageView imageView = createImageView(theImagePath, theWidth, theHeight);
@@ -211,7 +211,7 @@ public class ArenaScreen extends AbstractScreen{
         // Create the health label
         Label healthLabel = new Label();
         healthLabel.textProperty().bind(theCurrentHealthProperty.asString("Health: %d / " + theMaxHealth));
-        healthLabel.setStyle("-fx-font-size: 17; -fx-text-fill: white; -fx-font-weight: bold;"); // Styling for visibility
+        healthLabel.setStyle("-fx-font-size: 14;  -fx-background-color: rgba(28, 28, 28, 0.8);-fx-text-fill: white;"); // Styling for visibility
 
         // Arrange the image and label vertically
         VBox characterDisplay = new VBox(10, nameLabel, imageView, healthLabel);
@@ -258,9 +258,9 @@ public class ArenaScreen extends AbstractScreen{
     /**
      * Creates an ImageView with the specified properties.
      *
-     * @param imagePath Path to the image file.
-     * @param width     Width of the image view.
-     * @param height    Height of the image view.
+     * @param theImagePath Path to the image file.
+     * @param theWidth     Width of the image view.
+     * @param theHeight    Height of the image view.
      * @return Configured ImageView instance.
      */
     private ImageView createImageView(String theImagePath, int theWidth, int theHeight) {
