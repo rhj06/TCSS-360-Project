@@ -42,16 +42,13 @@ public final class Slime extends AbstractMonster{
         final double randomNumber;
         randomNumber = Math.random() * 10;
         Item item;
-        item = null;
-        if (randomNumber > 1.99) {
-            if (randomNumber < 4.01) {
+            if (randomNumber < 2.01) {
                 item = new SpeedPotion();
-            } else if(randomNumber < 6.01) {
+            } else if(randomNumber < 3.01) {
                 item = new VisionPotion();
             } else {
                 item = new HealthPotion();
             }
-        }
         return item;
     }
 

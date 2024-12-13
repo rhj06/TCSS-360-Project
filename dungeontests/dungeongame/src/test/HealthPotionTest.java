@@ -43,7 +43,7 @@ public class HealthPotionTest {
         healthPotion.useItem(character);
 
         // Verify health increased correctly
-        assertEquals(70, character.getHealth());
+        assertEquals(70, character.getCurHealthProperty());
     }
 
     @Test
