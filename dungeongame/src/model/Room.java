@@ -107,8 +107,8 @@ public class Room implements Serializable {
      * @param theY The row value of the room.
      */
     public void setCords(int theX, int theY) {
-        if (theX <= 0 || theY <= 0) {
-            throw new IllegalArgumentException("Coordinates must be greater than 0.");
+        if (theX < 0 || theY < 0) {
+            throw new IllegalArgumentException("Coordinates must be greater than or equal to 0.");
         }
         myCords = new Point(theX, theY);
     }
