@@ -38,16 +38,14 @@ public final class Skeleton extends AbstractMonster{
      */
     public Item getRandomItem() {
         final double randomNumber = Math.random() * 10;
-        Item item = null;
-        if (randomNumber > 1.99) {
-            if (randomNumber < 4.01) {
+        Item item;
+            if (randomNumber < 2.01) {
                 item = new HealthPotion();
-            } else if(randomNumber < 6.01) {
+            } else if(randomNumber < 3.90) {
                 item = new SpeedPotion();
             } else {
                 item = new VisionPotion();
             }
-        }
         return item;
     }
 

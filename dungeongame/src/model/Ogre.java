@@ -35,21 +35,19 @@ public final class Ogre extends AbstractMonster{
 
     /**
      * Generates a random item dropped by the Ogre.
-     * @return the dropped item, or null if no item is dropped.
+     * @return the dropped item
      */
     @Override
     public Item getRandomItem() {
         final double randomNumber = Math.random() * 10;
-        Item item = null;
-        if (randomNumber > 1.99) {
-            if (randomNumber < 4.01) {
+        Item item;
+            if (randomNumber < 2.01) {
                 item = new VisionPotion();
-            } else if(randomNumber < 6.01) {
+            } else if(randomNumber < 4.01) {
                 item = new SpeedPotion();
             } else {
                 item = new HealthPotion();
             }
-        }
         return item;
     }
 
