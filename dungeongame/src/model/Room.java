@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author Ryan Johnson, David Bessex, Kaleb Anagnostou
  * @version 11/10/2024
  */
-public class Room implements Serializable {
+public final class Room implements Serializable {
     @Serial
     private static final long serialVersionUID = 65432135L;
 

@@ -13,7 +13,7 @@ import java.sql.Statement;
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  *
  */
-public class MonsterDatabase {
+public final class MonsterDatabase {
 
     /**
      * The URL for the SQLite database file.

@@ -10,7 +10,7 @@ import java.awt.*;
  * @version 1.0
  * @author Ryan Johnsom, David Bessex, Kaleb Anagnostou
  */
-public class VisionPotion extends AbstractItem {
+public final class VisionPotion extends AbstractItem {
 
     /**
      * Constructs a Vision Potion with a predefined name, description, and value.
@@ -48,7 +48,7 @@ public class VisionPotion extends AbstractItem {
      * @param theX The x-coordinate of the room.
      * @param theY The y-coordinate of the room.
      */
-    private void revealRoomContents(Maze theMaze, int theX, int theY) {
+    private void revealRoomContents(final Maze theMaze, final int theX, final int theY) {
         if (theX >= 0 && theX < theMaze.getSize() && theY >= 0 && theY < theMaze.getSize()) {
             Room room = theMaze.getRooms()[theX][theY];
             System.out.println("Room at (" + theX + ", " + theY + "):");
