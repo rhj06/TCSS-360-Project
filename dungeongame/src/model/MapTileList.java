@@ -15,7 +15,7 @@ public final class MapTileList implements Serializable {
     private static final long serialVersionUID = 534215432523L;
     /** MapTileList uniqueInstance */
     private static MapTileList uniqueInstance;
-
+    /** my Array List */
     private ArrayList<MapTile> myList;
 
     private MapTileList() {

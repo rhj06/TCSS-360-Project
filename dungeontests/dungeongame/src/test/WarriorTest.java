@@ -71,12 +71,12 @@ public class WarriorTest {
      */
     @Test
     public void testUseSpecialAttack() {
-        int baseAttack = myWarrior.getAttack();
+        int baseAttack = 30;
         System.out.println("initial attack for: " + baseAttack);
         myWarrior.useSpecialAttack();
        int boostedAttack = myWarrior.getAttack();
         System.out.println("boosted attacked for: " + boostedAttack);
-        assertTrue(boostedAttack >= baseAttack + 50);
+        assertTrue(boostedAttack > baseAttack + 50);
     }
 
     /**

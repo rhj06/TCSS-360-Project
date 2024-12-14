@@ -51,7 +51,7 @@ public final class Room implements Serializable {
     /**
      * Constructor for the room object.
      */
-    Room() {
+    public Room() {
         myCords = null;
         myNorthNeighbor = null;
         myEastNeighbor = null;

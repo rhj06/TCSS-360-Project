@@ -43,10 +43,10 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="lib" level="application" />
-    <orderEntry type="library" name="javafx.base" level="project" />
-    <orderEntry type="library" name="javafx.controls" level="project" />
-    <orderEntry type="library" name="javafx.fxml" level="project" />
-    <orderEntry type="library" name="javafx.graphics" level="project" />
-    <orderEntry type="library" name="javafx.web" level="project" />
+    <orderEntry type="library" exported="" name="javafx.base" level="project" />
+    <orderEntry type="library" exported="" name="javafx.controls" level="project" />
+    <orderEntry type="library" exported="" name="javafx.fxml" level="project" />
+    <orderEntry type="library" exported="" name="javafx.graphics" level="project" />
+    <orderEntry type="library" exported="" name="javafx.web" level="project" />
   </component>
 </module>

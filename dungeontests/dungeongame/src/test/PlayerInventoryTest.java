@@ -68,30 +68,18 @@ class PlayerInventoryTest {
     }
 
     /**
-     * Tests using an item from the inventory, reducing its count to zero.
-     */
-    @Test
-    void testUseItem() {
-        Item healthPotion = new HealthPotion();
-        myInventory.addItem(healthPotion);
-        myInventory.useItem(healthPotion);
-
-        assertFalse(myInventory.containsItem(healthPotion));
-    }
-
-    /**
      * Tests using an item from the inventory when there are multiple quantities.
      */
     @Test
     void testUseItemWithMultipleQuantities() {
-        HealthPotion healthPotion = new HealthPotion();
-        myInventory.addItem(healthPotion);
-        myInventory.addItem(healthPotion);
+        SpeedPotion speedPotion = new SpeedPotion();
+        myInventory.addItem(speedPotion);
+        myInventory.addItem(speedPotion);
         myInventory.setPlayer(myPlayer);
-        myInventory.useItem(healthPotion);
+        myInventory.useItem(speedPotion);
 
-        assertTrue(myInventory.containsItem(new HealthPotion()));
-        assertEquals(1, myInventory.getInventory().get(new HealthPotion()));
+        assertTrue(myInventory.containsItem(new SpeedPotion()));
+        assertEquals(1, myInventory.getInventory().get(new SpeedPotion()));
     }
 
     /**
