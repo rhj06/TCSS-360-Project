@@ -1,23 +1,35 @@
 package dungeongame.src.test;
 
 import dungeongame.src.model.AbstractDungeonCharacter;
+import dungeongame.src.model.Goblin;
 import dungeongame.src.model.HeroFactory;
-import dungeongame.src.model.Player;
-import dungeongame.src.model.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit test class for testing the {@link HeroFactory} class.
+ * <p>
+ * This class includes tests for if the HeroFactory including
+ * testing for initializing Warrior, Wizard, and Thief objects as well
+ * as testing for invalid inputs
+ * </p>
+ */
 class HeroFactoryTest {
 
     private HeroFactory heroFactory;
 
+    /**
+     * setup for heroFactory
+     */
     @BeforeEach
     void setUp() {
         heroFactory = new HeroFactory();
     }
 
+    /**
+     * Create a Thief
+     */
     @Test
     void createThief() {
         AbstractDungeonCharacter thief = (AbstractDungeonCharacter) HeroFactory.createHero("thief",
@@ -29,6 +41,9 @@ class HeroFactoryTest {
         System.out.println(thief);
     }
 
+    /**
+     * Create a Warrior
+     */
     @Test
     void createWarrior() {
         AbstractDungeonCharacter warrior = (AbstractDungeonCharacter) HeroFactory.createHero("warrior",
@@ -40,6 +55,9 @@ class HeroFactoryTest {
         System.out.println(warrior);
     }
 
+    /**
+     * Create a Wizard
+     */
     @Test
     void createWizard() {
         AbstractDungeonCharacter wizard = (AbstractDungeonCharacter) HeroFactory.createHero("wizard",
@@ -51,6 +69,9 @@ class HeroFactoryTest {
         System.out.println(wizard);
     }
 
+    /**
+     * Check for invalid input
+     */
     @Test
     void invalidName() {
         String invalidHeroName = "Dragon Slayer";

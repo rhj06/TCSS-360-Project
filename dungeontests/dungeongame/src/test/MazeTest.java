@@ -3,11 +3,16 @@ package dungeongame.src.test;
 import dungeongame.src.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JUnit test class for testing the {@link Maze} class.
+ * <p>
+ * This class includes tests for Maze Size, Room Deep copies, if room
+ * has monster, if room has item, maze generation, and if the maze is traversable.
+ * </p>
+ */
 public class MazeTest {
 
     /**

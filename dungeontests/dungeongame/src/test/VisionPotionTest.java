@@ -39,16 +39,16 @@ class VisionPotionTest {
         myTestMaze.getPlayerCords().setLocation(playerPosition);
 
 
-        myTestMaze.getRooms()[1][1].setItem(new HealthPotion()); // North-West
-        myTestMaze.getRooms()[1][2].setItem(new VisionPotion()); // North
-        myTestMaze.getRooms()[1][3].setItem(new SpeedPotion()); // North-East
+        myTestMaze.setRoomItem(1, 1, new HealthPotion()); // North-West
+        myTestMaze.setRoomItem(1,2, new VisionPotion()); // North
+        myTestMaze.setRoomItem(1, 3, new SpeedPotion()); // North-East
 
-        myTestMaze.getRooms()[2][1].setMonster(MonsterFactory.createMonster("Goblin")); // West
-        myTestMaze.getRooms()[2][3].setMonster(MonsterFactory.createMonster("Ogre")); // East
-        myTestMaze.getRooms()[3][3].setMonster(MonsterFactory.createMonster("Skeleton")); // South-East
+        myTestMaze.setRoomMonster(2, 1, MonsterFactory.createMonster("Goblin")); // West
+        myTestMaze.setRoomMonster(2,3,MonsterFactory.createMonster("Ogre")); // East
+        myTestMaze.setRoomMonster(3,3,MonsterFactory.createMonster("Skeleton")); // South-East
 
-        myTestMaze.getRooms()[3][1].setItem(new Pillar("Polymorphism Pillar")); // South-West
-        myTestMaze.getRooms()[3][2].setItem(new Pillar("Encapsulation Pillar")); // South
+        myTestMaze.setRoomItem(3,1,new Pillar("Polymorphism Pillar")); // South-West
+        myTestMaze.setRoomItem(3,2,new Pillar("Encapsulation Pillar")); // South
     }
 
     /**

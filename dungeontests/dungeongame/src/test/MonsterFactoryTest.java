@@ -2,13 +2,20 @@ package dungeongame.src.test;
 
 import dungeongame.src.model.AbstractMonster;
 import dungeongame.src.model.MonsterFactory;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * JUnit test class for testing the {@link MonsterFactory} class.
+ * <p>
+ * This class includes tests for MonsterFactory
+ * </p>
+ */
 class MonsterFactoryTest {
 
-
+    /**
+     * create a goblin
+     */
     @Test
     void createGoblin() {
         final AbstractMonster goblin = MonsterFactory.createMonster("Goblin");
@@ -17,6 +24,9 @@ class MonsterFactoryTest {
         assertEquals(7, goblin.getSpeed());
     }
 
+    /**
+     * create a slime
+     */
     @Test
     void createSlime() {
         final AbstractMonster slime = MonsterFactory.createMonster("Slime");
@@ -25,6 +35,9 @@ class MonsterFactoryTest {
         assertEquals(4, slime.getSpeed());
     }
 
+    /**
+     * create a skeleton
+     */
     @Test
     void createSkeleton() {
         final AbstractMonster skeleton = MonsterFactory.createMonster("Skeleton");
@@ -33,6 +46,9 @@ class MonsterFactoryTest {
         assertEquals(6, skeleton.getSpeed());
     }
 
+    /**
+     * create an ogre
+     */
     @Test
     void createOgre() {
         final AbstractMonster ogre = MonsterFactory.createMonster("Ogre");
@@ -41,6 +57,9 @@ class MonsterFactoryTest {
         assertEquals(5, ogre.getSpeed());
     }
 
+    /**
+     * test for invalid monster input
+     */
     @Test
     void invalidName() {
         String invalidMonsterName = "Zombie";

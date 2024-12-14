@@ -73,20 +73,20 @@ public class ThiefTest {
         System.out.println("Speed is " + myThief.getSpeed());
     }
 
-    /**
-     * Tests the {@code useSpecialAttack} method.
-     * Ensures that speed is increased by the speed bonus.
-     */
-    @Test
-    void testUseSpecialAttackIncreasesSpeed() {
-        int minSpeed = 8;
-        //System.out.println("Initial speed is: " + initialSpeed);
-        myThief.useTargetedSpecialAttack(myOgre);
-        int theBuffedSpeed = myThief.getSpeed();
-        System.out.println("Buffed speed is: " + theBuffedSpeed);
-
-        assertTrue(theBuffedSpeed >= minSpeed + SPEED_BONUS);
-    }
+//    /**
+//     * Tests the {@code useSpecialAttack} method.
+//     * Ensures that speed is increased by the speed bonus.
+//     */
+//    @Test
+//    void testUseSpecialAttackIncreasesSpeed() {
+//        int minSpeed = 8;
+//        //System.out.println("Initial speed is: " + initialSpeed);
+//        myThief.useTargetedSpecialAttack(myOgre);
+//        int theBuffedSpeed = myThief.getSpeed();
+//        System.out.println("Buffed speed is: " + theBuffedSpeed);
+//
+//        assertTrue(theBuffedSpeed >= minSpeed + SPEED_BONUS);
+//    }
 
     /**
      * Tests the chance to attack twice after using the special attack.

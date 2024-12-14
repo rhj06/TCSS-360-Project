@@ -1,8 +1,6 @@
 package dungeongame.src.test;
 
 import dungeongame.src.model.*;
-import javafx.application.Platform;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
