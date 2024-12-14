@@ -209,7 +209,7 @@ final public class Maze implements Serializable {
      * Fire Property Change Listener with given message
      * @param theMessage theMessage to send
      */
-    public void notifyMessage(String theMessage) {
+    public void notifyMessage(final String theMessage) {
             myPCS.firePropertyChange("change in direction", null, theMessage);
     }
 
@@ -326,7 +326,7 @@ final public class Maze implements Serializable {
      * @param theJ X Coordinate of player
      * @return Room[8] of neighboring rooms of player
      */
-    public Room[] getNeighborsClockwise(int theI, int theJ) {
+    public Room[] getNeighborsClockwise(final int theI, final int theJ) {
         Room room = myRooms[theI][theJ];
         Room[] rooms = new Room[EIGHT]; // Default initialized to null
 

@@ -106,7 +106,7 @@ public final class Room implements Serializable {
      * @param theX The column value the room.
      * @param theY The row value of the room.
      */
-    public void setCords(int theX, int theY) {
+    public void setCords(final int theX, final int theY) {
         if (theX < 0 || theY < 0) {
             throw new IllegalArgumentException("Coordinates must be greater than or equal to 0.");
         }
@@ -118,7 +118,7 @@ public final class Room implements Serializable {
      *
      * @param theNorthNeighbor The room to be set as the north neighbor of the current room.
      */
-    public void setNorthNeighbor(Room theNorthNeighbor) {
+    public void setNorthNeighbor(final Room theNorthNeighbor) {
         myNorthNeighbor = theNorthNeighbor;
     }
 
@@ -127,7 +127,7 @@ public final class Room implements Serializable {
      *
      * @param theEastNeighbor The room to be set as the east neighbor of the current room.
      */
-    public void setEastNeighbor(Room theEastNeighbor) {
+    public void setEastNeighbor(final Room theEastNeighbor) {
         myEastNeighbor = theEastNeighbor;
     }
 
@@ -136,7 +136,7 @@ public final class Room implements Serializable {
      *
      * @param theSouthNeighbor The room to be set as the south neighbor of the current room.
      */
-    public void setSouthNeighbor(Room theSouthNeighbor) {
+    public void setSouthNeighbor(final Room theSouthNeighbor) {
         mySouthNeighbor = theSouthNeighbor;
     }
 
@@ -145,7 +145,7 @@ public final class Room implements Serializable {
      *
      * @param theWestNeighbor The room to be set as the west neighbor of the current room.
      */
-    public void setWestNeighbor(Room theWestNeighbor) {
+    public void setWestNeighbor(final Room theWestNeighbor) {
         myWestNeighbor = theWestNeighbor;
     }
 
@@ -180,28 +180,28 @@ public final class Room implements Serializable {
     /**
      * Sets the value of the North door.
      */
-    public void setNorthDoor(boolean theNorthConnect) {
+    public void setNorthDoor(final boolean theNorthConnect) {
         myNorthDoor = theNorthConnect;
     }
 
     /**
      * Sets the value of the East door.
      */
-    public void setEastDoor(boolean theEastConnect) {
+    public void setEastDoor(final boolean theEastConnect) {
         myEastDoor = theEastConnect;
     }
 
     /**
      * Sets the value of the South door.
      */
-    public void setSouthDoor(boolean theSouthConnect) {
+    public void setSouthDoor(final boolean theSouthConnect) {
         mySouthDoor = theSouthConnect;
     }
 
     /**
      * Sets the value of the West door.
      */
-    public void setWestDoor(boolean theWestConnect) {
+    public void setWestDoor(final boolean theWestConnect) {
         myWestDoor = theWestConnect;
     }
 
@@ -222,21 +222,21 @@ public final class Room implements Serializable {
     /**
      * Sets the monster of the room to be the inputted monster.
      */
-    public void setMonster(AbstractMonster theMonster) {
+    public void setMonster(final AbstractMonster theMonster) {
         myMonster = theMonster;
     }
 //
     /**
      * Sets the item in the room to be the inputted item.
      */
-    public void setItem(Item theItem) {
+    public void setItem(final Item theItem) {
         myItem = theItem;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Room room)) return false;
+    public boolean equals(final Object theOther) {
+        if (this == theOther) return true;
+        if (!(theOther instanceof Room room)) return false;
         return Objects.equals(myCords, room.myCords);
     }
 

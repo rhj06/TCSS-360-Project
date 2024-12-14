@@ -51,7 +51,7 @@ final public class PlayerInventory implements java.io.Serializable {
     /**
      * Method that sets the fields equal to the fields of another instance.
      */
-    public void updateFrom(PlayerInventory theOtherInventory) {
+    public void updateFrom(final PlayerInventory theOtherInventory) {
         myInventory = theOtherInventory.myInventory;
         myPlayer = theOtherInventory.myPlayer;
     }
@@ -59,7 +59,7 @@ final public class PlayerInventory implements java.io.Serializable {
     /**
      * Sets the player field.
      */
-    public void setPlayer(Player thePlayer) {
+    public void setPlayer(final Player thePlayer) {
         myPlayer = thePlayer;
     }
 
@@ -97,7 +97,7 @@ final public class PlayerInventory implements java.io.Serializable {
     /**
      * Checks if the item is in the inventory.
      */
-    public boolean containsItem(Item item) {
+    public boolean containsItem(final Item item) {
         if (myInventory.containsKey(item)) {
             return true;
         } else {
@@ -122,12 +122,25 @@ final public class PlayerInventory implements java.io.Serializable {
      * @param theItem the item to be deducted from the inventory.
      */
     public void useItem(final Item theItem) {
-        theItem.useItem((Character) myPlayer);
-        myInventory.put(theItem, myInventory.getOrDefault(theItem, 0) - 1);
-        if (theItem instanceof VisionPotion) {
-            myPCS.firePropertyChange("VisionPotionUsed", null, null);
-        }
+        if (myInventory.containsKey(theItem) && !(theItem instanceof Pillar)) {
+            if (myInventory.get(theItem) > 1) {
+                myInventory.put(theItem, myInventory.get(theItem) - 1);
+            } else if (myInventory.get(theItem) == 1) {
+                myInventory.remove(theItem);
+            }
 
+            if (!(theItem instanceof VisionPotion)) {
+                theItem.useItem(((AbstractDungeonCharacter)myPlayer));
+            }
+
+            if (theItem instanceof VisionPotion) {
+                myPCS.firePropertyChange("VisionPotionUsed", null, theItem);
+            }
+
+            myPCS.firePropertyChange("Item Used", null, myInventory);
+        } else {
+            throw new IllegalArgumentException("No item found / Cannot use item");
+        }
     }
 
     /**
