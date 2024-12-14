@@ -18,9 +18,6 @@ public final class Thief extends AbstractDungeonCharacter implements Player, Tar
     /** Speed bonus applied during the Thief's special attack. */
     private static final int SPEED_BONUS = 50;
 
-    /** Name of the specific Thief instance. */
-    private final String myName;
-
     /** Indicates if the Thief has a chance to attack twice. */
     private boolean myChanceToAttackTwice = false;
 
@@ -39,7 +36,6 @@ public final class Thief extends AbstractDungeonCharacter implements Player, Tar
                  final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
         super(theMaxHealth, theMinAttack, theMaxAttack,  Math.min(theMinSpeed, theMaxSpeed), Math.max(theMinSpeed, theMaxSpeed),
                 theDefense, theName);
-        myName = theName;
     }
 
 
@@ -62,7 +58,7 @@ public final class Thief extends AbstractDungeonCharacter implements Player, Tar
      */
     @Override
     public String toString() {
-        return myName + " the " + DEFAULT_NAME;
+        return this.getMyName() + " the " + DEFAULT_NAME;
     }
 
     private boolean ableToAttackTwice() {

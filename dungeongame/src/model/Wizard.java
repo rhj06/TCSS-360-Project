@@ -17,8 +17,6 @@ public final class Wizard extends AbstractDungeonCharacter implements Player, Ta
     /** Health bonus applied during the Wizard's special attack. */
     private static final int HEALTH_BONUS = 50;
 
-    /** Name of the specific Wizard instance. */
-    private final String myName;
 
     /**
      * Constructs a new {@code Wizard} instance with the specified attributes.
@@ -34,7 +32,6 @@ public final class Wizard extends AbstractDungeonCharacter implements Player, Ta
     public Wizard(final int theMaxHealth, final int theMinAttack, final int theMaxAttack,
                   final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
         super(theMaxHealth, theMinAttack, theMaxAttack, theMinSpeed, theMaxSpeed, theDefense, theName);
-        myName = theName;
     }
 
     /**
@@ -55,6 +52,6 @@ public final class Wizard extends AbstractDungeonCharacter implements Player, Ta
      */
     @Override
     public String toString() {
-        return myName + " the " + DEFAULT_NAME;
+        return this.getMyName() + " the " + DEFAULT_NAME;
     }
 }

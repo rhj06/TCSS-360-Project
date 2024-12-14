@@ -100,6 +100,10 @@ public abstract class AbstractDungeonCharacter implements Character, Serializabl
         myCurHealthProperty.set(myCurrHealth); // Ensure it reflects the current health
     }
 
+    public String getMyName() {
+        return myName;
+    }
+
     public int getHealth() {
         return myCurHealthProperty.get();
     }

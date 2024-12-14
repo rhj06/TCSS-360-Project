@@ -16,9 +16,6 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
     /** Bonus value for attack and defense when the special attack is activated. */
     private static final int ATTACK_AND_DEFENSE_BONUS = 50;
 
-    /** Name of the specific Warrior instance. */
-    private final String myName;
-
     /** Indicates if the attack bonus is active. */
     private boolean myAttackBonusActive = false;
 
@@ -39,7 +36,6 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
     public Warrior(final int theMaxHealth, final int theMinAttack, final int theMaxAttack,
                   final int theMinSpeed, final int theMaxSpeed, final int theDefense, final String theName) {
         super(theMaxHealth, theMinAttack, theMaxAttack, theMinSpeed, theMaxSpeed, theDefense, theName);
-        myName = theName;
     }
 
     /**
@@ -89,6 +85,6 @@ public final class Warrior extends AbstractDungeonCharacter implements Player {
      */
     @Override
     public String toString() {
-        return myName + " the " + DEFAULT_NAME;
+        return this.getMyName() + " the " + DEFAULT_NAME;
     }
 }
