@@ -124,6 +124,10 @@ final public class PlayerInventory implements java.io.Serializable {
     public void useItem(final Item theItem) {
         theItem.useItem((Character) myPlayer);
         myInventory.put(theItem, myInventory.getOrDefault(theItem, 0) - 1);
+        if (theItem instanceof VisionPotion) {
+            myPCS.firePropertyChange("VisionPotionUsed", null, null);
+        }
+
     }
 
     /**
