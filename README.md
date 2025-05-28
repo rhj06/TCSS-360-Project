@@ -1,1 +1,3 @@
-# TCSS-380-Project
+# TCSS-360-Project
+
+This project was done for TCSS 360. It is written in Java and JavaFX was used for the front end development. The application is a dungeon adventure game where the player is able to choose from three different characters who posses unique attributes that are different from one another. The player will navigate through the randomly generated maze collecting items as they go or enter combat upon reaching an enemy. The player has the ability to regenerate their health using health potions that they find. The goal of the game is to collect the 4 Pillars of OO in order to unlock the boss who will appear once the final pillar is collected (by defeating mini-bosses). If the player succeeds in fighting the boss they will have won the game.
